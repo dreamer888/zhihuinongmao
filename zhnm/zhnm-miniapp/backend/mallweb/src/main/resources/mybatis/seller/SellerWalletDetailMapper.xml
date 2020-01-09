@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SellerWalletDetailMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		SELLER
+	</sql>   
+	<sql id="sellerWalletDetail">
+	   SELLER_WALLET_DETAIL
+	</sql>
+	  <!-- 商户钱包明细 -->
+	<select id="WalletDetaillistPage" parameterType="page" resultType="pd" >
+		select  u.ID,            
+				u.SELLER_ID,     
+				u.MONEY_CHANGED, 
+				u.UPDATE_TIME,   
+				u.CHANGED_REASON,
+				u.FEE,           
+				u.OPERATOR,      
+				u.CREATE_TIME,   
+				u.REMARK,        
+				u.AUDITOR,       
+				u.AUDIT_TIME,
+				t.ACCOUNT,
+				t.NAME
+		from <include refid="sellerWalletDetail"></include> u,<include refid="tableName"></include> t
+		where u.SELLER_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+		and 
+				(
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		 </if>
+	 </select> 
+</mapper>

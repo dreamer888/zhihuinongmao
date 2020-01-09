@@ -1,0 +1,10 @@
+<view class="weui-content">
+  <view class="weui-article">
+    <view class="h1">{{news.news_title}}</view>
+				    <view class="wy-news-time h3">{{news.addtime}}</view>
+				    <section class="wy-news-info">
+				   
+            <rich-text nodes='{{news.news_content}}'></rich-text>
+				    </section>
+  </view>
+</view>

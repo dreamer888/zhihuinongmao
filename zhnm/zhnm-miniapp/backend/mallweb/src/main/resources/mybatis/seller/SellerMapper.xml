@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SellerMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		SELLER
+	</sql>
+	<sql id="marketTableName">
+	  MARKET
+	</sql>
+	<sql id="goodsSortTable">
+	  SHOP_CATEGORY
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+        TOKEN,
+        NAME,
+        ACCOUNT,
+        PASSWORD,
+        SHOP_CODE,
+        SHOP_NAME,
+        BUSINESS_LICENSE_IMG,
+        BELONG_MARKET,
+        ID_CARD_LAST,
+        BUSINESS_LICENSE_CODE,
+        SELLER_ICO,
+        SELLER_CATGORY
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},                     
+        #{TOKEN},                  
+        #{NAME},                   
+        #{ACCOUNT},                
+        #{PASSWORD},               
+        #{SHOP_CODE},              
+        #{SHOP_NAME},              
+        #{BUSINESS_LICENSE_IMG},   
+        #{BELONG_MARKET},          
+        #{ID_CARD_LAST},           
+        #{BUSINESS_LICENSE_CODE},  
+        #{SELLER_ICO},             
+        #{SELLER_CATGORY}
+	</sql>
+	<!-- 用户列表  -->
+	<select id="SellerlistPage" parameterType="page" resultType="pd" >
+		select  u.ID,                           
+                u.TOKEN,                
+                u.NAME,                 
+				u.ACCOUNT,              
+				u.PASSWORD,             
+				u.SHOP_CODE,            
+				u.SHOP_NAME,            
+				u.BUSINESS_LICENSE_IMG, 
+				u.ID_CARD_LAST,         
+				u.BUSINESS_LICENSE_CODE,
+				u.SELLER_ICO, 
+				u.BELONG_MARKET,
+                m.MARKET_NAME,
+                g.CATEGORY_NAME,
+                g.CATEGORY_ID,
+                m.ID as MARKET_ID
+		from <include refid="tableName"></include> u,<include refid="marketTableName"></include> m,<include refid="goodsSortTable"></include> g
+		where u.BELONG_MARKET = m.ID
+		and u.SELLER_CATEGORY = g.CATEGORY_ID
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+		and 
+				(
+					 u.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 u.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					 or
+					 u.SHOP_CODE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 u.SHOP_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	
+	
+	
+	<delete id="deleteS" parameterType="pd" flushCache="false">
+		delete from <include refid="tableName"></include>
+		where 
+			ID = ${SELLER_ID}
+	</delete>
+	<!-- 通过account 获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd" >
+	select      u.ID as SELLER_ID, 
+	            m.ID as MARKET_ID,                          
+                u.TOKEN,                
+                u.NAME,                 
+				u.ACCOUNT,              
+				u.PASSWORD,             
+				u.SHOP_CODE,            
+				u.SHOP_NAME,            
+				u.BUSINESS_LICENSE_IMG, 
+				u.ID_CARD_LAST,         
+				u.BUSINESS_LICENSE_CODE,
+				u.SELLER_ICO, 
+				u.BELONG_MARKET,
+                m.MARKET_NAME,
+                g.CATEGORY_NAME,
+                g.CATEGORY_ID
+		from <include refid="tableName"></include> u,<include refid="marketTableName"></include> m,<include refid="goodsSortTable"></include> g
+		where u.BELONG_MARKET = m.ID
+		and u.SELLER_CATEGORY = g.CATEGORY_ID
+		and  u.ID = #{SELLER_ID}
+	</select>
+	<sql id="shopCategory">
+	 SHOP_CATEGORY
+	</sql>
+	<select id="findByCategorySortName" parameterType="pd" resultType="pd" >
+		select t.CATEGORY_ID,
+		       t.CATEGORY_NAME
+		from 
+			<include refid="shopCategory"></include>t
+		where 
+			t.CATEGORY_NAME = #{SORT_NAME}
+		and t.super_id = 0
+	</select>
+	<update id="editS" parameterType="pd" >
+		update  <include refid="tableName"></include>
+			set SHOP_CODE              =#{SHOP_CODE},
+				SHOP_NAME              =#{SHOP_NAME},
+				BELONG_MARKET          =#{MARKET_ID},
+				BUSINESS_LICENSE_CODE  =#{BUSINESS_LICENSE_CODE},
+				SELLER_CATEGORY        =#{CATEGORY_ID},
+				PASSWORD               =#{PASSWORD}
+			where 
+				 ID = #{SELLER_ID}
+	</update>
+	<select id="findSellerByAccount" parameterType="pd" resultType="pd" >
+		select t.ID,
+		       t.ACCOUNT
+		from 
+			<include refid="tableName"></include>t
+		where 
+			t.ACCOUNT = #{SELLER_ACCOUNT}
+	</select>
+	<sql id="InsterField">
+		NAME,
+		ACCOUNT,
+		SHOP_CODE,
+		SHOP_NAME,
+		BELONG_MARKET,
+		ID_CARD_LAST,
+		BUSINESS_LICENSE_CODE,
+		SELLER_CATEGORY,
+		PASSWORD
+	</sql>
+	<!-- 字段值 -->
+	<sql id="InsterFieldValue">
+		#{NAME},
+		#{SELLER_ACCOUNT},
+		#{SHOP_CODE},
+		#{SHOP_NAME},
+		#{MARKET_ID},
+		#{ID_CARD},
+		#{BUSINESS_LICENSE_CODE},
+		#{CATEGORY_ID},
+		#{PASSWORD}
+	</sql>
+	<!-- 新增 -->
+	<insert id="saveS" parameterType="pd" >
+		insert into <include refid="tableName"></include> (
+			<include refid="InsterField"></include>
+		) values (
+			<include refid="InsterFieldValue"></include>
+		)
+	</insert>
+	
+	<select id="listCategoryAll" parameterType="category" resultType="category" >
+		select t.CATEGORY_ID,
+		       t.CATEGORY_NAME
+		from 
+			<include refid="shopCategory"></include>t
+		where  t.super_id = 0
+	</select>
+	
+	
+	
+	
+</mapper>

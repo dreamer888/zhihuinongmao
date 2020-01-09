@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BalanceMapper">
+	<!--表名 -->
+	<sql id="tableName">
+		BALANCE
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,	
+		BALANCE_IMEI,	
+		BALANCE_MODEL,	
+		USED
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},
+		#{IMEI},	
+		#{MODEL},	
+		#{USED}
+	</sql>
+	<select id="BalancelistPage" parameterType="page" resultType="pd" >
+		select  t.ID,
+				t.BALANCE_IMEI,
+				t.BALANCE_MODEL,
+				t.USED
+		 from <include refid="tableName"></include> t
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     where
+				(
+					 t.BALANCE_IMEI LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.BALANCE_MODEL LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 	 
+				)
+		</if>
+	</select>
+	<!-- 删除智能秤 -->
+	<delete id="deleteBalance" parameterType="String" >
+		delete from <include refid="tableName"></include>
+		where ID = #{BALANCE_ID}
+	</delete>
+	<!-- 批量删除智能秤 -->
+	<delete id="deleteAllB" parameterType="String" >
+		delete from <include refid="tableName"></include>
+		where 
+			ID in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+            
+	</delete>
+	<!-- 根据ID查询智能秤 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+	select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			ID = #{BALANCE_ID}
+	</select>
+	<update id="editB" parameterType="pd" >
+		update  <include refid="tableName"></include>
+			set BALANCE_IMEI 		= #{imei},
+				BALANCE_MODEL 		= #{model},
+				USED				= #{used}
+			where 
+				 ID = #{balance_id}
+	</update>
+	<!-- 通过Imei获取数据 -->
+	<select id="findByImei" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="tableName"></include>
+		where 
+			BALANCE_IMEI = #{BALANCE_IMEI}
+	</select>
+	<!-- 新增 -->
+	<insert id="saveB" parameterType="pd" >
+		insert into <include refid="tableName"></include> (
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+</mapper>

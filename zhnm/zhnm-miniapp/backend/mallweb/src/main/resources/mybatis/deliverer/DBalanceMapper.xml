@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DBalanceMapper">
+
+	<sql id="delivererDynamic">DELIVERER_DYNAMIC</sql>
+	<sql id="DelivererTableName">
+	  DELIVERER
+	</sql>
+	<select id="DBalancelistPage" parameterType="page" resultType="pd" >
+		select  t.ACCOUNT,
+		        t.CNNAME,
+		        d.ID,
+				d.POINTS,
+				d.WALLET,
+				d.EVALUATION_TOTAL,
+				d.EVALUATION_COUNT
+		 from <include refid="DelivererTableName"></include> t,<include refid="delivererDynamic"></include> d
+		 where d.DELIVERER_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''">
+	     and
+				(
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	<select id="findById" parameterType="pd" resultType="pd" >
+		select  t.ACCOUNT,
+		        t.CNNAME,
+		        d.ID,
+				d.POINTS,
+				d.WALLET,
+				d.EVALUATION_TOTAL,
+				d.EVALUATION_COUNT
+		from 
+			<include refid="DelivererTableName"></include> t,<include refid="delivererDynamic"></include> d
+		where d.DELIVERER_ID = t.ID
+		and   d.ID = #{BALANCE_ID}
+	</select>
+	<update id="editD" parameterType="pd" >
+		update  <include refid="delivererDynamic"></include>
+			set   POINTS    =#{POINTS},
+				  WALLET     =#{WALLET}
+			where 
+				 ID = #{ID}
+	</update>
+</mapper>

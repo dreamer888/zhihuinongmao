@@ -1,0 +1,17 @@
+<div class="weui-content">
+  <div class="weui-cells weui-cells_form wy-address-edit">
+
+    <div class="weui-cell weui-cell_vcode">
+      <div class="weui-cell__hd">
+        <label class="weui-label wy-lab">手机号</label>
+      </div>
+      <div class="weui-cell__bd">
+        <input class="weui-input" name="phone" id="phone" value="{{phone}}" type="number" pattern="[0-9]*" placeholder="请输入手机号" bindinput='change'/>
+      </div>
+    </div>
+
+  </div>
+  <div class="weui-btn-area">
+    <a class="weui-btn weui-btn_primary" bindtap='update'>确认修改</a>
+  </div>
+</div>

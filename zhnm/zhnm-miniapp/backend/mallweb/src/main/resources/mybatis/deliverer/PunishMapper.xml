@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="PunishMapper">
+
+  <sql id="delivererWalletDetail">
+		DELIVERER_WALLET_DETAIL
+	</sql>
+	<sql id="sysUser">SYS_USER</sql>
+	<sql id="DelivererTableName">
+	  DELIVERER
+	</sql>
+	<select id="PunishlistPage" parameterType="page" resultType="pd" >
+		select  d.ID,
+		        t.CNNAME,
+		        t.ACCOUNT,
+		        d.MONEY_CHANGED,
+		        d.CREATE_TIME,
+		        d.REMARK
+		 from <include refid="delivererWalletDetail"></include> d,<include refid="DelivererTableName"></include> t
+		 where d.DELIVERER_ID = t.ID
+		  and  d.CHANGED_REASON = 2
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     and
+				(
+					 t.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+</mapper>

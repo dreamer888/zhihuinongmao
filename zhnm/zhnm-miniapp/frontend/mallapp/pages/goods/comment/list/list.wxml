@@ -1,0 +1,2 @@
+<!--pages/goods/comment/list/list.wxml-->
+<text>{{page}}.wxml</text>

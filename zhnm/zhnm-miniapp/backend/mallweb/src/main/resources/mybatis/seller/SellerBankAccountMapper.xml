@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SellerBankAccountMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		SELLER
+	</sql>
+	<sql id="sellerBankAccount">
+	   SELLER_BANK_ACCOUNT
+	</sql>
+	   <!-- 商户银行卡列表 -->
+	<select id="BankAccountlistPage" parameterType="page" resultType="pd" >
+		select  u.ID,
+				u.SELLER_ID,
+				u.ACCOUNT_BANK,
+				u.ACCOUNT,
+				u.ACCOUNT_NAME,
+                t.NAME,
+                u.ACCOUNT_PHONE
+		from <include refid="sellerBankAccount"></include> u,<include refid="tableName"></include> t
+		where u.SELLER_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+		and 
+				(
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		 </if>
+	</select>
+	<!-- deleteD -->
+	<delete id="deleteSDB" parameterType="pd" flushCache="false">
+		delete from <include refid="sellerBankAccount"></include>
+		where 
+			ID = ${BANKACCOUNT_ID}
+	</delete>
+	<!-- 通过account 获取数据 -->
+	<select id="findByDBId" parameterType="pd" resultType="pd" >
+		select  d.NAME,
+		        d.ID_CARD_LAST,
+				t.ACCOUNT_BANK,
+				t.ACCOUNT,
+				t.ACCOUNT_NAME,
+				t.ACCOUNT_PHONE,
+				t.ID
+		from 
+			<include refid="sellerBankAccount"></include> t,<include refid="tableName"></include> d
+		where t.SELLER_ID = d.ID
+	    and   t.ID = #{BANKACCOUNT_ID}
+	</select>
+	<update id="editD" parameterType="pd" >
+		update  <include refid="sellerBankAccount"></include>
+			set   ACCOUNT_BANK    =#{ACCOUNT_BANK},
+				  ACCOUNT         =#{ACCOUNT},
+				  ACCOUNT_NAME    =#{ACCOUNT_NAME},
+				  ACCOUNT_PHONE   =#{ACCOUNT_PHONE} 
+			where 
+				 ID = #{BANKACCOUNT_ID}
+	</update>
+</mapper>

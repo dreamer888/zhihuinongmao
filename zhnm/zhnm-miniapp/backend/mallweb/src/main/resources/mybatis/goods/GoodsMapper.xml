@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GoodsMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_goods
+	</sql>
+	
+	<sql id="categorytableName">
+		shop_category
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		goods_pic,	
+		goods_name,	
+		goods_title,	
+		goods_price,	
+		goods_detail,	
+		category_id,	
+		goods_id,
+		sort,
+		tuijian,
+		reason_return,
+		goods_sales,
+		goods_num,
+		production_place,
+		effective_date,
+		pack,
+		storage_condition,
+		gtin
+	</sql>
+	
+	
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{goods_pic},	
+		#{goods_name},	
+		#{goods_title},	
+		#{goods_price},	
+		#{goods_detail},	
+		#{category_id},	
+		#{goods_id},
+		#{sort},
+		#{tuijian},
+		#{reason_return},
+		#{goods_sales},
+		#{goods_num},
+		#{production_place},
+		#{effective_date},
+		#{pack},
+		#{storage_condition},
+		#{gtin}
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Fields">
+		goods_pic,	
+		goods_name,	
+		goods_title,	
+		goods_price,	
+		goods_detail,	
+		category_id,
+		sort,
+		tuijian,
+		reason_return,
+		goods_sales,
+		goods_num,
+		production_place,
+		effective_date,
+		pack,
+		storage_condition,
+		gtin
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValues">
+		#{goods_pic},	
+		#{goods_name},	
+		#{goods_title},	
+		#{goods_price},	
+		#{goods_detail},	
+		#{category_id},
+		#{sort},
+		#{tuijian},
+		#{reason_return},
+		#{goods_sales},
+		#{goods_num},
+		#{production_place},
+		#{effective_date},
+		#{pack},
+		#{storage_condition},
+		#{gtin}
+	</sql>
+	
+	
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Fields"></include>
+		) values (
+	<include refid="FieldValues"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			goods_id = #{goods_id}
+	</delete>
+	<!-- 同时删除附表信息 -->
+	<sql id="sellerGoods">seller_goods</sql>
+	<delete id="deleteSellerGoods" parameterType="pd">
+		delete from
+		<include refid="sellerGoods"></include>
+		where 
+			goods_id = #{goods_id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+			goods_pic = #{goods_pic},
+			goods_name = #{goods_name},
+			goods_title = #{goods_title},
+			goods_price = #{goods_price},
+			goods_detail = #{goods_detail},
+			category_id = #{category_id},
+			sort = #{sort},
+			tuijian = #{tuijian},
+			reason_return = #{reason_return},
+			goods_sales= #{goods_sales},
+			goods_num =#{goods_num},
+			production_place = #{production_place},
+		    effective_date = #{effective_date},
+		    pack = #{pack},
+		    storage_condition = #{storage_condition}
+		
+		where 
+		goods_id = #{goods_id}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		t1.goods_id,
+		t1.goods_pic,	
+		t1.goods_name,	
+		t1.goods_title,	
+		t1.goods_price,	
+		t1.goods_detail,	
+		t1.category_id,
+		t2.category_name,
+		t1.sort,
+		tuijian,
+		reason_return,
+		goods_num,
+		goods_sales,
+		production_place,
+		effective_date,
+		pack,
+		storage_condition
+		from
+		shop_goods t1 left join  shop_category t2
+		on t1.category_id=t2.category_id
+		where 
+		goods_id = #{goods_id}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd"> 
+		
+		select 
+		t1.goods_pic,	
+		t1.goods_name,	
+		t1.goods_title,	
+		t1.goods_price,	
+		t1.goods_detail,	
+		t1.category_id,	
+		t1.goods_id,
+		t2.category_name
+		from 
+		<include refid="tableName"></include> t1 left join
+		
+		<include refid="categorytableName"></include> t2
+		on t1.category_id = t2.category_id 
+		where 1=1
+		<if test="pd.category_id!= null and pd.category_id!= ''">
+			and t1.category_id = #{pd.category_id}
+		</if>
+		<if test="pd.category_id== null or pd.category_id== ''">
+		<if test="pd.super_id!= null and pd.super_id!= '0'.toString() and pd.super_id!=''">
+		and t1.category_id in (select category_id from shop_category where super_id =#{pd.super_id})
+		</if>
+		</if>
+		<if test="pd.goods_name!= null and pd.goods_name!= ''">
+			and
+			goods_name like concat('%', #{pd.goods_name},'%')	
+		</if>
+		order by t1.category_id
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="category_id!= null and category_id!= ''">
+		and category_id = #{category_id}
+		</if>
+		order by sort
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			goods_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	<!-- 批量删除附表信息 -->
+	<delete id="deleteAllSellerGoods" parameterType="String">
+		delete from
+		<include refid="sellerGoods"></include>
+		where 
+			goods_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

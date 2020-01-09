@@ -1,0 +1,82 @@
+@import "/static/css/style.wxss";
+@import "/static/lib/weui.min.wxss";
+.container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f8f8f8;
+} 
+
+.citypickers{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  background-color: red;
+}
+
+.citypicker{
+  
+}
+.citybody {
+  position: fixed;
+  bottom: 0px;
+}
+
+.cityheader {
+  position: absolute;
+  top:0px;
+  width: 100%;
+  z-index: 4;
+}
+
+.city-cancel {
+  float: left;
+  margin: 20rpx;
+  color: #818181;
+}
+
+.city-true {
+  float: right;
+  margin: 20rpx;
+  color: #2FB42E
+}
+
+.section .picker {
+  background-color: #fff;
+  border-bottom: 1px #d9d9d9 solid;
+  border-top: 1px #d9d9d9 solid;
+  padding: 20rpx;
+}
+
+.picker-view {
+  width: 100%;
+  display: flex;
+  z-index:12;
+  background-color: #fff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  bottom: 0rpx;
+  left: 0rpx;
+  height: 300px;
+  font-size: 20px;
+}
+
+.dialog-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 8;
+  background: rgba(0, 0, 0, 0.3);
+}

@@ -1,0 +1,27 @@
+<wxs module="m1">
+var filter = {
+  timeToFix: function (time) {
+   console.log("formatting_time", time)
+       var date = getDate(time);
+       var hours = date.getHours() < 10?"0" +""+ date.getHours():date.getHours();
+       var minutes = date.getMinutes() < 10?"0" +""+ date.getMinutes():date.getMinutes();
+       return hours + ":" + minutes;
+  }
+}
+module.exports = {
+  timeToFix: filter.timeToFix
+}
+</wxs>
+<view class="weui-content">
+  <view class="weui-panel address-box" id="show-addr-list">
+    <view class="weui-panel__bd" data-msg="edit" data-market_id='{{item.id}}' data-market_name='{{item.marketName}}' bindtap="index_info" wx:for='{{marketlist}}' wx:key='*this'>
+      <view class="weui-media-box weui-media-box_text address-list-box">
+        <view class="time_title">
+          <span>{{item.marketName}}</span>
+        </view>
+        <view class="time_title"><span>{{item.marketAddress}}</span></view>
+        <view class="time_desc" >市场营业时间：{{item.marketOpendTime}}-{{item.marketClosedTime}}</view>
+      </view>
+    </view>
+  </view>
+</view>

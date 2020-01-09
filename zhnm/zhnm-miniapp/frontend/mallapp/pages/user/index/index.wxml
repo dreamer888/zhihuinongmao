@@ -1,0 +1,31 @@
+<view class='weui-content'>
+<view class="header">
+<view id="img_upload">
+<image class="weui-media-box__thumb radius" src="{{shopUser.head_img}}"/>
+</view>
+
+<view>
+<!--   -->
+</view>
+</view>
+  <view class="weui-panel">
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_small-appmsg">
+            <view class="weui-cells">
+               <a class="weui-cell weui-cell_access" bindtap='username'>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <p class="center-list-txt">昵称</p>
+                </view>
+                <span class="weui-cell__ft">{{shopUser.username}}</span>
+             	</a>
+             	 <a class="weui-cell weui-cell_access" bindtap='phone'>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <p class="center-list-txt">手机</p>
+                </view>
+                <span class="weui-cell__ft">{{shopUser.phone}}</span>
+             	</a>
+            </view>
+          </view>
+        </view>
+      </view>
+</view>

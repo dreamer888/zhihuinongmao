@@ -1,0 +1,3 @@
+<view class='open'>
+<button open-type="getUserInfo" bindgetuserinfo='get_user' class="weui-btn weui-btn_primary">一键登录</button>
+</view>

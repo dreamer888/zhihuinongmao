@@ -1,0 +1,24 @@
+<view class="weui-content">
+  <view class='proListWrap'>
+    <view class="pro-items">
+      <view class="weui-media-box weui-media-box_appmsg" wx:for="{{list}}" wx:key="*this">
+        <view class="weui-media-box__hd" data-goods_id="{{item.goods_id}}" bindtap="goods_info">
+          <a>
+            <image class="weui-media-box__thumb" src="{{item.goods_pic}}" />
+          </a>
+        </view>
+        <view class="weui-media-box__bd">
+          <view class="weui-media-box__desc">
+            <a class="ord-pro-link">{{item.goods_name}}</a>
+          </view>
+          <view class="wy-pro-pri"></view>
+          <view class="wy-pro-pri">¥
+            <em class="num font-15">{{item.goods_price}}</em>
+            <a class="wy-dele" data-goods_id='{{item.goods_id}}' bindtap='delete_'></a>
+          </view>
+        </view>
+      </view>
+      
+    </view>
+  </view>
+</view>

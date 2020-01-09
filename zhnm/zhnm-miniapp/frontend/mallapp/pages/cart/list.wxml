@@ -1,0 +1,87 @@
+<empty-layout class="empty_tip" bindemptyevent="emptyCallback" emptyType="{{emptyType}}" loadingTransparent="{{false}}">
+</empty-layout>
+<view class="weui-content" hidden="{{footMenuHidden}}">
+  <view class="weui-panel weui-panel_access">
+    <view class="weui-panel__bd" wx:for="{{cartlist}}" wx:key="value">
+      <view class="weui-panel__hd">
+        <a class="wy-dele" bindtap='deleteList' data-index="{{index}}"></a>
+      </view>
+      <view class="weui-media-box_appmsg pd-10">
+
+        <view class="weui-media-box__hd check-w weui-cells_checkbox">
+
+          <view class="weui-check__label" for="cart-pto1">
+            <view class="weui-cell__hd">
+              <!-- wx:if 是否选择显示不同图标 -->
+              <icon wx:if="{{item.selected}}" type="success" bindtap="selectList" data-index="{{index}}" />
+              <icon wx:else type="circle" bindtap="selectList" data-index="{{index}}" />
+            </view>
+          </view>
+
+        </view>
+        <view class="weui-media-box__hd" bindtap='goods_info'data-goods_id='{{item.goods_id}}'>
+          <a>
+            <image class="weui-media-box__thumb" src="{{item.goods_pic}}" />
+          </a>
+        </view>
+        <view class="weui-media-box__bd">
+          <view class="weui-media-box__desc" bindtap='goods_info'data-goods_id='{{item.goods_id}}'>
+            <a class="ord-pro-link">{{item.goods_name}}</a>
+          </view>
+          <p class="weui-media-box__desc" bindtap='goods_info'data-goods_id='{{item.goods_id}}'>
+            <span>{{item.attribute_detail_name}}</span>
+
+          </p>
+          <view class="clear mg-t-10">
+            <view class="wy-pro-pri fl" bindtap='goods_info'data-goods_id='{{item.goods_id}}'>¥
+              <em class="num font-15">{{item.goods_price}}</em>
+            </view>
+            <view class="pro-amount fr">
+              <view class="Spinner">
+                <a wx:if="{{item.goods_count==1}}" class="DisDe">
+                  <i bindtap="minusCount" data-index="{{index}}" class="DisDe">-</i>
+                </a>
+                <a wx:if="{{item.goods_count>1}}" class="Decrease">
+                  <i bindtap="minusCount" data-index="{{index}}" class="DisDe">-</i>
+                </a>
+                <view>
+                  <input class="Amount" value="{{item.goods_count}}" autocomplete="off" maxlength="3" disabled/>
+                </view>
+                <a class="Increase">
+                  <i bindtap="addCount" data-index="{{index}}">+</i>
+                </a>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+<!--底部导航-->
+<view class="foot-black" hidden="{{footMenuHidden}}"></view>
+<view class="weui-tabbar wy-foot-menu" style="bottom:88rpx" hidden="{{footMenuHidden}}">
+  <view class="npd cart-foot-check-item weui-cells_checkbox allselect">
+    <view class="weui-cell allsec-well weui-check__label" for="all">
+      <view class="weui-cell__hd checked-all" wx:if="{{selectAllStatus}}" bindtap="selectAll">
+        <icon class="checked-all" type="success" />
+        <p class="font-14">全选</p>
+      </view>
+
+      <view class="weui-cell__hd checked-all" wx:else bindtap="selectAll">
+        <icon class="checked-all" type="circle" />
+        <p class="font-14">全选</p>
+      </view>
+    </view>
+  </view>
+  <view class="weui-tabbar__item  npd">
+    <p class="cart-total-txt">合计：
+      <i>￥</i>
+      <em class="num font-16" id="zong1">{{total_price}}</em>
+    </p>
+  </view>
+  <a class="red-color npd w-90 t-c" bindtap='to_order'>
+    <p class="promotion-foot-menu-label">去结算</p>
+  </a>
+</view>
+<include src="../footer/footer3.wxml" />

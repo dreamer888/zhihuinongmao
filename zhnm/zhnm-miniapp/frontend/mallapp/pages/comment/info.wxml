@@ -1,0 +1,52 @@
+<view class="weui-content clear">
+  <view wx:for='{{order_list}}' wx:key='*this'>
+    <view class="order-list-Below clear">
+
+      <view class='text'>
+        <image src="{{item.goods_pic}}" style="width:20px;height:20px" />
+      </view>
+      <text>商品评价</text>
+      <ul>
+        <li class="{{item.comment_title>0?'on':''}}" data-index='{{index}}' data-comment_title='1' bindtap='clickstar'></li>
+        <li class="{{item.comment_title>1?'on':''}}" data-index='{{index}}' data-comment_title='2' bindtap='clickstar'></li>
+        <li class="{{item.comment_title>2?'on':''}}" data-index='{{index}}' data-comment_title='3' bindtap='clickstar'></li>
+        <li class="{{item.comment_title>3?'on':''}}" data-index='{{index}}' data-comment_title='4' bindtap='clickstar'></li>
+        <li class="{{item.comment_title>4?'on':''}}" data-index='{{index}}' data-comment_title='5' bindtap='clickstar'></li>
+      </ul>
+    </view>
+    <view class="weui-cells weui-cells_form com-txt-area">
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <textarea class="weui-textarea txt-area" data-index='{{index}}' placeholder="这个商品满足你的期待吗？说说你的使用心得，分享给想买的他们吧" rows="3" bindinput='comment_content' value='{{item.comment_content}}'></textarea>
+
+        </view>
+      </view>
+    </view>
+    <view class="weui-cells weui-cells_form" hidden='true'>
+      <view class="weui-cell">
+        <view class="weui-cell__bd">
+          <view class="weui-uploader">
+            <view class="weui-uploader__hd">
+              <p class="weui-uploader__title font-14">图片上传</p>
+            </view>
+            <view class="weui-uploader__bd">
+              <ul class="weui-uploader__files" style='float:left'>
+               <image src='{{img}}' wx:for='{{item.img}}' wx:for-item='img' style='width:164rpx;height:164rpx' />
+              </ul>
+              <view class="weui-uploader__input-box">
+                <view class="weui-uploader__input" data-index='{{index}}' bindtap='imgupload' />
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="foot-black"></view>
+<view class="foot-black"></view>
+<view class="com-button">
+  <a bindtap='comment_add'>发表评价</a>
+</view>
+<view class="deploy_ctype_tip" hidden="{{nullTip}}"><p>{{tipTxt}}</p></view>

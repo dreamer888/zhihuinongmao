@@ -1,0 +1,58 @@
+<!--list.wxml-->
+<header class='weui-header fixed-top'>
+  <view class='weui-header'>
+        <view class="weui-search-bar">
+            <view class="weui-search-bar__form">
+                <view class="weui-search-bar__box">
+                    <icon class="weui-icon-search_in-box"  type="search"  size="14"></icon>
+                    <input type="text" class="weui-search-bar__input" placeholder="搜索您想要的商品"
+                    value="{{goods_name}}" focus="{{inputShowed}}" bindinput="inputTyping"  bindtap="showInput" data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindconfirm='sort_list'/>
+                    <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}">
+                        <icon type="clear" size="14" bindtap='clearInput'></icon>
+                    </view>
+                </view>
+                <label class="weui-search-bar__label" hidden="{{inputShowed}}"  bindtap="clearInput" bindtap="showInput">
+                    <icon class="weui-icon-search" type="search" size="14"></icon>
+                    <view class="weui-search-bar__text" wx:if="{{goods_name==''}}">搜索您想要的商品</view>
+                    <view class="weui-search-bar__text" wx:if="{{goods_name!=''}}">{{goods_name}}</view>
+                </label>
+            </view>
+            <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+        </view>
+ </view>  
+  <view class="pro-sort">
+    <view class="weui-flex">
+      <view class="weui-flex__item"><view class="placeholder NormalCss"  data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindtap='sort_list'>综合</view></view>
+      <view class="weui-flex__item">
+        <view wx:if="{{gsales==0}}" class="placeholder NormalCss" data-gsales='1' data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindtap='sort_list'>按销量</view>
+        <view wx:if="{{gsales==1}}" class="placeholder SortDescCss" data-gsales='2' data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindtap='sort_list'>按销量</view>
+        <view wx:if="{{gsales==2}}" class="placeholder SortAscCss" data-gsales='1' data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindtap='sort_list'>按销量</view>
+      </view>
+      <view class="weui-flex__item">
+        <view wx:if="{{gprice==0}}" class="placeholder NormalCss" data-gprice='1' data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindtap='sort_list'>按价格</view>
+        <view wx:if="{{gprice==1}}" class="placeholder SortDescCss" data-gprice='2' data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindtap='sort_list'>按价格</view>
+        <view wx:if="{{gprice==2}}" class="placeholder SortAscCss" data-gprice='1'data-category_id='{{category_id}}' data-super_id='{{super_id}}' data-goods_name='{{goods_name}}' bindtap='sort_list'>按价格</view>
+      </view>
+    </view>
+  </view>
+</header>
+<!--主体-->
+<view class="weui-content" style="padding-top:85px;">
+  <!--产品列表-->
+  <view id="list" class='demos-content-padded proListWrap'>
+    <view class="pro-items" wx:for="{{goods}}" wx:key="*this">
+      <a  class="weui-media-box weui-media-box_appmsg" data-goods_id="{{item.goods_id}}" bindtap="goods_info">
+        <view class="weui-media-box__hd"><image class="weui-media-box__thumb" src="{{item.goods_pic}}" style='width:82px'/></view>
+        <view class="weui-media-box__bd">
+          <text class="weui-media-box__desc">{{item.goods_name}}</text> 
+          <view class="wy-pro-pri">¥<em class="num font-15">{{item.attr_min_price}}</em></view>
+          <ul class="weui-media-box__info prolist-ul">
+            <li class="weui-media-box__info__meta"><em class="num">{{item.comment_count}}</em>条评价</li>
+            <li class="weui-media-box__info__meta"><em class="num">{{item.comment_rate}}%</em>好评</li>
+          </ul>
+        </view>
+      </a>
+    </view>
+  </view>
+<include src="../../footer/footer2.wxml" />  
+</view>

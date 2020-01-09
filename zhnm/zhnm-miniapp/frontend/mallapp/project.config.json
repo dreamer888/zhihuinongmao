@@ -1,0 +1,130 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "1.9.9",
+	"appid": "wxd45f95999d77c04b",
+	"projectname": "%E5%8D%83%E6%B4%BE%E7%BB%BC%E5%90%88%E5%95%86%E5%9F%8E",
+	"miniprogramRoot": "./",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": [
+				{
+					"name": "test",
+					"pathName": "",
+					"title": "",
+					"cacheKey": ""
+				}
+			]
+		},
+		"conversation": {
+			"current": 0,
+			"list": [
+				{
+					"name": "test",
+					"query": "",
+					"boxQI": "",
+					"service": {}
+				}
+			]
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"current": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": -1,
+			"list": [
+				{
+					"id": 0,
+					"name": "购物车列表",
+					"pathName": "pages/cart/list",
+					"query": ""
+				},
+				{
+					"id": 1,
+					"name": "确认订单",
+					"pathName": "pages/order/payment/info",
+					"query": "goods_id=05b87c4206da4c8e81ae774317248725&goods_count=2&cart_id=a59dba89f91b4773832ea62a2551ffcf&attribute_detail_id=6fbc732a51804024a712176780bf507a"
+				},
+				{
+					"id": 2,
+					"name": "商品详情",
+					"pathName": "pages/goods/info/info",
+					"query": "goods_id=210d59848d2a4f848c5c3c6556732cfb"
+				},
+				{
+					"id": -1,
+					"name": "个人中心",
+					"pathName": "pages/center/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "收藏",
+					"pathName": "pages/collect/list",
+					"query": ""
+				},
+				{
+					"id": 5,
+					"name": "优惠券",
+					"pathName": "pages/coupon/user/list/list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "优惠券列表",
+					"pathName": "pages/coupon/list/list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "会员信息",
+					"pathName": "pages/user/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "地址",
+					"pathName": "pages/address/info/info",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "地址列表",
+					"pathName": "pages/address/list/list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "商品列表",
+					"pathName": "pages/goods/list/list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "订单列表",
+					"pathName": "pages/order/list/list",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "评价页面",
+					"pathName": "pages/comment/info",
+					"query": "order_id=1512393942926"
+				}
+			]
+		}
+	}
+}

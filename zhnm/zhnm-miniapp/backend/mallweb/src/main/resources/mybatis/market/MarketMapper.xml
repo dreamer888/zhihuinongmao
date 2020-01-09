@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MarketMapper">
+
+	<sql id="marketTableName">
+	  MARKET
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		MARKET_NAME,
+		MARKET_PROVINCE,
+		MARKET_CITY,
+		MARKET_DISTRICT,
+		MARKET_ADDRESS,
+		MARKET_COORDS,
+		MARKET_OPEND_TIME,
+		MARKET_CLOSED_TIME,
+		CREATE_TIME,
+		UPDATE_TIME,
+		MARKET_IMG,
+		MARKET_STATUS,
+		MARKET_DESC,
+		GEODE_ID
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},
+		#{MARKET_NAME},
+		#{MARKET_PROVINCE},
+		#{MARKET_CITY},
+		#{MARKET_DISTRICT},
+		#{MARKET_ADDRESS},
+		#{MARKET_COORDS},
+		#{MARKET_OPEND_TIME},
+		#{MARKET_CLOSED_TIME},
+		#{CREATE_TIME},
+		#{UPDATE_TIME},
+		#{MARKET_IMG},
+		#{MARKET_STATUS},
+		#{MARKET_DESC}
+	</sql>
+	<!-- 用户列表 -->
+	<select id="MarketlistPage" parameterType="page" resultType="pd" >
+		select  u.ID,
+				u.MARKET_NAME,
+				u.MARKET_PROVINCE,
+				u.MARKET_CITY,
+				u.MARKET_DISTRICT,
+				u.MARKET_ADDRESS,
+				u.MARKET_COORDS,
+				u.MARKET_OPEND_TIME,
+				u.MARKET_CLOSED_TIME,
+				u.CREATE_TIME,
+				u.UPDATE_TIME,
+				u.MARKET_IMG,
+				u.MARKET_STATUS,
+				u.MARKET_DESC
+		 from <include refid="marketTableName"></include> u
+		 where u.id !=0 
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     and
+				(
+					 u.MARKET_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 u.MARKET_ADDRESS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					 or
+					 u.MARKET_CITY LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 u.MARKET_COORDS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	<!--  -->
+	
+
+	<delete id="deleteM" parameterType="pd" flushCache="false">
+		delete from <include refid="marketTableName"></include>
+		where 
+			ID = ${MARKET_ID}
+	</delete>
+	
+	<select id="findById" parameterType="pd" resultType="pd">
+	select 
+			<include refid="Field"></include>
+		from 
+			<include refid="marketTableName"></include>
+		where 
+			ID = #{MARKET_ID}
+	</select>
+	
+	<update id="editM" parameterType="pd" >
+		update  <include refid="marketTableName"></include>
+			set MARKET_NAME 		= #{market_name},
+				MARKET_PROVINCE 	= #{market_province},
+				MARKET_CITY			= #{market_city},
+				MARKET_DISTRICT     = #{market_district},
+				MARKET_ADDRESS      = #{market_address},
+				MARKET_STATUS       = #{type},
+				MARKET_COORDS       =#{market_coords},
+				GEODE_ID            =#{gaode_id}
+			where 
+				 ID = #{market_id}
+	</update>
+	<!-- 批量删除market -->
+	<delete id="deleteAllM" parameterType="String" >
+		delete from <include refid="marketTableName"></include>
+		where 
+			ID in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+            
+	</delete>
+	<sql id="Fields">
+		MARKET_NAME,
+		MARKET_PROVINCE,
+		MARKET_CITY,
+		MARKET_DISTRICT,
+		MARKET_ADDRESS,
+		MARKET_COORDS,
+		MARKET_OPEND_TIME,
+		MARKET_CLOSED_TIME,
+		CREATE_TIME,
+		UPDATE_TIME,
+		MARKET_STATUS,
+		GEODE_ID
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValues">
+		#{MARKET_NAME},
+		#{MARKET_PROVINCE},
+		#{MARKET_CITY},
+		#{MARKET_DISTRICT},
+		#{MARKET_ADDRESS},
+		#{MARKET_COORDS},
+		#{OPEN_TIMES},
+		#{CLOSE_TIMES},
+		#{CREATE_TIME},
+		#{CREATE_TIME},
+		#{MARKET_STATUS},
+		#{GAODE_ID}	
+	</sql>
+	<!-- 新增 -->
+	<insert id="saveM" parameterType="pd" >
+		insert into <include refid="marketTableName"></include> (
+			<include refid="Fields"></include>
+		) values (
+			<include refid="FieldValues"></include>
+		)
+	</insert>
+	<select id="listmarketAll" parameterType="market" resultType="market">
+	select 
+			<include refid="Field"></include>
+		from 
+			<include refid="marketTableName"></include>
+			where id !=0
+	</select>
+</mapper>

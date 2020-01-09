@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderDetailMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_order_detail
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{order_detail_id},
+		#{goods_id},		
+		#{goods_pic},	
+		#{goods_name},	
+		#{goods_price},
+		#{goods_count},	
+		#{goods_total},
+		#{attribute_detail_id},
+		#{attribute_detail_name},
+		#{pay_total},
+		#{order_id},
+		#{sort},
+		#{status}
+	</sql>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+		order_id = #{order_id}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		shop_order_detail
+		set 
+		status = #{status}	
+		where 
+		order_detail_id = #{order_detail_id}
+	</update>
+	
+	<!-- 修改 -->
+	<update id="edit_order_id" parameterType="pd">
+		update
+		shop_order_detail
+		set 
+		status = #{status}	
+		where 
+		order_id = #{order_id}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status
+		from shop_order_detail t1
+		where 
+		order_detail_id=#{order_detail_id}
+	</select>
+	
+	<select id="count" parameterType="pd" resultType="int">
+		select
+		count(1)
+		from shop_order_detail
+		where 
+		status=#{status}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status
+		from shop_order_detail t1
+		where
+		order_id=#{order_id}
+		order by sort
+	</select>
+	
+	
+    <!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status
+		from shop_order_detail
+		where
+		order_id=#{order_id}
+		<!-- <if test="status !=null">
+		and status=#{status}
+		</if> -->
+		order by sort
+	</select>
+	
+	
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORDER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	
+	<select id="printOrderDetail" parameterType="pd" resultType="pd">
+		SELECT
+		    ol.goods_name,	
+		    ol.goods_count,	
+		    ol.goods_total,
+		    ol.goods_price,
+		    ol.pay_total,
+		    sg.goods_price price,
+		    sg.production_place production_place
+		FROM shop_order_detail ol LEFT JOIN shop_goods sg ON ol.goods_id = sg.goods_id
+		where 1=1
+		<if test="seller_id!=null">
+		and ol.seller_id=#{seller_id}
+		</if>
+		<if test="order_id!=null and order_id!=''">
+		and ol.order_id=#{order_id}
+		</if>
+	</select>
+	
+	<select id="printOrder" parameterType="pd" resultType="pd">
+		SELECT 
+		  ir.order_id order_id,
+		  ir.order_total order_total,
+		  ir.addtime addtime,
+		  m.market_name market_name,
+		  (SELECT se.shop_code FROM shop_order_detail sod INNER JOIN seller se ON sod.seller_id = se.id WHERE order_id = #{order_id} and seller_id=#{seller_id} GROUP BY se.shop_code ) shop_code,
+		  (SELECT se.account FROM shop_order_detail sod INNER JOIN seller se ON sod.seller_id = se.id WHERE order_id = #{order_id} and seller_id=#{seller_id} GROUP BY se.shop_code ) account
+		FROM
+		  shop_order ir 
+		  LEFT JOIN market m  
+		  ON ir.market_id = m.id 
+		  WHERE ir.order_id = #{order_id} 
+	</select>
+	
+	
+</mapper>

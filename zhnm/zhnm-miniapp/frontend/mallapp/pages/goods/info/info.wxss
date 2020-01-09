@@ -1,0 +1,46 @@
+@import "/static/lib/weui.min.wxss";
+@import "/static/css/style.wxss";
+@import "/static/css/showTip.wxss";
+.kefu{
+ -webkit-appearance:none;
+ border-radius:0px
+
+}
+.kefu::after{
+ border-right: none;
+  border-radius:0px
+}
+img{
+  width:100%
+}
+ .cell_view{
+ display:flex;
+ justify-content:space-between;
+ flex-flow:row wrap;
+ border-top:2px solid #e1e1e1;
+ }
+  .cell_view_2{
+  display:flex;
+  justify-content:space-between;
+  flex-flow:row wrap;
+  margin-bottom:20px
+  }
+ .cell_view_left{
+   margin:10px 5px 5px 20px;
+   flex:1;
+ }
+ .cell_view_right{
+   margin:10px 15px 5px 5px;
+   text-align:left;
+   flex:1;
+ }
+  .cell_view_text_left{
+  	font-size: 13px;
+  	color: #81838e;
+  	line-height: 15px;
+  }
+ .cell_view_text_right{
+ 	font-size: 13px;
+ 	color: #586c94;
+ 	line-height: 15px;
+ }

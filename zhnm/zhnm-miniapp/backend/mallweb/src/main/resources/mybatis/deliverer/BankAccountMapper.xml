@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BankAccountMapper">
+
+  <sql id="delivererBankAccount">
+		DELIVERER_BANK_ACCOUNT
+	</sql>
+	<sql id="DelivererTableName">
+	  DELIVERER
+	</sql>
+	<select id="BankAccountlistPage" parameterType="page" resultType="pd" >
+		select  t.CNNAME,
+		        t.ID_CARD,
+				d.ID,
+				d.ACCOUNT_BANK,
+				d.ACCOUNT,
+				d.ACCOUNT_NAME
+		 from <include refid="DelivererTableName"></include> t,<include refid="delivererBankAccount"></include> d
+		 where d.DELIVERER_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     and
+				(
+					 t.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	<!-- deleteD -->
+	<delete id="deleteDB" parameterType="pd" flushCache="false">
+		delete from <include refid="delivererBankAccount"></include>
+		where 
+			ID = ${DBankAccount_ID}
+	</delete>
+	<!-- 通过account 获取数据 -->
+	<select id="findByDBId" parameterType="pd" resultType="pd" >
+		select  t.CNNAME,
+		        t.ID_CARD,
+				d.ID,
+				d.ACCOUNT_BANK,
+				d.ACCOUNT,
+				d.ACCOUNT_NAME
+		from 
+			<include refid="DelivererTableName"></include> t,<include refid="delivererBankAccount"></include> d
+		where d.DELIVERER_ID = t.ID
+	    and   d.ID = #{BANKACCOUNT_ID}
+	</select>
+	<update id="editD" parameterType="pd" >
+		update  <include refid="delivererBankAccount"></include>
+			set   ACCOUNT_BANK    =#{ACCOUNT_BANK},
+				  ACCOUNT         =#{ACCOUNT},
+				  ACCOUNT_NAME    =#{ACCOUNT_NAME} 
+			where 
+				 ID = #{BANKACCOUNT_ID}
+	</update>
+</mapper>

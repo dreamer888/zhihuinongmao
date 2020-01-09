@@ -1,0 +1,122 @@
+<!--info.wxml-->
+<view class='weui-content'>
+  <view class="wy-center-top">
+    <view class="weui-media-box weui-media-box_appmsg">
+      <view class="weui-media-box__hd"></view>
+      <view class="weui-media-box__bd">
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==0}}">待付款</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==1}}">待发货</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==2}}">待收货</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==3}}">待退款</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==4}}">退款成功</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==5}}">待评价</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==6}}">交易完成</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==11}}">待接单</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==13}}">已接单</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==15}}">待备货</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==17}}">待取货</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==19}}">配送中</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==21}}">已送达</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==25}}">已完成</text>
+        <text class="weui-media-box__title user-name" wx:if="{{order.status==27 || item.status==37}}">已取消</text>
+      </view>
+    </view>
+
+  </view>
+
+  <view class="wy-media-box weui-media-box_text address-select">
+    <view class="weui-media-box_appmsg" style="border-bottom: 1px solid #ddd;padding-bottom:5px" wx:if="{{order.status==2||order.status==5||order.status==6}}" bindtap='express_info' hidden='true'>
+      <view class="weui-media-box__hd proinfo-txt-l" style="width:20px;line-height:40px"><span class="promotion-label-tit"><image src="/static/images/center-icon-order-dsh.png"  mode="widthFix"/></span></view>
+      <view class="weui-media-box__bd">
+        <a class="weui-cell_access" wx:if="{{order.express_title!='wxkd'}}">
+          <view class="address-name"><span>{{order.express_name}}</span></view>
+          <view class="address-txt">{{order.express_num}}</view>
+        </a>
+        <a class="weui-cell_access" wx:if="{{order.express_title=='wxkd'}}">
+          <view class="address-name"><span>无需菜小二</span></view>
+        </a>
+      </view>
+      <view class="weui-media-box__hd proinfo-txt-l" style="width:16px;">
+        <view class="weui-cell_access"></view>
+      </view>
+    </view>
+
+    <view class="weui-media-box_appmsg">
+      <view class="weui-media-box__hd proinfo-txt-l" style="width:20px;"><span class="promotion-label-tit"><image src="/static/images/icon_nav_city.png" mode="widthFix"/></span></view>
+      <view class="weui-media-box__bd">
+        <a class="weui-cell_access" id="address">
+          <view class="address-name"><span>{{order.addr_realname}}</span><span>{{order.addr_phone}}</span></view>
+          <view class="address-txt">{{order.addr_city}}\t\t{{order.address}}</view>
+        </a>
+      </view>
+      <view class="weui-media-box__hd proinfo-txt-l" style="width:16px;">
+        <view class="weui-cell_access"></view>
+      </view>
+    </view>
+  </view>
+  <!-- 商品 -->
+  <view class="weui-panel weui-panel_access" id="order">
+     <view class="weui-panel__hd">
+      <view><span>单号：{{order.order_id}}</span><span class="ord-status-txt-ts fr"> 下单时间：{{order.addtime}} </span></view>
+    </view>
+    <view class="weui-media-box__bd  pd-10" wx:for="{{orderdetail}}" wx:for-item="items">
+      <view class="weui-media-box_appmsg ord-pro-list">
+        <view class="weui-media-box__hd">
+          <a>
+            <image class="weui-media-box__thumb" src="{{items.goods_pic}}" />
+          </a>
+        </view>
+        <view class="weui-media-box__bd">
+          <view class="weui-media-box__desc"><a class="ord-pro-link">{{items.goods_name}}</a></view>
+          <p class="weui-media-box__desc"><span>{{items.attribute_detail_name}}</span></p>
+          <view class="clear mg-t-10">
+            <view class="wy-pro-pri fl">¥<em class="num font-15">{{items.goods_price}}</em></view>
+            <view class="pro-amount fr"><span class="font-13">数量×<em class="name">{{items.goods_count}}</em></span></view>
+          </view>
+        </view>
+      </view>
+
+      <view style="text-align: right;" wx:if="{{items.status==3}}"><a class="ords-btn-com receipt">等待退款</a></view>
+
+      <view style="text-align: right;" wx:if="{{items.status==4}}"><a class="ords-btn-com receipt">退款成功</a></view>
+
+    </view>
+    <view class="weui-panel__hd">
+      <view><span>商品总价</span><span class="ord-status-txt-ts fr"> {{order.total_price}} </span></view>
+      <view><span>配送费</span><span class="ord-status-txt-ts fr">{{order.freight_price}}</span></view>
+      <view><span>店铺优惠</span><span class="ord-status-txt-ts fr">-{{order.coupon_price}}</span></view>
+      <view><span>订单总价</span><span class="ord-status-txt-ts fr">{{order.order_total}}</span></view>
+    </view>
+    <view class="weui-panel__hd">
+      <view><span>配送时段</span><span class="ord-status-txt-ts fr">{{order.delivery_time_slice}}</span></view>
+      <view><span>备注</span><span class="ord-status-txt-ts fr">{{order.remark}}</span></view>
+    </view>
+    <view class="weui-panel__ft">
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==0}}">
+        <a class="ords-btn-dele" bindtap='delete_order'>删除订单</a><a class="ords-btn-com receipt" bindtap='get_order'>付款</a>
+      </view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==11}}">等待商户抢单</view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==13}}">商户已接单</view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==15}}">等待商户备货</view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==17}}">等待配送员取货</view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==19}}">配送中</view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==27}}">用户已取消</view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==37}}">订单超时商户没有接单,系统自动取消订单</view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==21 ||order.status==23 }}">
+       <a class="ords-btn-com receipt" bindtap="order_sure">确认收货</a>
+      </view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==3}}">
+        <a class="ords-btn-com receipt">待商家处理</a>
+      </view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==4}}">
+        <a href="order_info?order_id='+order.order_id+'" class="ords-btn-com receipt">查看详情</a>
+      </view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==5}}">
+        <a class="ords-btn-com" bindtap="comment">去评价</a>
+      </view>
+      <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{order.status==6}}">
+        <a href="order_info?order_id='+order.order_id+'" class="ords-btn-com">交易完成</a>
+      </view>
+    </view>
+  </view>
+</view>

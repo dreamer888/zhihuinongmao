@@ -1,0 +1,64 @@
+ <view class="weui-content">
+  <view class="weui-cells weui-cells_form wy-address-edit">
+    <view class="weui-cell">
+      <view class="weui-cell__hd"><label class="weui-label wy-lab">收货人</label></view>
+      <view class="weui-cell__bd"><input class="weui-input" type="text" value='{{addr_realname}}' placeholder="请填写收货人" bindfocus="close" bindinput='addr_realname'/></view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd"><label class="weui-label wy-lab">手机号</label></view>
+      <view class="weui-cell__bd"><input class="weui-input" type="number" value='{{addr_phone}}' pattern="[0-9]*" placeholder="请填写手机号" bindfocus="close" bindinput='addr_phone'/></view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd"><label for="name" class="weui-label wy-lab">所在地区</label></view>
+      
+     <view class="weui-cell__bd" bindtap="open">
+     <text>{{province}} {{city}} {{county}}</text>
+     
+     </view>
+   
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__hd"><label class="weui-label wy-lab">详细地址</label></view>
+      <view class="weui-cell__bd">
+        <textarea class="weui-textarea" placeholder="请输入详细地址" bindfocus="close" bindinput='address' value='{{address}}' ></textarea>
+      </view>
+    </view>
+    <view class="weui-cell weui-cell_switch">
+      <view class="weui-cell__bd">设为默认地址</view>
+      <view class="weui-cell__ft">
+      <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell weui-cell_switch">
+                <view class="weui-cell__ft" wx:if="{{is_default==1}}">
+                    <switch checked bindtap='change_default'/>
+                </view>
+                <view class="weui-cell__ft" wx:else>
+                    <switch bindtap='change_default'/>
+                </view>
+            </view>
+        </view>
+      </view>
+
+    </view>
+  </view> 
+  <view class="weui-btn-area">
+    <a class="weui-btn weui-btn_primary" bindtap='addr_add'>保存此地址</a>
+    <a class="weui-btn weui-btn_warn" wx:if="{{msg=='edit'}}" bindtap='address_delete'>删除此地址</a>
+  </view>
+</view> 
+
+<view  class="citypicker"  wx:if="{{condition}}">
+  <picker-view indicator-style="height: 50px;" style="width: 100%; height: 300px;" value="{{value}}" bindchange="bindChange" class="citybody">
+    <view class="cityheader">
+      <view class="city-true" bindtap="close">确定</view>
+    </view> 
+    <picker-view-column>
+      <view wx:for="{{provinces}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{citys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+    <picker-view-column>
+      <view wx:for="{{countys}}" wx:key="item" style="line-height: 50px;padding-left:10px;">{{item}}</view>
+    </picker-view-column>
+  </picker-view>
+</view>

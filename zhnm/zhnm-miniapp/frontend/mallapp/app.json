@@ -1,0 +1,40 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/goods/info/info",
+    "pages/order/list/list",
+    "pages/center/index",
+    "pages/cart/list",
+    "pages/category/list",
+    "pages/goods/list/list",
+    "pages/logs/logs",
+    "pages/address/list/list",
+    "pages/news/list/list",
+    "pages/news/info/info",
+    "pages/collect/list",
+    "pages/address/info/info",
+    "pages/coupon/list/list",
+    "pages/user/index/index",
+    "pages/order/info/info",
+    "pages/order/refund/index",
+    "pages/goods/comment/list/list",
+    "pages/order/payment/info",
+    "pages/coupon/user/list/list",
+    "pages/user/name/index",
+    "pages/user/phone/index",
+    "pages/order/address/info/info",
+    "pages/order/address/list/list",
+    "pages/order/express/index",
+    "pages/welcome/index",
+    "pages/comment/info",
+    "pages/market/list/list",
+    "pages/search/list/list",
+    "pages/h5/info/info"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "罗老板智慧农贸商城",
+    "navigationBarTextStyle": "black"
+  }
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd"> -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-4.0.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd">
+	<mvc:annotation-driven />
+	<mvc:default-servlet-handler />
+
+	<context:component-scan base-package="com.*.controller" />
+	<context:component-scan base-package="com.json" />
+
+	<!-- 对静态资源文件的访问 restful -->
+	<mvc:resources mapping="/admin/**" location="/,/admin/" />
+	<mvc:resources mapping="/static/**" location="/,/static/" />
+	<mvc:resources mapping="/plugins/**" location="/,/plugins/" />
+	<!-- 访问拦截 -->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/**" />
+			<bean class="com.fh.interceptor.LoginHandlerInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- 配置SpringMVC的视图解析器 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- <bean id="exceptionResolver" class="com.fh.resolver.MyExceptionResolver"></bean> -->
+	<!-- 上传拦截，如最大上传值及最小上传值 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>4096</value>
+		</property>
+		<property name="defaultEncoding">
+			<value>utf-8</value>
+		</property>
+	</bean>
+
+</beans>

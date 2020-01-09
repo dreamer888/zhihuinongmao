@@ -1,0 +1,4 @@
+@import "/static/lib/weui.min.wxss";
+.open{
+  margin-top:50%
+}

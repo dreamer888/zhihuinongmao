@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AddressMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_address
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+	addr_realname,	
+		addr_phone,	
+		addr_city,	
+		address,	
+		addtime,	
+		is_default,	
+		address_id,
+		user_id
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{addr_realname},	
+		#{addr_phone},	
+		#{addr_city},	
+		#{address},	
+		#{addtime},	
+		#{is_default},	
+		#{address_id},
+		#{user_id}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			address_id = #{address_id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		<if test="addr_realname!= null and addr_realname != ''">
+			addr_realname = #{addr_realname},
+		</if>	
+		<if test="addr_phone!= null and addr_phone != ''">
+			addr_phone = #{addr_phone},
+		</if>
+		<if test="addr_city!= null and addr_city != ''">
+			addr_city = #{addr_city},
+		</if>
+		<if test="address!= null and address != ''">	
+			address = #{address},
+		</if>
+		<if test="addtime!= null and addtime != ''">
+			addtime = #{addtime},
+		</if>
+		<if test="is_default!= null and is_default != ''">	
+			is_default = #{is_default},
+		</if>	
+		address_id = #{address_id}
+		where 
+		address_id = #{address_id}
+	</update>
+	
+	<update id="updatedefault" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		is_default = 0
+		where 
+		user_id = #{user_id}
+	</update>
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			user_id = #{user_id}
+			and is_default=1
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1 
+		and user_id = #{user_id} order by is_default desc,addtime desc 
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			address_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- 壹仟科技 357788906 -->
+</mapper>

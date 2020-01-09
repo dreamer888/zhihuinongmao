@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OffLineOrderMapper">
+
+	<sql id="TableName">
+	  BALANCE_OFFLINE_ORDER
+	</sql>
+	<sql id="SellerTableName">
+	    SELLER
+	</sql>
+	<sql id="OrderGoodsTableName">
+	    BALANCE_OFFLINE_ORDER_GOODS
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		BALANCE_ID,
+		ADDTIME,
+		TOTAL_PRICE,
+		PAY_WAY,
+		STATUS,
+		REMARK,
+		SELLER_ID,
+		ORDER_NUMBER
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{ID},
+		#{BALANCE_ID},
+		#{ADDTIME},
+		#{TOTAL_PRICE},
+		#{PAY_WAY},
+		#{STATUS},
+		#{REMARK},
+		#{SELLER_ID},
+		#{ORDER_NUMBER}
+	</sql>
+	<!-- 用户列表 -->
+	<select id="OffLineOrderlistPage" parameterType="page" resultType="pd" >
+		select  u.ID,          
+				u.BALANCE_ID,  
+				u.ADDTIME,     
+				u.TOTAL_PRICE, 
+				u.PAY_WAY,     
+				u.STATUS,      
+				u.REMARK,      
+				u.SELLER_ID,   
+				u.ORDER_NUMBER,
+				s.Name
+		 from <include refid="TableName"></include> u,<include refid="SellerTableName"></include>s
+		 where u.SELLER_ID= s.ID  
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	       and 
+				(
+					 u.BALANCE_ID LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 u.PAY_WAY LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					 or
+					 u.STATUS LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 u.ORDER_NUMBER LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 s.Name LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+		order by u.ADDTIME desc 
+	</select>
+	<!-- 删除线下订单 -->
+	<delete id="deleteO" parameterType="pd" flushCache="false">
+		delete from <include refid="TableName"></include>
+		where 
+			ID = #{order_Id}
+		and 
+		    ORDER_NUMBER = #{orderNumber}
+	</delete>
+	<!-- 删除附表线下订单 -->
+	<delete id="deleteAppendix" parameterType="pd" flushCache="false">
+		delete from <include refid="OrderGoodsTableName"></include>
+		where  
+		    ORDER_NUMBER = #{orderNumber}
+	</delete>
+	<!-- 批量删除线下订单 -->
+	<delete id="deleteAllO" parameterType="String" >
+		delete from <include refid="TableName"></include>
+		where 
+			ORDER_NUMBER in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	<!-- 批量删除附表线下订单 -->
+	<delete id="deleteAllAppendix" parameterType="String" >
+		delete from <include refid="OrderGoodsTableName"></include>
+		where 
+			ORDER_NUMBER in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+	</delete>
+	<!-- 获取订单商品详情 -->
+	<select id="listAllOrderGoods" parameterType="page" resultType="pd" >
+		select  u.ID,          
+				u.GOODS_NAME,  
+				u.GOODS_PRICE,     
+				u.GOODS_COUNT, 
+				u.PAY_TOTAL,     
+				u.ORDER_NUMBER,
+				sg.production_place
+		 FROM BALANCE_OFFLINE_ORDER_GOODS u
+		 LEFT JOIN shop_goods sg ON u.goods_id = sg.goods_id 
+		 WHERE u.order_number = #{ORDER_NUMBER} 
+		 
+	</select>
+	
+	<select id="printOfflineOrderDetail" parameterType="pd" resultType="pd">
+		SELECT
+		    goods_name goods_name,	
+		    goods_count goods_count,	
+		    pay_total goods_total,
+		    goods_price price
+		FROM balance_offline_order_goods 
+		WHERE order_number = #{order_number}
+	</select>
+	
+	<select id="printOfflineOrder" parameterType="pd" resultType="pd">
+		SELECT 
+		  ir.id order_id,
+		  ir.total_price order_total,
+		  ir.addtime ADDTIME,
+		  mt.market_name market_name,
+		  sr.shop_code shop_code,
+		  ir.order_number,
+		  sr.account,
+		  ir.seller_id
+		FROM
+		  balance_offline_order ir 
+		  LEFT JOIN seller sr  
+		  ON ir.seller_id = sr.id 
+		  LEFT JOIN market mt ON sr.belong_market = mt.id 
+		  WHERE ir.id = #{order_id}
+	</select>
+	
+	
+</mapper>

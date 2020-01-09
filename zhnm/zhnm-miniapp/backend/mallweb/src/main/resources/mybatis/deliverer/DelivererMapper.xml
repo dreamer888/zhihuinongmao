@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DelivererMapper">
+
+	<sql id="DelivererTableName">
+	  DELIVERER
+	</sql>
+	<sql id="delivererBankAccount">
+	  DELIVERER_BANK_ACCOUNT
+	</sql>
+	<!-- 字段 -->
+	<sql id="Field">
+		ID,
+		TOKEN,
+		ACCOUNT,
+		PASSWORD,
+		ID_CARD,
+		STATUS,
+		CREDIT,
+		CNNAME,
+		GENDER,
+		AGE
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	    #{ID},
+		#{TOKEN},
+		#{ACCOUNT},
+		#{PASSWORD},
+		#{ID_CARD},
+		#{STATUS},
+		#{CREDIT},
+		#{CNNAME},
+		#{GENDER},
+		#{AGE}
+	</sql>
+	<!-- 列表 -->
+	<select id="DelivererlistPage" parameterType="page" resultType="pd" >
+		select  u.ID,      
+				u.TOKEN,   
+				u.ACCOUNT,
+				u.ID_CARD, 
+				u.STATUS,  
+				u.CREDIT, 
+				u.CNNAME,  
+				u.GENDER,  
+				u.AGE  
+		 from <include refid="DelivererTableName"></include> u
+		<if test="pd.keywords!= null and pd.keywords != ''">
+	     where
+				(
+					 u.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 u.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+					 or
+					 u.ID_CARD LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 u.GENDER LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 u.AGE LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	<select id="listBankAccounts" parameterType="page" resultType="pd" >
+		select  u.ID,
+				u.DELIVERER_ID,
+				u.ACCOUNT_BANK,
+				u.ACCOUNT,  
+				u.ACCOUNT_NAME,
+				t.CNNAME,
+				t.ACCOUNT,   
+				t.ID_CARD
+		 from <include refid="delivererBankAccount"></include> u,<include refid="DelivererTableName"></include> t
+		 where u.DELIVERER_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''">
+	     and
+				(
+					 u.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 t.ID_CARD LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 t.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	<sql id="delivererWalletDetail">
+		DELIVERER_WALLET_DETAIL
+	</sql>
+	<sql id="sysUser">SYS_USER</sql>
+	<select id="listPunish" parameterType="page" resultType="pd" >
+		select  d.ID,            
+				d.DELIVERER_ID,  
+				d.MONEY_CHANGED, 
+				d.CHANGED_REASON,
+				d.FEE,           
+				d.UPDATE_TIME,   
+				d.OPERATOR,      
+				d.CREATE_TIME,   
+				d.REMARK,        
+				d.AUDITOR,       
+				d.AUDIT_TIME,
+				t.ACCOUNT,
+				t.CNNAME,
+				u.NAME
+		 from <include refid="delivererWalletDetail"></include> d,<include refid="DelivererTableName"></include> t,<include refid="sysUser"></include> u
+		 where d.DELIVERER_ID = t.ID
+		 and d.CHANGED_REASON = 2
+		 and d.AUDITOR = u.USER_ID
+		 and d.OPERATOR = u.USER_ID or d.OPERATOR = 0
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     and
+				(
+					 t.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or	 
+				)
+		</if>
+		
+	</select>
+	<select id="listBonus" parameterType="page" resultType="pd" >
+		select  d.ID,            
+				d.DELIVERER_ID,  
+				d.MONEY_CHANGED, 
+				d.CHANGED_REASON,
+				d.FEE,           
+				d.UPDATE_TIME,   
+				d.OPERATOR,      
+				d.CREATE_TIME,   
+				d.REMARK,        
+				d.AUDITOR,       
+				d.AUDIT_TIME,
+				t.ACCOUNT,
+				t.CNNAME
+		 from <include refid="delivererWalletDetail"></include> d,<include refid="DelivererTableName"></include> t,<include refid="sysUser"></include> u
+		 where d.DELIVERER_ID = t.ID
+		 and d.CHANGED_REASON = 1
+		 and d.OPERATOR = u.USER_ID or d.OPERATOR = 0
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     and
+				(
+					 t.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or	 
+				)
+		</if>
+	</select>
+	<sql id="marketTable">
+	MARKET
+	</sql>
+	<sql id="delivererMarket">
+	DELIVERER_MARKET
+	</sql>
+	<select id="listMarket" parameterType="page" resultType="pd" >
+		select  d.ID,
+		        u.ACCOUNT,
+				u.CNNAME,
+				t.MARKET_NAME
+		 from <include refid="delivererMarket"></include> d,<include refid="marketTable"></include> t,<include refid="DelivererTableName"></include> u
+		 where d.DELIVERER_ID = u.ID
+		 and d.MARKET_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     and
+				(
+					 u.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 u.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or	 
+					 t.MARKET_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+	<sql id="delivererDynamic">DELIVERER_DYNAMIC</sql>
+	<!-- 显示配送员余额 列表 -->
+	<select id="listBalance" parameterType="page" resultType="pd" >
+		select  d.ID,
+		        d.WALLET,
+		        u.CNNAME,
+		        u.ACCOUNT
+		 from <include refid="delivererDynamic"></include> d,<include refid="DelivererTableName"></include> u
+		 where d.DELIVERER_ID = u.ID
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+	     and
+				(
+					 u.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 u.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')		
+				)
+		</if>
+	</select>
+	<!-- deleteD -->
+	<delete id="deleteD" parameterType="pd" flushCache="false">
+		delete from <include refid="DelivererTableName"></include>
+		where 
+			ID = ${DELIVERER_ID}
+	</delete>
+	<!-- 通过account 获取数据 -->
+	<select id="findByAccount" parameterType="pd" resultType="pd" >
+		select 
+			<include refid="Field"></include>
+		from 
+			<include refid="DelivererTableName"></include>
+		where 
+			ACCOUNT = #{DELIVERER_ACCOUNT}
+	</select>
+	<!-- 字段 -->
+	<sql id="Fields">
+		ACCOUNT,
+		ID_CARD,
+		STATUS,
+		CREDIT,
+		CNNAME,
+		GENDER,
+		AGE
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValues">
+		#{DELIVERER_ACCOUNT},
+		#{DELIVERER_ID_CARD},
+		#{DELIVERER_STATUS},
+		#{DELIVERER_CREDIT},
+		#{DELIVERER_CNNAME},
+		#{DELIVERER_GENDER},
+		#{DELIVERER_AGE}
+	</sql>
+	<!-- 新增 -->
+	<insert id="saveD" parameterType="pd" >
+		insert into <include refid="DelivererTableName"></include> (
+			<include refid="Fields"></include>
+		) values (
+			<include refid="FieldValues"></include>
+		)
+	</insert>
+	<!-- 批量删 -->
+	<delete id="deleteAllD" parameterType="String" >
+		delete from <include refid="DelivererTableName"></include>
+		where 
+			ID in
+  			 <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                  #{item}
+             </foreach>
+            
+	</delete>
+	<update id="editD" parameterType="pd" >
+		update  <include refid="DelivererTableName"></include>
+			set   ID_CARD    =#{ID_CARD},
+				  STATUS     =#{DELIVERER_STATUS},
+				  CREDIT     =#{CREDIT},
+				  GENDER     =#{DELIVERER_GENDER},
+				  AGE        =#{AGE}
+			where 
+				 ID = #{DELIVERER_ID}
+	</update>
+</mapper>

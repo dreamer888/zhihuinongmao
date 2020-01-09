@@ -1,0 +1,165 @@
+<view id="order">
+  <view class="weui-content">
+    <view class="wy-media-box weui-media-box_text address-select">
+      <view class="weui-media-box_appmsg">
+        <view class="weui-media-box__hd proinfo-txt-l" style="width:20px;">
+          <span class="promotion-label-tit">
+            <image src="/static/images/icon_nav_city.png" style="width:32rpx;height:32rpx" />
+          </span>
+        </view>
+        <view class="weui-media-box__bd" bindtap='address_list'>
+          <a class="weui-cell_access">
+            <view class="address-name" wx:if="{{address==null}}">
+              <span>点击添加收货地址</span>
+            </view>
+            <view wx:else>
+              <view class="address-name">
+                <span>{{address.addr_realname}}</span>
+                <span>{{address.addr_phone}}</span>
+              </view>
+              <view class="address-txt">{{address.addr_city}} {{address.address}}</view>
+            </view>
+          </a>
+        </view>
+        <view class="weui-media-box__hd proinfo-txt-l" style="width:16px;">
+          <view class="weui-cell_access">
+            <span class="weui-cell__ft"></span>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="wy-media-box weui-media-box_text">
+      <view class="weui-media-box__bd">
+        <!-- <c:forEach items="${list}" var="list"> -->
+        <view class="weui-media-box_appmsg ord-pro-list" wx:for="{{list}}" wx:key="*this">
+          <view class="weui-media-box__hd">
+            <a href="goods/info/${list.goods_id}">
+              <image class="weui-media-box__thumb" src="{{item.goods_pic}}" alt="" />
+            </a>
+          </view>
+          <view class="weui-media-box__bd">
+            <view class="weui-media-box__desc">
+              <a href="goods/info/${list.goods_id}" class="ord-pro-link">{{item.goods_name}}</a>
+            </view>
+            <p class="weui-media-box__desc">{{item.attribute_detail_name}}</p>
+            <view class="clear mg-t-10">
+              <view class="wy-pro-pri fl">¥
+                <em class="num font-15">{{item.goods_price}}</em>
+              </view>
+              <view class="pro-amount fr">
+                <span class="font-13">数量×
+                  <em class="name">{{item.goods_count}}</em>
+                </span>
+              </view>
+            </view>
+          </view>
+        </view>
+        <!-- </c:forEach> -->
+      </view>
+    </view>
+  </view>
+  <view class="weui-panel">
+    <view class="weui-panel__bd">
+      <view class="weui-media-box weui-media-box_small-appmsg">
+        <view class="weui-cells">
+          <view class="weui-cell weui-cell_access">
+            <view class="weui-cell__bd weui-cell_primary">
+              <p class="font-14">
+                <span class="mg-r-10">配送方式</span>
+                <span class="fr">菜小二</span>
+              </p>
+            </view>
+          </view>
+          <view class="weui-cell weui-cell_access" href="javascript:;">
+            <view class="weui-cell__bd weui-cell_primary">
+              <p class="font-14">
+                <span class="mg-r-10">配送费</span>
+                <span class="fr txt-color-red" wx:if='{{freight_price==0}}'>
+                  免配送费
+                </span>
+                <span class="fr txt-color-red" wx:if='{{freight_price!=0}}'>
+                  ￥
+                  <em class="num">{{freight_price}}</em>
+                </span>
+              </p>
+            </view>
+          </view>
+
+          <a class="weui-cell weui-cell_access" bindtap="{{coupon_count>0?'actionSheetTap':''}}">
+            <view class="weui-cell__bd weui-cell_primary">
+              <p class="font-14">
+                <span class="mg-r-10">优惠券</span>
+                <span class="sitem-tip">
+                  <em class="num">{{coupon_count}}</em>张可用</span>
+                <span class="fr" wx:if="{{coupon_count!=0}}">
+                  {{coupon.coupon_name}}
+                  <text wx:if="{{coupon.coupon_id!='0'}}">{{coupon.coupon_price}}元
+                  </text>
+                </span>
+              </p>
+            </view>
+            <span class="weui-cell__ft"></span>
+          </a>
+        </view>
+      </view>
+    </view>
+  </view>
+   <view class="cell_view">
+        <view class="cell_view_left"> <span class="font-14">备注</span></view>
+        <view class="cell_view_right font-14"><input class="weui-input" type="text" placeholder="请填写备注" bindfocus="close" bindinput='remark'/></view>
+   </view>
+   <view class="cell_view">
+          <view class="cell_view_left"> <span class="font-14">配送时间</span></view>
+           <picker class="cell_view_right" mode="multiSelector" bindtap="getDeliveryDate" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+           <input class="font-14" value='{{time}}' placeholder="请选择配送时间" disabled/>
+          </picker>
+    </view>
+  <view class="wy-media-box weui-media-box_text">
+    <view class="mg10-0 t-c">总金额：
+      <span class="wy-pro-pri mg-tb-5">¥
+        <em class="num font-20" id="order_total">{{order_total}}</em>
+      </span>
+    </view>
+    <view class="mg10-0">
+      <a class="weui-btn weui-btn_primary" data-address_id='{{address.address_id}}' data-coupon_id='{{coupon.coupon_id}}' bindtap='add_order'>微信付款</a>
+    </view>
+  </view>
+  <action-sheet hidden="{{actionSheetHidden}}" bindchange="actionSheetbindchange">
+    <view id="join_cart" class='weui-popup__container popup-bottom weui-popup__container--visible' style="z-index: 600;">
+      <view class="weui-popup__overlay" style="opacity: 1;"></view>
+      <view class="weui-popup__modal">
+        <view class="modal-content">
+          <view class="weui-msg" style="padding-top: 0;">
+            <view class="weui-msg__text-area">
+              <view class="weui-msg__title">可用优惠券</view>
+            </view>
+            <view class="weui-cells weui-cells_radio">
+              <view class="weui-cell weui-check__label" wx:for="{{couponlist}}" wx:key="*this">
+                <view class="weui-cell__bd" data-goods_id='{{pd.goods_id}}' data-goods_count='{{pd.goods_count}}' data-attribute_detail_id='{{pd.attribute_detail_id}}' data-coupon_name='{{item.coupon_name}}' data-coupon_id='{{item.coupon_id}}' bindtap='chose_coupon'>
+                  <p>{{item.coupon_name}}
+                    <span style="float: right;">{{item.coupon_price}}元</span>
+                  </p>
+                </view>
+                <view class="weui-cell__ft" wx:if="{{item.coupon_id==coupon.coupon_id}}">
+                  <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                </view>
+              </view>
+              <view class="weui-cell weui-check__label" data-goods_id='{{pd.goods_id}}' data-goods_count='{{pd.goods_count}}' data-attribute_detail_id='{{pd.attribute_detail_id}}' data-coupon_name='{{item.coupon_name}}' data-coupon_id='0' bindtap='chose_coupon'>
+
+                <view class="weui-cell__bd">
+                  <p>不使用优惠</p>
+                </view>
+              </view>
+            </view>
+            <action-sheet-cancel class="cancel">关闭</action-sheet-cancel>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </action-sheet>
+
+
+  <!-- 优惠券 -->
+
+</view>

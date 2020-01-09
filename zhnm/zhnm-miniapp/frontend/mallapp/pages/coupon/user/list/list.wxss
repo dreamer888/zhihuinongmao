@@ -1,0 +1,4 @@
+@import "/static/css/style.wxss";
+@import "/static/lib/weui.min.wxss";
+@import "/static/css/jquery-weui.wxss";
+@import "/static/css/coupon.wxss";

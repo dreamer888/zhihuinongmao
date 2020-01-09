@@ -1,0 +1,19 @@
+<view class="wy-center-top">
+    <view class="weui-media-box weui-media-box_appmsg">
+      <view class="weui-media-box__hd"></view>
+      <view class="weui-media-box__bd">
+        <text class="weui-media-box__title user-name" id="status">{{express_name}}：{{express_num}}</text>
+       
+      </view>
+    </view>
+
+  </view>
+  
+  <view class="weui-panel weui-panel_access">
+<view class="weui-media-box weui-media-box_text" wx:if='{{express_status==0||express_status==-1}}' ><p class="weui-media-box__desc">{{express.Reason}}</p></view>
+
+<view class="weui-media-box weui-media-box_text" wx:if='{{express_status==1}}' wx:for='{{express.Traces}}' wx:key='*this'> 
+<p class="weui-media-box__desc"> {{item.AcceptStation}}</p><ul class="weui-media-box__info">
+               <li class="weui-media-box__info__meta"> {{item.AcceptTime}} </li>
+               </ul></view>
+  </view>

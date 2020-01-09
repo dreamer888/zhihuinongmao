@@ -1,0 +1,17 @@
+@import "/static/css/style.wxss";
+ @import "/static/lib/weui.min.wxss";
+ @import "/static/css/jquery-weui.wxss";
+ .cell_view{
+ display:flex;
+ flex-flow:row wrap;
+ border-bottom: 1px solid #ededed
+ }
+ .cell_view_left{
+   flex:1;
+   margin:10px 5px 5px 15px
+ }
+ .cell_view_right{
+   flex:2;
+   margin:10px 15px 5px 5px;
+   text-align:right;
+ }

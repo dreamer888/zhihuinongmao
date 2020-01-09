@@ -1,0 +1,128 @@
+
+<view class='weui-header' hidden='{{footMenuHidden}}'>
+    <view class="weui_searchLayout">
+         <view class="index_location_layout" bindtap="addr_list">
+            <image class="location_left_img" src="../../static/images/location.png"/>
+            <view class="index_location_content">{{address}}</view>
+            <image class="location_right_img" src="../../static/images/arrow.png"/>
+        </view>
+         <view class="index_search_lable" bindtap="to_search">
+              <icon class="weui-icon-search" type="search" size="14"></icon>
+              <view class="index_search_text">搜索商品</view>
+         </view>
+     </view>
+    <!-- <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+        <input type="text" class="weui-search-bar__input" placeholder="搜索您想要的商品" value="{{}}" focus="{{inputShowed}}" bindinput="inputTyping" bindtap="showInput" bindconfirm='search_list' />
+        <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}">
+          <icon type="clear" size="14" bindtap='clearInput'></icon>
+        </view>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="clearInput">
+        <icon class="weui-icon-search" type="search" size="14"></icon>
+        <view class="weui-search-bar__text">搜索您想要的商品</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view> -->
+</view>
+
+<view class='weui-content' hidden='{{footMenuHidden}}'>
+  <!--顶部轮播-->
+  <swiper class="swiper" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true" style="width: {{bannerwidth}}px; height: {{bannerheight}}px;">
+    <block wx:for="{{banner}}" wx:key="*this">
+      <swiper-item>
+        <image src="{{item.ban_img}}" bindtap='banner_info' data-category_id='{{item.attr_value}}'  data-type='{{item.type}}' data-url='{{item.app_url}}'
+        data-goods_id='{{item.attr_value}}' class="slide-image" mode="widthFix" bindload="bannerLoad" />
+      </swiper-item>
+    </block>
+  </swiper>
+  <!-- 菜市场信息显示-->
+ <view class='wy-Module' hidden="{{!noDataShowed}}">
+   <view class="wy-Module-tit">
+         <span>{{market_name}}</span>
+       </view>
+    <image  class='markname_right_img' src="../../static/images/market_right.png"/>
+    <view  class='weui_markname_right' bindtap='to_market_list'>切换菜市场</view>
+ </view>
+  <!--图标分类-->
+  <view class="weui-flex wy-iconlist-box">
+    <view class="weui-flex__item" wx:for="{{navigation}}" wx:key="*this">
+      <a class="wy-links-iconlist">
+        <view class="img">
+          <image src="{{item.navigation_img}}" bindtap='banner_info' data-type='{{item.type}}' data-url='{{item.navigation_app_url}}' data-category_id='{{item.navigation_attr_value}}' data-goods_id='{{item.navigation_attr_value}}' mode="widthFix" />
+        </view>
+        <p>{{item.navigation_name}}</p>
+      </a>
+    </view>
+  </view>
+
+  <view class="wy-ind-news">
+    <i class="news-icon-laba"></i>
+
+    <swiper bindtap="news_list" class="swiper-wrapper" autoplay="true" interval="3000" duration="1000" circular="true" vertical="true">
+      <swiper-item class="swiper-slide" wx:for="{{news}}" wx:key="*this">
+        <view class="swiper-slide">
+          <a>{{item.news_title}}</a>
+        </view>
+      </swiper-item>
+
+    </swiper>
+    <view class="swiper-pagination"></view>
+    <a class="newsmore">
+      <i class="news-icon-more"></i>
+    </a>
+  </view>
+  <image hidden="{{noDataShowed}}" class= "no_data_image" src="../../static/images/no_market_bg.png"></image>
+  <!--精选推荐-->
+  <view class="wy-Module" hidden="{{!noDataShowed}}">
+    <view class="wy-Module-tit">
+      <span>精选推荐</span>
+    </view>
+    <view class="wy-Module-con">
+      <view class="swiper-container swiper-jingxuan" style="padding-top:34px;">
+        <scroll-view scroll-x="true">
+          <view class="swiper-wrapper" scroll-x="true">
+            <view class="swiper-slide" wx:for="{{tuijian}}" wx:key="*this">
+              <image src="{{item.goods_pic}}" mode="widthFix" bindtap="goods_info" data-goods_id='{{item.goods_id}}'/>
+            </view>
+          </view>
+        </scroll-view>
+        <view class="swiper-pagination jingxuan-pagination"></view>
+      </view>
+    </view>
+  </view>
+
+  <!--猜你喜欢-->
+  <view class="wy-Module" hidden="{{!noDataShowed}}">
+    <view class="wy-Module-tit-line">
+      <span>猜你喜欢</span>
+    </view>
+    <view class="wy-Module-con">
+      <ul class="wy-pro-list clear">
+
+        <li wx:for="{{goods}}" wx:key="*this">
+          <a data-goods_id="{{item.goods_id}}" bindtap="goods_info">
+            <view class="proimg">
+              <image src="{{item.goods_pic}}" mode="widthFix" />
+            </view>
+            <view class="protxt">
+              <view class="goods_name">{{item.goods_name}}</view>
+              <view class="wy-pro-pri">¥
+                <span>{{item.attr_min_price}}</span>
+                <span class="span_right">销量 {{item.sell_count}}</span>
+              </view>
+            </view>
+          </a>
+        </li>
+
+      </ul>
+      <view class="morelinks" bindtap="goods_list" data-category_id='' hidden="{{!noDataShowed}}">
+        <a>查看更多 >></a>
+      </view>
+    </view>
+  </view>
+</view>
+<empty-layout class="empty_tip" bindemptyevent="emptyCallback" emptyType="{{emptyType}}" loadingTransparent="{{false}}">
+</empty-layout>
+<include src="../footer/footer1.wxml" />

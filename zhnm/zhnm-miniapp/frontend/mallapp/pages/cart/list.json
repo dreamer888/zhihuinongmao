@@ -1,0 +1,9 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarBackgroundColor": "#fff",
+  "navigationBarTitleText": "购物车",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "empty-layout": "../../empty/empty"
+  }
+}

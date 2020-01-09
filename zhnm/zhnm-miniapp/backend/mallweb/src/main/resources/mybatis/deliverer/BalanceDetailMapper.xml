@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="BalanceDetailMapper">
+
+	<sql id="delivererWalletDetail">DELIVERER_WALLET_DETAIL</sql>
+	<sql id="DelivererTableName">
+	  DELIVERER
+	</sql>
+	<select id="BDetaillistPage" parameterType="page" resultType="pd" >
+		select t.ACCOUNT,
+		       t.CNNAME,
+		        d.ID,
+				d.MONEY_CHANGED,
+				d.CHANGED_REASON,
+				d.CREATE_TIME,
+				d.REMARK
+		 from <include refid="DelivererTableName"></include> t,<include refid="delivererWalletDetail"></include> d
+		 where d.DELIVERER_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''">
+	     and
+				(
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+				)
+		</if>
+	</select>
+</mapper>

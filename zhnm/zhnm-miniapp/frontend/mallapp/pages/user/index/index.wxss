@@ -1,0 +1,10 @@
+@import "/static/css/style.wxss";
+@import "/static/lib/weui.min.wxss";
+.header{
+text-align: center;
+padding: 10px 0
+}
+.header image{
+height: 82px;
+width: 82px
+}

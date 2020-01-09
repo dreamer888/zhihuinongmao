@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SellerGoodsMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		SELLER
+	</sql>
+	<sql id="sellerGoods">
+	    SELLER_GOODS
+	</sql>
+	   
+	<sql id="shopGoods">
+	    SHOP_GOODS
+	</sql>
+	   <!-- 商户商品列表 -->
+	<select id="GoodslistPage" parameterType="page" resultType="pd" >
+		select  u.ID,
+				u.SELLER_ID,
+				u.GOODS_ID,
+				u.STATUS,
+				u.START_STOCK,
+				u.CURRENT_STOCK,
+				u.PRICE,
+				u.BALANCE_HOTKEY,
+				t.ACCOUNT,
+				t.NAME,
+				g.GOODS_NAME
+		from <include refid="sellerGoods"></include> u,<include refid="tableName"></include> t,<include refid="shopGoods"></include> g
+		where u.SELLER_ID = t.ID
+		and u.GOODS_ID = g.GOODS_ID
+	    <if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+		and 
+				(
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+	 </select>
+	<select id="findById" parameterType="pd" resultType="pd" >
+		select  u.ID,
+				u.SELLER_ID,
+				u.GOODS_ID,
+				u.STATUS,
+				u.START_STOCK,
+				u.CURRENT_STOCK,
+				u.PRICE,
+				u.BALANCE_HOTKEY,
+				t.ACCOUNT,
+				t.NAME,
+				g.GOODS_NAME
+		from <include refid="sellerGoods"></include> u,<include refid="tableName"></include> t,<include refid="shopGoods"></include> g
+		where u.SELLER_ID = t.ID
+		and   u.GOODS_ID = g.GOODS_ID
+	    and   u.ID = #{GOODS_ID} 
+	</select>
+	<update id="editD" parameterType="pd" >
+		update  <include refid="sellerGoods"></include>
+			set   STATUS          =#{STATUS},
+				  START_STOCK     =#{START_STOCK},
+				  CURRENT_STOCK   =#{CURRENT_STOCK},
+				  PRICE           =#{PRICE},
+				  BALANCE_HOTKEY  =#{BALANCE_HOTKEY}
+			where 
+				 ID = #{GOODS_ID}
+	</update>
+</mapper>

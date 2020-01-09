@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SellerCreditAndWalletMapper">
+
+	<!--表名 -->
+	<sql id="tableName">
+		SELLER
+	</sql>
+	<sql id="sellerDynamic">
+	   SELLER_DYNAMIC
+	</sql>
+	<!-- 商户积分及钱包 -->
+	<select id="creditAndWalletlistPage" parameterType="page" resultType="pd" >
+		select  u.ID,               
+				u.SELLER_ID,        
+				u.EVALUATION_TOTAL, 
+				u.SELLER_POINTS,    
+				u.SELLER_WALLET,    
+				u.EVALUATION_COUNT, 
+                t.ACCOUNT,
+                t.NAME
+		from <include refid="sellerDynamic"></include> u,<include refid="tableName"></include> t
+		where u.SELLER_ID = t.ID
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+		and 
+				(
+					 t.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 t.NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		 </if>
+	   </select>
+	   <select id="findById" parameterType="pd" resultType="pd" >
+		select  d.NAME,
+		        d.ACCOUNT,
+		        t.EVALUATION_TOTAL,
+		        t.SELLER_POINTS,
+		        t.SELLER_WALLET,
+		        t.EVALUATION_COUNT,
+		        t.ID
+		from 
+			<include refid="sellerDynamic"></include> t,<include refid="tableName"></include> d
+		where t.SELLER_ID = d.ID
+		and   t.ID = #{CREDITANDWALLET_ID}
+	</select>
+	
+	<update id="editD" parameterType="pd" >
+		update  <include refid="sellerDynamic"></include>
+			set   EVALUATION_TOTAL    =#{EVALUATION_TOTAL},
+				  SELLER_POINTS       =#{SELLER_POINTS},
+				  SELLER_WALLET       =#{SELLER_WALLET},
+				  EVALUATION_COUNT    =#{EVALUATION_COUNT}
+			where 
+				 ID = #{CREDITANDWALLET_ID}
+	</update>   
+</mapper>

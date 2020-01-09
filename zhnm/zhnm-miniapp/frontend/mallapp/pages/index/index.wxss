@@ -1,0 +1,76 @@
+/* pages/index/index.wxss */
+@import "../../static/css/style.wxss";
+@import "/static/lib/weui.wxss";
+@import "../../static/css/jquery-weui.wxss";
+ 
+.index_location_layout{
+  display: flex;
+  height: 2rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-right:20rem
+}
+.index_location_content{
+  font-size: 12px;
+	font-weight: bold;
+	color: #333;
+  height: 2rem;
+  line-height: 2rem;
+  max-width: 9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.location_left_img{
+ height:1rem;
+ width:1rem;
+ display: inline-block;
+ margin: .5rem 0rem .5rem .5rem;
+}
+.location_right_img{
+ height:1rem;
+ width:1rem;
+ display: inline-block;
+ margin: .5rem .5rem .5rem 0rem;
+}
+
+.weui_searchLayout{
+  position:relative;
+  height: 3rem;
+  line-height: 3rem;
+  width: 100%;
+  overflow: hidden;
+}
+.index_search_lable{
+    display:flex;
+    background:rgba(238,238,238,1);
+    height: 2rem;
+    line-height: 2rem;
+    border-radius: 1rem;
+    float: right;
+    padding-left: 1.5rem;
+    padding-right:1.5rem;
+    margin-right: .5rem;
+}
+ 
+.index_search_text{
+ font-size:12px;
+ color:#A1A1A1;
+}
+.no_data_image{
+  height:7rem;
+  line-height:7rem;
+  width: 95%;
+  padding:10px;
+}
+.empty_tip{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  background:#ffffff;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+}

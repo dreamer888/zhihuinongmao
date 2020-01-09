@@ -1,0 +1,47 @@
+<view class="wy-content">
+  <view class="category-top">
+    <view class='weui-header'>
+      <view class="weui-search-bar">
+        <view class="weui-search-bar__form">
+          <view class="weui-search-bar__box">
+            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+            <input type="text" class="weui-search-bar__input" placeholder="搜索您想要的商品" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" bindtap="showInput" bindconfirm='search_list' />
+            <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}">
+              <icon type="clear" size="14" bindtap='clearInput'></icon>
+            </view>
+          </view>
+          <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="clearInput" bindtap="showInput">
+            <icon class="weui-icon-search" type="search" size="14"></icon>
+            <view class="weui-search-bar__text">搜索您想要的商品</view>
+          </label>
+        </view>
+        <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+      </view>
+    </view>
+  </view>
+
+  <view>
+    <view class="menu-left scrollbar-none" id="sidebar">
+      <ul>
+        <block wx:for="{{category}}" wx:key="*this">
+          <li id="{{index}}" class="{{activeIndex == index ? 'active' : ''}}" bindtap="tabClick">{{item.category_name}}</li>
+        </block>
+      </ul>
+    </view>
+  </view>
+
+  <view wx:for="{{category}}" wx:key="*this">
+    <view hidden="{{activeIndex != index}}" class="menu-right padding-all j-content">
+      <view class="h5">{{item.category_name}}</view>
+      <ul>
+        <li class="w-3" wx:for="{{item.childcategory}}" wx:key="*this" wx:for-item="chlidcategory">
+          <view data-category_id='{{chlidcategory.category_id}}' bindtap='goods_list'>
+            <image src="{{chlidcategory.category_img}}" />
+            <span>{{chlidcategory.category_name}}</span>
+          </view>
+        </li>
+      </ul>
+    </view>
+  </view>
+</view>
+<include src="../footer/footer2.wxml" />

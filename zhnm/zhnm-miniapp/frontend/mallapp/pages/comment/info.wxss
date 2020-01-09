@@ -1,0 +1,3 @@
+@import "/static/lib/weui.min.wxss";
+@import "/static/css/style.wxss";
+@import "/static/css/showTip.wxss";

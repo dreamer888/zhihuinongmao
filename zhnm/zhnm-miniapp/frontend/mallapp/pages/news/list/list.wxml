@@ -1,0 +1,12 @@
+<view class="weui-content">
+  <view class="weui-cells wy-news-list">
+    <view class="weui-media-box weui-media-box_text" wx:for='{{list}}' wx:key='*this' data-news_id='{{item.news_id}}' bindtap="news_info">
+      <text class="weui-media-box__title">{{item.news_title}}</text>
+      <rich-text class="weui-media-box__desc" nodes="{{item.news_content}}"></rich-text>
+      <ul class="weui-media-box__info">
+        <li class="weui-media-box__info__meta">时间：{{item.addtime}}</li>
+      </ul>
+    </view>
+  </view>
+
+</view>

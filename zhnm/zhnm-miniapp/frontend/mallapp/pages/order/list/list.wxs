@@ -1,0 +1,90 @@
+var statusLabel = function (status) {
+  var label="";
+  switch(status){
+    case 0:
+      label = "待付款"
+    break
+    case 1:
+      label = "待发货"
+      break
+    case 2:
+      label = "待收货"
+      break
+    case 3:
+      label = "待退款"
+      break
+    case 4:
+      label = "退款成功"
+      break
+    case 5:
+      label = "待评价"
+      break
+    case 6:
+      label = "交易完成"
+      break
+    case 11:
+      label = "待接单"
+      break
+    case 13:
+      label = "已接单"
+      break
+    case 15:
+      label = "待备货"
+      break
+    case 17:
+      label = "待取货"
+      break
+    case 19:
+      label = "配送中"
+      break
+    case 21:
+      label = "已送达"
+      break
+    case 25:
+      label = "已完成"
+      break
+    case 27:
+    case 37:
+      label = "已取消"
+      break
+  }
+  return label;
+}
+
+var detailLabel = function (status) {
+  var label = "";
+  switch (status) {
+    case 11:
+      label = "等待商户抢单"
+      break
+    case 13:
+      label = "商户已接单"
+      break
+    case 15:
+      label = "等待商户备货"
+      break
+    case 17:
+      label = "等待配送员取货"
+      break
+    case 19:
+      label = "配送中"
+      break
+    case 21:
+      label = "已送达"
+      break
+    case 25:
+      label = "已完成"
+      break
+    case 27:
+      label = "用户已取消"
+      break
+    case 37:
+      label = "订单超时商户没有接单, 系统自动取消订单"
+      break
+  }
+  return label;
+}
+module.exports = {
+  statusLabel: statusLabel,
+  detailLabel: detailLabel
+};

@@ -1,0 +1,33 @@
+<view class="foot-black"></view>
+<view class="weui-tabbar wy-foot-menu">
+
+  <view class="weui-tabbar__item weui-bar__item--on">
+    <navigator url="/pages/index/index" redirect="true"  hover-class="none">
+      <view class="weui-tabbar__icon foot-menu-home"></view>
+      <text class="weui-tabbar__label">首页</text>
+    </navigator>
+  </view>
+
+
+  <view class="weui-tabbar__item" bindtap="category_list">
+    <navigator url="/pages/category/list" redirect="true"  hover-class="none">
+      <view class="weui-tabbar__icon foot-menu-list"></view>
+      <text class="weui-tabbar__label">分类</text>
+    </navigator>
+  </view>
+
+
+  <view class="weui-tabbar__item" id="c_num">
+    <navigator url="/pages/cart/list" redirect="true"  hover-class="none">
+      <span class="{{showCartCount?'weui-badge':'weui-badge-hidden'}}" style="position: absolute;top: -.4em;right: 1em;">{{cart_count}}</span>
+      <view class="weui-tabbar__icon foot-menu-cart"></view>
+      <text class="weui-tabbar__label">购物车</text>
+    </navigator>
+  </view>
+  <view class="weui-tabbar__item">
+    <navigator url="/pages/center/index" redirect="true"  hover-class="none">
+      <view class="weui-tabbar__icon foot-menu-member"></view>
+      <text class="weui-tabbar__label">我的</text>
+    </navigator>
+  </view>
+</view>

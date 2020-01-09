@@ -1,0 +1,20 @@
+<view class="weui-content">
+  <view class="weui-panel address-box" id="show-addr-list">
+    <view class="weui-panel__bd"  wx:for='{{list}}' wx:key='*this'>
+      <view class="weui-media-box weui-media-box_text address-list-box">
+        <a class="address-edit" data-msg="edit" data-address_id='{{item.address_id}}' bindtap="address_info"></a>
+        <view data-address_id='{{item.address_id}}' data-address_location='{{item.location}}' bindtap="payment_info">
+        <view class="weui-media-box__title">
+          <span>{{item.addr_realname}}</span>
+          <span>{{item.addr_phone}}</span>
+        </view>
+        <p class="weui-media-box__desc address-txt">{{item.addr_city+item.address}}</p>
+        <span class="default-add" wx:if='{{item.is_default==1}}'>默认地址</span>
+      </view>
+      </view>
+    </view>
+  </view>
+  <view class="weui-btn-area">
+    <a class="weui-btn weui-btn_primary" data-msg="save" bindtap='address_info'>添加收货地址</a>
+  </view>
+</view>

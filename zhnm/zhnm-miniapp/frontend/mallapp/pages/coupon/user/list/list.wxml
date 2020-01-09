@@ -1,0 +1,21 @@
+<view class="weui-content">
+  <view class='proListWrap' wx:for='{{list}}' wx:key='*this'>
+    <view class="stamp stamp01">
+      <view class="par">
+        <view class="p">{{item.coupon_name}}</view>
+        <sub class="sign">￥</sub>
+        <span>{{item.coupon_price}}</span>
+        <sub>优惠券</sub>
+        <view class="p">订单满{{item.use_price}}元</view>
+      </view>
+      <view class="copy">副券
+        <view class="p">{{item.starttime}}\n {{item.endtime}}</view>
+      </view>
+      <i></i>
+    </view>
+  </view>
+</view>
+<view class="foot-black"></view>
+<view class="weui-tabbar wy-foot-menu" >
+  <button class="weui-btn" type="primary" bindtap="coupon_list" style='margin-top:0'>兑换</button>
+</view>

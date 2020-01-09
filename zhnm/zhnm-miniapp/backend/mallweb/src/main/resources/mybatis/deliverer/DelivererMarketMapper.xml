@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="DelivererMarketMapper">
+
+  <sql id="deliverer">
+     deliverer
+  </sql>
+  <sql id="delivererMarket">
+    deliverer_market
+  </sql>
+  <sql id="market">
+     market
+  </sql>
+  <select id="MarketlistPage" parameterType="page" resultType="pd" >
+		select   t.ID,
+		         d.ACCOUNT,
+                 d.CNNAME,
+                 m.MARKET_NAME
+		 from <include refid="deliverer"></include>d,<include refid="delivererMarket"></include>t,<include refid="market"></include>m
+		where t.DELIVERER_ID = d.ID
+		and   t.MARKET_ID = m.ID
+		<if test="pd.keywords!= null and pd.keywords != ''">
+	     and
+				(
+					 d.ACCOUNT LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					 d.CNNAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or
+					 m.MARKET_NAME LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				)
+		</if>
+	</select>
+	<select id="listDelivererAll" parameterType="deliverer" resultType="deliverer" >
+		select   d.ID,
+		         d.ACCOUNT,
+                 d.CNNAME
+		 from <include refid="deliverer"></include>d
+	</select>
+	
+	
+  <!-- 通过ByName 获取数据 -->
+	<select id="findByName" parameterType="pd" resultType="pd" >
+		select t.ID,
+		       t.MARKET_NAME
+		from 
+			<include refid="market"></include>t
+		where 
+			t.MARKET_NAME = #{MARKET_NAME}
+	</select>
+	<!-- 通过account 获取数据 DELIVERER_ACCOUNT -->
+	<select id="findByAccount" parameterType="pd" resultType="pd" >
+		select t.ID,
+		       t.ACCOUNT,
+		       t.CNNAME
+		from 
+			<include refid="deliverer"></include>t
+		where 
+			t.ACCOUNT = #{DELIVERER_ACCOUNT}
+	</select>
+	<sql id="Field">
+		MARKET_ID,
+		DELIVERER_ID
+	</sql>
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+	    #{marketName},
+		#{dAccount}
+	</sql>
+	<!-- 新增 -->
+	<insert id="saveD" parameterType="pd" >
+		insert into <include refid="delivererMarket"></include> (
+			<include refid="Field"></include>
+		) values (
+			<include refid="FieldValue"></include>
+		)
+	</insert>
+	<!-- deleteD -->
+	<delete id="deleteDM" parameterType="pd" flushCache="false">
+		delete from <include refid="delivererMarket"></include>
+		where 
+			ID = ${MARKET_ID}
+	</delete>
+	
+	<select id="queryDelivererMarket" parameterType="pd" resultType="pd" >
+		select t.ID,
+		       t.DELIVERER_ID,
+		       t.MARKET_ID
+		from 
+			<include refid="delivererMarket"></include>t
+		where 
+			t.DELIVERER_ID = #{DELIVERER_ID}
+	    and t.MARKET_ID = #{MARKET_ID}
+	</select>
+	
+	
+</mapper>

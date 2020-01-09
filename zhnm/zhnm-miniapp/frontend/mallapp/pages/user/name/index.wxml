@@ -1,0 +1,9 @@
+<view class="weui-content">
+  <view class="weui-cells weui-cells_form wy-address-edit">
+  
+    <view class="weui-cell">
+      <view class="weui-cell__bd"><input class="weui-input" id="username" type="text" value="{{username}}" placeholder="请输入昵称" bindinput='change'/></view>
+    </view>
+  </view>
+  <view class="weui-btn-area"><a  class="weui-btn weui-btn_primary" bindtap='update'>确认修改</a></view>
+</view>

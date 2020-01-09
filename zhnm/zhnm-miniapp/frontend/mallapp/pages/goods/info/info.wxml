@@ -1,0 +1,231 @@
+<view>
+<view class="weui-content">
+  <!--产品详情-->
+  <view class="weui-tab">
+    <view class="weui-navbar" style="position:fixed; top:0; left:0; right:0">
+      <block wx:for="{{tabs}}" wx:key="*this">
+        <view id="{{index}}" class="weui-navbar__item proinfo-tab-tit font-14 {{activeIndex == index ? 'weui-bar__item--on' : ''}}" bindtap="tabClick">
+          <view class="weui-navbar__title">{{item}}</view>
+        </view>
+      </block>
+
+      <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    </view>
+    <view class="weui-tab__bd proinfo-tab-con" style="margin-top:72rpx">
+      <scroll-view scroll-y style="height:550px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+      <view id="page1" class="weui-tab__bd-item weui-tab__bd-item--active">
+        <!--主图轮播-->
+         <swiper class="swiper" indicator-dots="true" autoplay="true" interval="3000" duration="1000" circular="true" style="width: {{imagewidth}}px; height: {{imageheight}}px;">
+          <swiper-item wx:for="{{goods_pic}}" wx:key="*this">
+            <image src="{{item}}" class="slide-image" mode="widthFix" bindload="imageLoad" />
+          </swiper-item>
+        </swiper>
+        <view class="wy-media-box-nomg weui-media-box_text">
+          <text class="wy-media-box__title">{{goods.goods_name}}</text>
+          <view class="wy-pro-pri mg-tb-5">¥
+            <em class="num font-20">{{goods.attr_min_price}}</em>
+          </view>
+          <p class="weui-media-box__desc">{{goods.goods_title}}</p>
+        </view>
+        <view class="wy-media-box2 weui-media-box_text">
+          <view class="weui-media-box_appmsg">
+            <view class="weui-media-box__hd_g_info proinfo-txt-l">
+              <span class="promotion-label-tit">优惠</span>
+            </view>
+            <view class="weui-media-box__bd">
+              <view class="promotion-message clear" wx:for="{{couponlist}}" wx:key="*this">
+                <i class="yhq">
+                  <span class="label-text">优惠券</span>
+                </i>
+                <span class="promotion-item-text">满{{item.use_price}}减{{item.coupon_price}}</span>
+              </view>
+              <view class="yhq-btn clear">
+                <a bindtap='coupon'>去领券</a>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <view class="wy-media-box2 txtpd weui-media-box_text">
+
+          <view class="weui-media-box_appmsg">
+            <view class="weui-media-box__hd_g_info proinfo-txt-l">
+              <span class="promotion-label-tit">配送费</span>
+            </view>
+            <view class="weui-media-box__bd">
+              <view class="promotion-message clear">
+                <span class="promotion-item-text" wx:if="{{freight.freight_price == 0}}">免配送费</span>
+                <span class="promotion-item-text" wx:if="{{freight.freight_price != 0}}">配送费
+                  <view class="wy-pro-pri">¥
+                    <span class="num">{{freight.freight_price}}</span>
+                  </view> (满{{freight.freight_free_price}}免配送费)</span>
+
+              </view>
+            </view>
+          </view>
+
+          <view class="weui-media-box_appmsg">
+            <view class="weui-media-box__hd_g_info proinfo-txt-l">
+              <span class="promotion-label-tit">提示</span>
+            </view>
+            <view class="weui-media-box__bd">
+              <view class="promotion-message clear">
+                <span class="promotion-item-text">
+                  <p class="txt-color-ml" wx:if="{{goods.reason_return==1}}"> 支持7天无理由退换货</p>
+                  <p class="txt-color-ml" wx:if="{{goods.reason_return!=1}}"> 不支持7天无理由退换货</p>
+                </span>
+              </view>
+            </view>
+          </view>
+
+          <view class="cell_view">
+            <view class="cell_view_left"><span class="cell_view_text_left">产地 :  </span><span class="cell_view_text_right">{{goods.production_place}}</span></view>
+            <view class="cell_view_right"><span class="cell_view_text_left">保质期 :  </span><span class="cell_view_text_right">{{goods.effective_date}}</span></view>
+          </view>
+          <view class="cell_view_2">
+               <view class="cell_view_left"><span class="cell_view_text_left">包装 :  </span><span class="cell_view_text_right">{{goods.pack}}</span></view>
+               <view class="cell_view_right"><span class="cell_view_text_left">储存条件 :  </span><span class="cell_view_text_right">{{goods.storage_condition}}</span></view>
+          </view>
+
+        </view>
+      </view>
+      <view  id="page2" class="weui-tab__bd-item">
+        <view class="pro-detail">
+           <rich-text nodes='{{goods_detail}}'></rich-text>
+        </view>
+      </view>
+     
+      <view  class="weui-tab__bd-item">
+        <!--评价-->
+        <view id="page3" class="weui-panel__bd" bindscrolltolower="downLoad" style='height:{{screenHeight}}px;' scroll-y="true">
+          <view class="wy-media-box weui-media-box_text" wx:for="{{commentlist}}" wx:key="*this">
+            <view class="weui-cell nopd weui-cell_access">
+              <view class="weui-cell__hd" wx:if='{{item.head_img}}'>
+                <image src="{{item.head_img}}" mode="widthFix" style="width:20px;margin-right:5px;display:block" />
+              </view>
+              <view class="weui-cell__bd weui-cell_primary">
+                <p>{{item.username ? item.username:'匿名用户'}}</p>
+              </view>
+              <span class="weui-cell__time">{{item.addtime}}</span>
+            </view>
+            <view class="comment-item-star">
+              <span class="real-star comment-stars-width1" wx:if='{{item.comment_title==1}}'></span>
+              <span class="real-star comment-stars-width2" wx:if='{{item.comment_title==2}}'></span>
+              <span class="real-star comment-stars-width3" wx:if='{{item.comment_title==3}}'></span>
+              <span class="real-star comment-stars-width4" wx:if='{{item.comment_title==4}}'></span> 
+              <span class="real-star comment-stars-width5" wx:if='{{item.comment_title==5}}'></span>
+            </view>
+            <p class="weui-media-box__desc">{{item.comment_content}}</p>
+            <ul class="weui-uploader__files clear mg-com-img">
+              <li class="weui-uploader__file" style="background-image:url({{com_pic}})"  wx:for="{{item.comment_pic_arry}}" wx:for-item='com_pic'></li>
+            </ul>
+          </view>
+        </view>
+      </view>
+       </scroll-view>
+    </view>
+  </view>
+</view>
+<!--底部导航-->
+<view class="foot-black"></view>
+<view class="weui-tabbar wy-foot-menu">
+   <button  class="promotion-foot-menu-items kefu" open-type="contact"> 
+    <view class="weui-tabbar__icon promotion-foot-menu-kefu"></view>
+  <p class="weui-tabbar__label">客服</p> 
+  </button>
+  <a class="promotion-foot-menu-items"  wx:if='{{collection==null}}' bindtap='collection'>
+    <view class="weui-tabbar__icon promotion-foot-menu-collection"></view>
+    <p class="weui-tabbar__label">收藏</p>
+  </a>
+  <contact-button type="default-light" size="20" session-from="weapp" open-type="contact">
+</contact-button>
+  <a class="promotion-foot-menu-items"  wx:if='{{collection!=null}}' bindtap='collection_ed'>
+    <view class="weui-tabbar__icon promotion-foot-menu-collection-ed"></view>
+    <p class="weui-tabbar__label">收藏</p>
+  </a>
+  <a class="promotion-foot-menu-items" bindtap='cart_list'>
+    <span class="weui-badge" style="position: absolute;top: -.4em;right: 0.1em;">{{cart_count}}</span>
+    <view class="weui-tabbar__icon promotion-foot-menu-cart"></view>
+    <p class="weui-tabbar__label">购物车</p>
+  </a>
+  <a  class="weui-tabbar__item yellow-color open-popup" data-submit_type="1" bindtap="actionSheetTap">
+    <p class="promotion-foot-menu-label">加入购物车</p>
+  </a>
+  <a  class="weui-tabbar__item red-color open-popup" data-submit_type="2" bindtap="actionSheetTap">
+    <p class="promotion-foot-menu-label">立即购买</p>
+  </a>
+  
+</view> 
+ <action-sheet hidden="{{actionSheetHidden}}" bindchange="actionSheetbindchange">
+  <view class='weui-popup__container popup-bottom weui-popup__container--visible' style="z-index: 600;">
+    <view class="weui-popup__overlay" style="opacity: 1;"></view>
+    <view class="weui-popup__modal">
+      <view class="modal-content">
+        <view class="wy-media-box2 weui-media-box_text">
+          <view class="weui-media-box_appmsg">
+            <view style="margin-right:10px">
+              <image src="{{pic }}" style="width: 50px;height: 50px" />
+            </view>
+            <view class="wy-pro-pri fl" style="margin-right:10px">¥
+              <em class="num font-15">{{goods_price }}</em>
+            </view>
+            <view>
+              <view class="wy-media-box__title">库存：
+                <font id="sys_num">{{goods_num}}</font> 件</view>
+            </view>
+          </view>
+        
+          <view class="attr" wx:for="{{attr_key_value_list}}" wx:key="*this" wx:for-index="attr_index">  
+            <view class="weui-media-box_appmsg">
+              <view class="weui-media-box__hd_g_info proinfo-txt-l">
+                <span class="promotion-label-tit">{{item.attr_key}}</span>
+              </view>
+              <view class="weui-media-box__bd">
+                <view class="promotion-sku clear">
+                  <ul>
+                    <li class="{{attr_index==firstIndex || item.attr_value_status[value_index]?(value==item.selected_value?'active':''):'disabled'}}" bindtap="selectattr_value" data-status="{{item.attr_value_status[value_index]}}"  
+      data-value="{{value}}" data-key="{{item.attr_key}}" data-index="{{attr_index}}" data-selected_value="{{item.selected_value}}" wx:for="{{item.attr_values}}" wx:for-item="value" wx:key='*this' wx:for-index="value_index">
+                      <a>{{value}}</a>
+                    </li>
+                  </ul>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="weui-media-box_appmsg">
+            <view class="weui-media-box__hd_g_info proinfo-txt-l">
+              <span class="promotion-label-tit">数量</span>
+            </view>
+            <view class="weui-media-box__bd">
+              <view class="promotion-sku clear">
+                <view class="Spinner">
+                  <a wx:if="{{goods_count==1}}" class="DisDe">
+                  <i bindtap="minusCount" data-index="{{index}}" class="DisDe">-</i>
+                </a>
+                <a wx:if="{{goods_count>1}}" class="Decrease">
+                  <i bindtap="minusCount" data-index="{{index}}" class="DisDe">-</i>
+                </a>
+                <view>
+                  <input class="Amount" value="{{goods_count}}" autocomplete="off" maxlength="3" disabled/>
+                </view>
+                <a class="Increase">
+                  <i bindtap="addCount" data-index="{{index}}">+</i>
+                </a>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view class="weui-msg__opr-area">
+            <p class="weui-btn-area">
+              <button class="weui-btn" type="primary" bindtap="add_cart" wx:if="{{submit_type==1}}">确定</button>
+              <button class="weui-btn" type="primary" bindtap="to_order" wx:if="{{submit_type==2}}">确定</button>
+            </p>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</action-sheet>
+</view>
+<view class="deploy_ctype_tip" hidden="{{nullTip}}"><p>{{tipTxt}}</p></view>

@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_order
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		addtime,	
+		total_price,
+		order_total,
+		coupon_id,
+		coupon_price,
+		freight_price,	
+		pay_way,
+		user_id,	
+		addr_realname,
+		addr_phone,
+		addr_city,	
+		address,
+		ip_address,
+		user_ip,
+		order_id,
+		status,
+		express_title,
+		express_name,
+		express_num
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{addtime},	
+		#{total_price},
+		#{order_total},
+		#{coupon_id},
+		#{coupon_price},
+		#{freight_price},	
+		#{pay_way},
+		#{user_id},	
+		#{addr_realname},
+		#{addr_phone},
+		#{addr_city},	
+		#{address},
+		#{ip_address},
+		#{user_ip},
+		#{order_id},
+		#{express_title},
+		#{express_name},
+		#{express_num}
+	</sql>
+	
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+		order_id = #{order_id}
+	</delete>
+	
+
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		shop_order
+		set 
+		<if test="addr_realname !=null and addr_realname !=''">
+		addr_realname=#{addr_realname},
+		</if>
+		<if test="addr_phone !=null and addr_phone !=''">
+		addr_phone=#{addr_phone},
+		</if>
+		<if test="addr_city !=null and addr_city !=''">
+		addr_city=#{addr_city},	
+		</if>
+		<if test="address !=null and address !=''">
+		address=#{address},
+		</if>
+		<if test="status !=null and status !=''">
+		status=#{status},
+		</if>
+		<if test="express_title !=null and express_title !=''">
+		express_title=#{express_title},
+		</if>
+		<if test="express_name !=null and express_name !=''">
+		express_name=#{express_name},
+		</if>
+		<if test="express_num !=null and express_num !=''">
+		express_num=#{express_num},
+		</if>
+		order_id = #{order_id}
+		where 
+		order_id = #{order_id}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+	select 	
+		t1.addtime,	
+		order_total,
+		total_price,
+		coupon_id,
+		coupon_price,freight_price,	
+		pay_way,
+		addr_realname,
+		addr_phone,
+		addr_city,	
+		address,
+		ip_address,
+		user_ip,
+		t1.order_id,
+		status,
+		t1.user_id,	
+		t2.username,
+		t2.phone,
+		express_title,
+		express_name,
+		express_num
+		from shop_order t1
+		left join shop_user t2 on t1.user_id=t2.user_id
+		where 
+		order_id=#{order_id}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		t1.addtime,	
+		order_total,
+		total_price,
+		coupon_id,
+		coupon_price,
+		freight_price,	
+		pay_way,
+		addr_realname,
+		addr_phone,
+		addr_city,	
+		address,
+		ip_address,
+		user_ip,
+		t1.order_id,
+		status,
+		t1.user_id,	
+		t2.username,
+		t2.phone,
+		express_title,
+		express_name,
+		express_num
+		from shop_order t1
+		left join shop_user t2 on t1.user_id=t2.user_id
+		where 1=1
+		<if test="pd.username!=null and pd.username!=''">
+		and 
+		(
+		username like concat(concat('%',#{pd.username}),'%')
+		or
+		phone like concat(concat('%',#{pd.username}),'%')
+		)
+		</if>
+		<if test="pd.status!=null and pd.status!=''">
+		and (SELECT COUNT(1) from shop_order_detail sd WHERE status=#{pd.status} and sd.order_id=t1.order_id)>0
+		</if> 
+		<if test="pd.order_id!=null and pd.order_id!=''">
+		and order_id=#{pd.order_id}
+		</if>
+		<if test="pd.user_id!=null and pd.user_id!=''">
+		and t1.user_id=#{pd.user_id}
+		</if>
+		order by t1.addtime desc
+	</select>
+	
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		t1.addtime,	
+		order_total,
+		total_price,
+		coupon_id,
+		coupon_price,freight_price,	
+		pay_way,
+		addr_realname,
+		addr_phone,
+		addr_city,	
+		address,
+		ip_address,
+		user_ip,
+		t1.order_id,
+		status,
+		t1.user_id,	
+		t2.username,
+		t2.phone,
+		express_title,
+		express_name,
+		express_num
+		from shop_order t1
+		left join shop_user t2 on t1.user_id=t2.user_id
+		where 1=1
+		<if test="username !=null and username !=''">
+		and 
+		(
+		username like concat(concat('%',#{username}),'%')
+		or
+		phone like concat(concat('%',#{username}),'%')
+		)
+		</if>
+		<if test="status!=null">
+		and status=#{status}
+		</if>
+		<if test="order_id!=null and order_id!=''">
+		and order_id=#{order_id}
+		</if>
+		<if test="user_id!=null and user_id!=''">
+		and t1.user_id=#{user_id}
+		</if>
+		order by t1.addtime desc
+	</select>
+	
+	<!-- 查询数据数量 -->
+	<select id="count" parameterType="pd" resultType="int">
+		select
+		count(1)
+		from shop_order
+		where 1=1
+		<if test="status!=null">
+		and status=#{status}
+		</if>
+		<if test="user_id!=null and user_id!=''">
+		and user_id=#{user_id}
+		</if>
+	</select>
+	
+	
+	<select id="order_count" parameterType="pd" resultType="int">
+		select
+		count(1)
+		from shop_order t1
+		left join shop_user t2 on t1.user_id=t2.user_id
+		where 1=1
+		<if test="status!=null">
+		and (SELECT COUNT(1) from shop_order_detail sd WHERE status=#{status} and sd.order_id=t1.order_id)>0
+		</if> 
+		order by t1.addtime desc
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORDER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+	<!-- 订单流水 -->
+	<select id="orderFlow" parameterType="page" resultType="pd">
+		SELECT DATE_FORMAT(o.single_time,'%Y/%m/%d') AS `date`,o.order_id,m.market_name,s.shop_code,g.`goods_name`,od.`goods_total`,s.`name`,ba.`account_bank`,
+        ba.`account`,CAST(od.`goods_total`*0.85 AS DECIMAL(10,2)) AS check_total,s.account as account_phone,o.`status`  
+        FROM shop_order o LEFT JOIN shop_order_detail od ON o.`order_id`=od.`order_id`
+        LEFT JOIN shop_goods g ON  g.`goods_id`=od.`goods_id`
+        LEFT JOIN seller s ON s.id=od.`seller_id`
+        LEFT JOIN `seller_bank_account` ba ON s.`id`= ba.`seller_id`
+        LEFT JOIN market m ON m.id=o.`market_id` WHERE (o.`status`=5 OR o.`status`=25) 
+        <if test="keyword!=null and keyword!=''">
+		and (m.market_name=#{keyword} or g.goods_name=#{keyword} or o.order_id=#{keyword})
+		</if>
+        ORDER BY order_id DESC;
+	</select>
+	
+	<!-- 订单流水 -->
+	<select id="orderSellerSettle" parameterType="page" resultType="pd">
+		SELECT 
+		  od.seller_id,
+		  s.`name`,
+		  DATE_FORMAT(seller_seize_time, '%Y/%m/%d') AS seller_seize_time,
+		  od.order_id,
+		  SUM(goods_total) AS order_total,
+		  o.`market_id`,
+		  m.`market_name`,
+		  s.`shop_code`,
+		  ba.`account_bank`,
+		  ba.`account` AS account,
+		  CAST(SUM(goods_total)*0.85 AS DECIMAL(10,2)) AS settle_price,
+		  s.`account` AS mobile 
+		FROM
+		  `shop_order_detail` od 
+		  LEFT JOIN `shop_order` o 
+		    ON od.`order_id` = o.`order_id` 
+		  LEFT JOIN `market` m 
+		    ON m.`id` = o.`market_id` 
+		  LEFT JOIN `seller` s 
+		    ON s.`id` = od.`seller_id` 
+		  LEFT JOIN `seller_bank_account` ba 
+		    ON s.`id` = ba.`seller_id` 
+		WHERE (o.`status` = 5 
+		    OR o.`status` = 25) 
+		  AND od.seller_id > 0 
+		  AND ba.`account` > 0 
+        <if test="keyword!=null and keyword!=''">
+		and (m.market_name=#{keyword} or od.goods_name=#{keyword} or o.order_id=#{keyword})
+		</if>
+          GROUP BY od.seller_id,
+		  seller_seize_time,
+		  od.order_id 
+		  ORDER BY seller_seize_time DESC,
+		  od.seller_id DESC ;
+	</select>
+    
+    <!-- 商户结算 -->
+	<select id="sellerSettle" parameterType="page" resultType="pd">
+		SELECT 
+			  s.`name`,
+			  SellerSeizeTime,
+			  COUNT(od1.order_id) AS OrderCount,
+			  SUM(GoodsTotal) AS GoodsTotalAll,
+			  o.`market_id`,
+			  m.`market_name`,
+			  s.`shop_code`,
+			  ba.`account_bank`,
+			  ba.`account` AS BankAccount,
+			  CAST(SUM(GoodsTotal)*0.85 AS DECIMAL(10,2)) AS settle_price,
+			  s.`account` AS Mobile 
+			FROM
+			  (SELECT 
+			    seller_id,
+			    DATE_FORMAT(seller_seize_time, '%Y/%m/%d') AS SellerSeizeTime,
+			    order_id,
+			    SUM(goods_total) AS GoodsTotal 
+			  FROM
+			    `shop_order_detail` AS od 
+			  GROUP BY seller_id,
+			    SellerSeizeTime,
+			    order_id) AS od1 
+			  LEFT JOIN `shop_order` o 
+			    ON od1.`order_id` = o.`order_id` 
+			  LEFT JOIN `market` m 
+			    ON m.`id` = o.`market_id` 
+			  LEFT JOIN `seller` s 
+			    ON s.`id` = od1.`seller_id` 
+			  LEFT JOIN `seller_bank_account` ba 
+			    ON s.`id` = ba.`seller_id` 
+			WHERE (o.`status` = 5 
+			    OR o.`status` = 25) 
+			  AND od1.seller_id > 0 
+			  AND ba.`account` > 0 
+			  <if test="keyword!=null and keyword!=''">
+				and (m.market_name=#{keyword} or s.`name`=#{keyword})
+			  </if>
+			GROUP BY od1.seller_id,
+			  SellerSeizeTime 
+			ORDER BY SellerSeizeTime DESC,
+			  od1.seller_id DESC ;
+	</select>
+	
+</mapper>

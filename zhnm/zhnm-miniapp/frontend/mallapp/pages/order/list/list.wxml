@@ -1,0 +1,194 @@
+<wxs src="./list.wxs" module="tools" />
+<view class='weui-content'>
+  <view class="weui-tab">
+    <view class="weui-navbar" style="position:fixed; top:0; left:0; right:0;background:#fff;">
+        <block wx:for="{{tabs}}" wx:key="*this">
+          <view id="{{item.tab_index}}" data-status="{{item.tab_index}}" class="weui-navbar__item proinfo-tab-tit font-14 {{activeIndex == item.tab_index ? 'weui-bar__item--on' : ''}}" bindtap="tabClick">
+            <view class="weui-navbar__title">{{item.tab_name}}</view>
+          </view>
+        </block>
+        <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+    </view>
+
+    <view class="weui-tab__bd proinfo-tab-con" style="padding-top:72rpx">
+      <view class="weui-tab__bd-item weui-tab__bd-item--active">
+        <view class="weui-panel weui-panel_access" wx:for="{{order}}" wx:key="*this">
+          <view class="weui-panel__hd"><span>单号：{{item.order_id}}</span>
+          <span class="ord-status-txt-ts fr">{{tools.statusLabel(item.status)}}</span>
+          </view>
+          <view class="weui-media-box__bd  pd-10" bindtap="order_info" data-order_id="{{item.order_id}}">
+            <view class="weui-media-box_appmsg ord-pro-list"  wx:for="{{item.orderdetail}}" wx:for-item="items"  wx:key>
+              <view class="weui-media-box__hd"><a><image class="weui-media-box__thumb" src="{{items.goods_pic}}" /></a></view>
+              <view class="weui-media-box__bd">
+                <view class="weui-media-box__desc"><a class="ord-pro-link">{{items.goods_name}}</a></view>
+                <p class="weui-media-box__desc">规格：<span>{{items.attribute_detail_name}}</span></p>
+                <view class="clear mg-t-10">
+                  <view class="wy-pro-pri fl">¥<em class="num font-15">{{items.goods_price}}</em></view>
+                  <view class="pro-amount fr"><span class="font-13">数量×<em class="name">{{items.goods_count}}</em></span></view>
+                </view>
+              </view>
+              </view>
+          </view>
+          <view class="ord-statistics">
+            <span>共<em class="num">{{item.goods_total}}</em>件商品，</span>
+            <span class="wy-pro-pri">总金额：¥<em class="num font-15">{{item.order_total}}</em></span>
+            <span>(含配送费<b>￥{{item.freight_price}}</b>)</span>
+          </view>
+          <view class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==0}}">
+              <a class="ords-btn-dele" bindtap="delete_order" data-order_id="{{item.order_id}}" data-index="{{index}}">删除订单</a><a class="ords-btn-com" bindtap="order_info" data-order_id="{{item.order_id}}">付款</a>
+            </view> 
+            <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox">{{tools.detailLabel(item.status)}}</view>
+            
+             <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==21 || item.status==23}}">
+             <a class="ords-btn-com" bindtap="order_sure" data-order_id="{{item.order_id}}">确认收货</a>
+            </view> 
+            <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==3||item.status==4}}">
+              <a class="ords-btn-com" bindtap="order_info" data-order_id="{{item.order_id}}">查看详情</a>
+            </view> 
+            <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==5}}">
+              <a class="ords-btn-com" data-order_id="{{item.order_id}}" bindtap="comment">去评价</a>
+            </view> 
+            <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==6}}">
+              <a class="ords-btn-com" bindtap="order_info" data-order_id="{{item.order_id}}">交易完成</a>
+            </view>    
+          </view>
+        </view>
+      </view>
+      <!-- <view hidden="{{activeIndex != 0}}" class="weui-tab__bd-item">
+        <view class="weui-panel weui-panel_access" wx:for="{{order}}" wx:key="*this">
+          <view class="weui-panel__hd"><span>单号：{{item.order_id}}</span> <span class="ord-status-txt-ts fr"> 待付款</span>
+          </view>
+          <view class="weui-media-box__bd  pd-10" bindtap="order_info" data-order_id="{{item.order_id}}">
+            <view class="weui-media-box_appmsg ord-pro-list"  wx:for="{{item.orderdetail}}" wx:for-item="items"  wx:key>
+              <view class="weui-media-box__hd"><a><image class="weui-media-box__thumb" src="{{items.goods_pic}}"/></a></view>
+              <view class="weui-media-box__bd">
+                <view class="weui-media-box__desc"><a class="ord-pro-link">{{items.goods_name}}</a></view>
+                <p class="weui-media-box__desc">规格：<span>{{items.attribute_detail_name}}</span></p>
+                <view class="clear mg-t-10">
+                  <view class="wy-pro-pri fl">¥<em class="num font-15">{{items.goods_price}}</em></view>
+                  <view class="pro-amount fr"><span class="font-13">数量×<em class="name">{{items.goods_count}}</em></span></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="ord-statistics">
+            <span>共<em class="num">{{item.goods_total}}</em>件商品，</span>
+            <span class="wy-pro-pri">总金额：¥<em class="num font-15">{{item.order_total}}</em></span>
+            <span>(含配送费<b>￥{{item.freight_price}}</b>)</span>
+          </view>
+          <view class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox">
+              <a class="ords-btn-dele"  bindtap="delete_order" data-order_id="{{item.order_id}}"  data-index="{{index}}">删除订单</a><a  class="ords-btn-com" bindtap="order_info" data-order_id="{{item.order_id}}">付款</a>
+            </view> 
+            
+          </view>
+        </view>
+        
+      </view>
+      <view hidden="{{activeIndex != 1}}" class="weui-tab__bd-item">
+      
+      <view class="weui-panel weui-panel_access" wx:for="{{order}}" wx:key="*this">
+          <view class="weui-panel__hd"><span>单号：{{item.order_id}}</span>
+          <span class="ord-status-txt-ts fr"> 待发货</span>
+          </view>
+          <view class="weui-media-box__bd  pd-10" bindtap="order_info" data-order_id="{{item.order_id}}">
+            <view class="weui-media-box_appmsg ord-pro-list"  wx:for="{{item.orderdetail}}" wx:for-item="items"  wx:key>
+              <view class="weui-media-box__hd"><a><image class="weui-media-box__thumb" src="{{items.goods_pic}}" /></a></view>
+              <view class="weui-media-box__bd">
+                <view class="weui-media-box__desc"><a class="ord-pro-link">{{items.goods_name}}</a></view>
+                <p class="weui-media-box__desc">规格：<span>{{items.attribute_detail_name}}</span></p>
+                <view class="clear mg-t-10">
+                  <view class="wy-pro-pri fl">¥<em class="num font-15">{{items.goods_price}}</em></view>
+                  <view class="pro-amount fr"><span class="font-13">数量×<em class="name">{{items.goods_count}}</em></span></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="ord-statistics">
+            <span>共<em class="num">{{item.goods_total}}</em>件商品，</span>
+            <span class="wy-pro-pri">总金额：¥<em class="num font-15">{{item.order_total}}</em></span>
+            <span>(含配送费<b>￥{{item.freight_price}}</b>)</span>
+          </view>
+          <view class="weui-panel__ft">
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==11}}">等待商户接单</view>
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==13}}">商户已接单</view>
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==15}}">等待商户备货</view>
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==17}}">等待配送员取货</view>
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==19}}">配送中</view>
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==27}}">用户已取消</view>
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==37}}">订单超时商户没有接单,系统自动取消订单</view>
+          </view>
+        </view>
+        </view>
+      
+      </view>
+      <view hidden="{{activeIndex != 2}}" class="weui-tab__bd-item">
+      
+        <view class="weui-panel weui-panel_access" wx:for="{{order}}" wx:key="*this">
+          <view class="weui-panel__hd"><span>单号：{{item.order_id}}</span>
+          <span class="ord-status-txt-ts fr"> 待收货</span>
+          </view>
+          <view class="weui-media-box__bd  pd-10" bindtap="order_info" data-order_id="{{item.order_id}}">
+            <view class="weui-media-box_appmsg ord-pro-list"  wx:for="{{item.orderdetail}}" wx:for-item="items"  wx:key>
+              <view class="weui-media-box__hd"><a><image class="weui-media-box__thumb" src="{{items.goods_pic}}" /></a></view>
+              <view class="weui-media-box__bd">
+                <view class="weui-media-box__desc"><a class="ord-pro-link">{{items.goods_name}}</a></view>
+                <p class="weui-media-box__desc">规格：<span>{{items.attribute_detail_name}}</span></p>
+                <view class="clear mg-t-10">
+                  <view class="wy-pro-pri fl">¥<em class="num font-15">{{items.goods_price}}</em></view>
+                  <view class="pro-amount fr"><span class="font-13">数量×<em class="name">{{items.goods_count}}</em></span></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="ord-statistics">
+            <span>共<em class="num">{{item.goods_total}}</em>件商品，</span>
+            <span class="wy-pro-pri">总金额：¥<em class="num font-15">{{item.order_total}}</em></span>
+            <span>(含配送费<b>￥{{item.freight_price}}</b>)</span>
+          </view>
+          <view class="weui-panel__ft">
+            
+              <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox" wx:if="{{item.status==21 || item.status==23}}">
+              <a class="ords-btn-com" bindtap="order_sure" data-order_id="{{item.order_id}}">确认收货</a>
+            </view> 
+           
+          </view>
+        </view>
+      </view> -->
+      <!-- <view hidden="{{activeIndex != 5}}" class="weui-tab__bd-item">
+      
+        <view class="weui-panel weui-panel_access" wx:for="{{order}}" wx:key="*this">
+          <view class="weui-panel__hd"><span>单号：{{item.order_id}}</span>
+          <span class="ord-status-txt-ts fr"> 待评价</span>
+          </view>
+          <view class="weui-media-box__bd  pd-10" bindtap="order_info" data-order_id="{{item.order_id}}">
+            <view class="weui-media-box_appmsg ord-pro-list"  wx:for="{{item.orderdetail}}" wx:for-item="items"  wx:key>
+              <view class="weui-media-box__hd"><a><image class="weui-media-box__thumb" src="{{items.goods_pic}}" /></a></view>
+              <view class="weui-media-box__bd">
+                <view class="weui-media-box__desc"><a class="ord-pro-link">{{items.goods_name}}</a></view>
+                <p class="weui-media-box__desc">规格：<span>{{items.attribute_detail_name}}</span></p>
+                <view class="clear mg-t-10">
+                  <view class="wy-pro-pri fl">¥<em class="num font-15">{{items.goods_price}}</em></view>
+                  <view class="pro-amount fr"><span class="font-13">数量×<em class="name">{{items.goods_count}}</em></span></view>
+                </view>
+              </view>
+            </view>
+          </view>
+          <view class="ord-statistics">
+            <span>共<em class="num">{{item.goods_total}}</em>件商品，</span>
+            <span class="wy-pro-pri">总金额：¥<em class="num font-15">{{item.order_total}}</em></span>
+            <span>(含配送费<b>￥{{item.freight_price}}</b>)</span>
+          </view>
+          <view class="weui-panel__ft">
+
+            <view class="weui-cell weui-cell_access weui-cell_link oder-opt-btnbox">
+              <a class="ords-btn-com" data-order_id="{{item.order_id}}" bindtap="comment">去评价</a>
+            </view> 
+  
+          </view>
+        </view> -->
+   
+    </view>
+  </view>
+</view>

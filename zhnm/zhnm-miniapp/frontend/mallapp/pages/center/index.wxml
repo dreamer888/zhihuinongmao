@@ -1,0 +1,94 @@
+<view class='weui-content'>
+  <view class="wy-center-top">
+    <view class="weui-media-box weui-media-box_appmsg">
+      <view class="weui-media-box__hd"><image class="weui-media-box__thumb radius" src="{{shopUser.head_img}}"/></view>
+      <view class="weui-media-box__bd">
+        <text class="weui-media-box__title user-name">{{shopUser.username}}</text>
+      </view>
+
+    </view>
+
+  </view>
+  <view class="weui-panel weui-panel_access">
+  <view class="weui-panel__hd" data-status="11" bindtap="order_list" hover-class="none">
+      <view class="weui-cell weui-cell_access center-alloder" style="padding:0">
+        <view class="weui-cell__bd wy-cell">
+          <view class="weui-cell__hd"><image src="../../static/images/center-icon-order-all.png"  class="center-list-icon"  mode="widthFix"/></view>
+          <view class="weui-cell__bd weui-cell_primary"><text class="center-list-txt">全部订单</text></view>
+        </view>
+        <span class="weui-cell__ft"></span>
+      </view>   
+    </view>
+  <view class="weui-panel__bd">
+      <view class="weui-flex">
+        <view class="weui-flex__item" data-status="0" bindtap="order_list">
+          <view href="all_orders.html" class="center-ordersModule">
+            <span class="weui-badge" style="position: absolute;top:5px;right:10px; font-size:10px;" wx:if="{{count.d_fk!=0}}">{{count.d_fk}}</span>
+            <view class="imgicon"><image src="../../static/images/center-icon-order-dfk.png" /></view>
+            <view class="name">待付款</view>
+          </view>
+        </view>
+        <view class="weui-flex__item" data-status="1" bindtap="order_list">
+          <view href="all_orders.html" class="center-ordersModule">
+            <span class="weui-badge" style="position: absolute;top:5px;right:10px; font-size:10px;" wx:if="{{count.d_fh!=0}}">{{count.d_fh}}</span>
+            <view class="imgicon"><image src="../../static/images/center-icon-order-dfh.png" /></view>
+            <view class="name">待发货</view>
+          </view>
+        </view>
+        <view class="weui-flex__item" data-status="2" bindtap="order_list">
+          <view href="all_orders.html" class="center-ordersModule">
+          <span class="weui-badge" style="position: absolute;top:5px;right:10px; font-size:10px;" wx:if="{{count.d_sh!=0}}">{{count.d_sh}}</span>
+            <view class="imgicon"><image src="../../static/images/center-icon-order-dsh.png" /></view>
+            <view class="name">待收货</view>
+          </view>
+        </view>
+        <view class="weui-flex__item" data-status="5" bindtap="order_list">
+          <view href="orders.html" class="center-ordersModule">
+            <span class="weui-badge" style="position: absolute;top:5px;right:10px; font-size:10px;" wx:if="{{count.d_pj!=0}}">{{count.d_pj}}</span>
+            <view class="imgicon"><image src="../../static/images/center-icon-order-dpj.png" /></view>
+            <view class="name">待评价</view>
+          </view>
+        </view>
+      </view>
+    </view>
+   
+  </view>
+  
+  <view class="weui-panel">
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_small-appmsg">
+            <view class="weui-cells">
+               <view class="weui-cell weui-cell_access"  bindtap="collect_list">
+                <view class="weui-cell__hd"><image src="../../static/images/center-icon-sc.png"  class="center-list-icon" mode="widthFix"/></view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <text class="center-list-txt">我的收藏</text>
+                </view>
+                <span class="weui-cell__ft"></span>
+              </view>
+              <view class="weui-cell weui-cell_access" bindtap="address_list">
+                <view class="weui-cell__hd"><image src="../../static/images/center-icon-dz.png"  class="center-list-icon" mode="widthFix"/></view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <p class="center-list-txt">地址管理</p>
+                </view>
+                <span class="weui-cell__ft"></span>
+              </view>
+               <view class="weui-cell weui-cell_access" bindtap="coupon_list">
+                <view class="weui-cell__hd"><image src="../../static/images/center-icon-coupon.png"  class="center-list-icon" mode="widthFix"/></view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <p class="center-list-txt">优惠中心</p>
+                </view>
+                <span class="weui-cell__ft"></span>
+              </view>
+              <view class="weui-cell weui-cell_access" bindtap="user_index">
+                <view class="weui-cell__hd"><image src="../../static/images/center-icon-set.png"  class="center-list-icon" mode="widthFix"/></view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <p class="center-list-txt">个人资料</p>
+                </view>
+                <span class="weui-cell__ft"></span>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+</view>
+<include src="../footer/footer4.wxml"/> 

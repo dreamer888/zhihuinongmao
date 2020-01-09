@@ -1,0 +1,33 @@
+<!--index.wxml-->
+<view class="weui-content clear" id="list">
+			<view class="order-list-Below clear">
+				<text>退款金额</text>
+			</view>
+			<view class="weui-cells weui-cells_form com-txt-area">
+				<view class="weui-cell" style="padding:0 15px">
+
+					<view class="weui-cell__bd">
+						<input class="weui-textarea txt-area" type="number" onkeyup="check(this)"
+						name="refund_price" id="refund_price" bindinput='refund_price' value='{{refund_price}}'	placeholder="请输入退款金额，最多{{order.pay_total}}"/>
+					</view>
+				</view>
+			</view>
+
+			<view class="order-list-Below clear">
+				<text>退款说明</text>
+			</view>
+			<view class="weui-cells weui-cells_form com-txt-area">
+				<view class="weui-cell" style="padding:0 15px">
+
+					<view class="weui-cell__bd">
+						<textarea class="weui-textarea txt-area" placeholder="请输入退款说明"
+							rows="3" style="padding:20rpx 0;height:80rpx" bindinput='refund_explain'></textarea>
+					</view>
+				</view>
+			</view>
+		</view>
+	<view class="foot-black"></view>
+	<view class="foot-black"></view>
+	<view class="com-button">
+		<a bindtap='refund'>提交申请</a>
+	</view>

@@ -1,0 +1,19 @@
+@import "/static/css/style.wxss";
+@import "/static/lib/weui.min.wxss";
+.time_title{
+  margin-top: 10px;
+  font-size: 17px;
+  color: #313131;
+  line-height: 1em;
+  list-style: none;
+  overflow: hidden;
+}
+.time_desc{
+  margin-top: 10px;
+  padding-bottom: 10px;
+  font-size: 13px;
+  color: #A1A1A1;
+  line-height: 1em;
+  list-style: none;
+  overflow: hidden;
+}
