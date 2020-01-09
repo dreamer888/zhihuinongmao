@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CartMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_cart
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		goods_id,
+		goods_name,	
+		goods_pic,
+		goods_price,
+		addtime,	
+		user_id,	
+		goods_count,	
+		cart_id,
+		attribute_detail_id,
+		attribute_detail_name
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{goods_id},	
+		#{goods_name},	
+		#{goods_pic},
+		#{goods_price},
+		#{addtime},	
+		#{user_id},	
+		#{goods_count},	
+		#{cart_id},
+		#{attribute_detail_id},
+		#{attribute_detail_name}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+		cart_id = #{cart_id}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		goods_count = #{goods_count}
+		<if test="addtime !=null and addtime !=''">
+		,addtime = #{addtime}
+		</if>
+		
+		where 1=1
+		<if test="cart_id!=null and cart_id!=''">
+		and cart_id = #{cart_id}
+		</if>
+		<if test="user_id!=null and user_id!=''">
+		and user_id = #{user_id}
+		</if>
+		<if test="goods_id!=null and goods_id!=''">
+		and goods_id = #{goods_id}
+		</if>
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="cart_id!=null and cart_id!=''">
+		and cart_id = #{cart_id}
+		</if>
+		<if test="user_id!=null and user_id!=''">
+		and user_id = #{user_id}
+		</if>
+		<if test="goods_id!=null and goods_id!=''">
+		and goods_id = #{goods_id}
+		</if>
+		<if test="attribute_detail_id!=null and attribute_detail_id!=''">
+		and attribute_detail_id = #{attribute_detail_id}
+		</if>
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select 
+		t1.goods_id,	
+		addtime,	
+		user_id,	
+		goods_count,	
+		cart_id,
+		t1.attribute_detail_id,
+		t2.goods_name,
+		t2.goods_pic,
+		ifnull(t3.attribute_detail_name,'') attribute_detail_name,
+		ifnull(t3.attribute_detail_price,t2.goods_price) goods_price
+		from shop_cart t1 
+		left join shop_goods t2 on t1.goods_id=t2.goods_id
+		left join shop_attribute_detail t3 on t1.attribute_detail_id=t3.attribute_detail_id
+		where 1=1
+		<if test="pd.user_id!=null and pd.user_id!=''">
+		and user_id =#{pd.user_id}
+		order by addtime desc
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select 
+		t1.goods_id,	
+		addtime,	
+		user_id,	
+		goods_count,	
+		cart_id,
+		t1.attribute_detail_id,
+		t1.goods_name,
+		t1.goods_pic,
+		t1.attribute_detail_name,
+		t1.goods_price,
+		if(t1.attribute_detail_id='1',t2.goods_num,attribute_detail_num) goods_num
+		from shop_cart t1 
+		left join v_market_shop_goods m on t1.goods_id = m.goods_id 
+		left join shop_goods t2 on t1.goods_id=t2.goods_id
+		left join shop_attribute_detail t3 on t1.attribute_detail_id=t3.attribute_detail_id
+		where 1=1
+		<if test="market_id!=null and market_id!=''">
+		and m.market_id =#{market_id}
+		</if>
+		<if test="user_id!=null and user_id!=''">
+		and t1.user_id =#{user_id}
+		order by addtime desc
+		</if>
+	</select>
+	
+<!-- 查询数据数量 -->
+	<select id="count" parameterType="pd" resultType="java.lang.Integer">
+		select
+		IFNULL(sum(goods_count),0)
+		from shop_cart t1 left join v_market_shop_goods m on t1.goods_id = m.goods_id 
+		left join shop_goods t2 on t1.goods_id=t2.goods_id
+		left join shop_attribute_detail t3 on t1.attribute_detail_id=t3.attribute_detail_id
+		where 1=1
+		<if test="market_id!=null and market_id!=''">
+		and m.market_id =#{market_id}
+		</if>
+		<if test="user_id!=null and user_id!=''">
+		and t1.user_id=#{user_id}
+		</if>
+	</select>
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			cart_id in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

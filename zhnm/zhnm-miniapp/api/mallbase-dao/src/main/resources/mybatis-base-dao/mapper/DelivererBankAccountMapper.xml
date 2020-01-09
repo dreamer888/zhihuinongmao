@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.DelivererBankAccountMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.DelivererBankAccount">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			account_bank accountBank,
+			account account,
+			account_name accountName,
+			account_phone accountPhone
+			FROM deliverer_bank_account
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.DelivererBankAccount" resultType="com.wqwy.zhnm.base.entity.DelivererBankAccount">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			account_bank accountBank,
+			account account,
+			account_name accountName,
+			account_phone accountPhone
+			FROM deliverer_bank_account
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="delivererId!=null"> and deliverer_id = #{delivererId}</if>
+			<if test="accountBank!=null"> and account_bank = #{accountBank}</if>
+			<if test="account!=null"> and account = #{account}</if>
+			<if test="accountName!=null"> and account_name = #{accountName}</if>
+			<if test="accountPhone!=null"> and account_phone = #{accountPhone}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.DelivererBankAccount" resultType="com.wqwy.zhnm.base.entity.DelivererBankAccount">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			account_bank accountBank,
+			account account,
+			account_name accountName,
+			account_phone accountPhone
+			FROM deliverer_bank_account
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="delivererId!=null"> and deliverer_id = #{delivererId}</if>
+			<if test="accountBank!=null"> and account_bank = #{accountBank}</if>
+			<if test="account!=null"> and account = #{account}</if>
+			<if test="accountName!=null"> and account_name = #{accountName}</if>
+			<if test="accountPhone!=null"> and account_phone = #{accountPhone}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.DelivererBankAccount">
+		INSERT INTO deliverer_bank_account (
+			<if test="delivererId!=null">deliverer_id,</if>
+			<if test="accountBank!=null">account_bank,</if>
+			<if test="account!=null">account,</if>
+			<if test="accountName!=null">account_name,</if>
+			<if test="accountPhone!=null">account_phone,</if>
+			id
+			) VALUES (
+			<if test="delivererId!=null">#{delivererId},</if>
+			<if test="accountBank!=null">#{accountBank},</if>
+			<if test="account!=null">#{account},</if>
+			<if test="accountName!=null">#{accountName},</if>
+			<if test="accountPhone!=null">#{accountPhone},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.DelivererBankAccount">
+		UPDATE deliverer_bank_account SET
+			<if test="delivererId!=null">deliverer_id = #{delivererId} ,</if>
+			<if test="accountBank!=null">account_bank = #{accountBank} ,</if>
+			<if test="account!=null">account = #{account} ,</if>
+			<if test="accountName!=null">account_name = #{accountName} ,</if>
+			<if test="accountPhone!=null">account_Phone = #{accountPhone} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM deliverer_bank_account  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.ValidateCodeMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ValidateCode">
+		SELECT
+			id id,
+			phone phone,
+			code code,
+			operation_type operationType,
+			user_type userType,
+			send_time sendTime
+			FROM validate_code
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.ValidateCode" resultType="com.wqwy.zhnm.base.entity.ValidateCode">
+		SELECT
+			id id,
+			phone phone,
+			code code,
+			operation_type operationType,
+			user_type userType,
+			send_time sendTime
+			FROM validate_code
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="phone!=null"> and phone = #{phone}</if>
+			<if test="code!=null"> and code = #{code}</if>
+			<if test="operationType!=null"> and operation_type = #{operationType}</if>
+			<if test="userType!=null"> and user_type = #{userType}</if>
+			<if test="sendTime!=null"> and send_time = #{sendTime}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.ValidateCode" resultType="com.wqwy.zhnm.base.entity.ValidateCode">
+		SELECT
+			id id,
+			phone phone,
+			code code,
+			operation_type operationType,
+			user_type userType,
+			send_time sendTime
+			FROM validate_code
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="phone!=null"> and phone = #{phone}</if>
+			<if test="code!=null"> and code = #{code}</if>
+			<if test="operationType!=null"> and operation_type = #{operationType}</if>
+			<if test="userType!=null"> and user_type = #{userType}</if>
+			<if test="sendTime!=null"> and send_time = #{sendTime}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.ValidateCode">
+		INSERT INTO validate_code (
+			<if test="phone!=null">phone,</if>
+			<if test="code!=null">code,</if>
+			<if test="operationType!=null">operation_type,</if>
+			<if test="userType!=null">user_type,</if>
+			<if test="sendTime!=null">send_time,</if>
+			id
+			) VALUES (
+			<if test="phone!=null">#{phone},</if>
+			<if test="code!=null">#{code},</if>
+			<if test="operationType!=null">#{operationType},</if>
+			<if test="userType!=null">#{userType},</if>
+			<if test="sendTime!=null">#{sendTime},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.ValidateCode">
+		UPDATE validate_code SET
+			<if test="phone!=null">phone = #{phone} ,</if>
+			<if test="code!=null">code = #{code} ,</if>
+			<if test="operationType!=null">operation_type = #{operationType} ,</if>
+			<if test="userType!=null">user_type = #{userType} ,</if>
+			<if test="sendTime!=null">send_time = #{sendTime} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM validate_code  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

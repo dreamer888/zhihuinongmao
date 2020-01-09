@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.HelpAndFeedbackMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.HelpAndFeedback">
+		SELECT
+			id id,
+			object_id objectId,
+			object_type objectType,
+			title title,
+			content content,
+			create_time createTime
+			FROM help_and_feedback
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.HelpAndFeedback" resultType="com.wqwy.zhnm.base.entity.HelpAndFeedback">
+		SELECT
+			id id,
+			object_id objectId,
+			object_type objectType,
+			title title,
+			content content,
+			create_time createTime
+			FROM help_and_feedback
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="objectId!=null"> and object_id = #{objectId}</if>
+			<if test="objectType!=null"> and object_type = #{objectType}</if>
+			<if test="title!=null"> and title = #{title}</if>
+			<if test="content!=null"> and content = #{content}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.HelpAndFeedback" resultType="com.wqwy.zhnm.base.entity.HelpAndFeedback">
+		SELECT
+			id id,
+			object_id objectId,
+			object_type objectType,
+			title title,
+			content content,
+			create_time createTime
+			FROM help_and_feedback
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="objectId!=null"> and object_id = #{objectId}</if>
+			<if test="objectType!=null"> and object_type = #{objectType}</if>
+			<if test="title!=null"> and title = #{title}</if>
+			<if test="content!=null"> and content = #{content}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.HelpAndFeedback">
+		INSERT INTO help_and_feedback (
+			<if test="objectId!=null">object_id,</if>
+			<if test="objectType!=null">object_type,</if>
+			<if test="title!=null">title,</if>
+			<if test="content!=null">content,</if>
+			<if test="createTime!=null">create_time,</if>
+			id
+			) VALUES (
+			<if test="objectId!=null">#{objectId},</if>
+			<if test="objectType!=null">#{objectType},</if>
+			<if test="title!=null">#{title},</if>
+			<if test="content!=null">#{content},</if>
+			<if test="createTime!=null">#{createTime},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.HelpAndFeedback">
+		UPDATE help_and_feedback SET
+			<if test="objectId!=null">object_id = #{objectId} ,</if>
+			<if test="objectType!=null">object_type = #{objectType} ,</if>
+			<if test="title!=null">title = #{title} ,</if>
+			<if test="content!=null">content = #{content} ,</if>
+			<if test="createTime!=null">create_time = #{createTime} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM help_and_feedback  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

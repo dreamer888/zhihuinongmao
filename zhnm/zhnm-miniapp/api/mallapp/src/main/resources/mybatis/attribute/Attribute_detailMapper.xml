@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Attribute_detailMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_attribute_detail
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		goods_id,	
+		attribute_detail_name,	
+		attribute_detail_price,	
+		attribute_detail_num,	
+		sort,	
+		attribute_detail_id
+		
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{goods_id},	
+		#{attribute_detail_name},	
+		#{attribute_detail_price},	
+		#{attribute_detail_num},	
+		#{sort},	
+		#{attribute_detail_id}
+	</sql>
+	
+	
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+		attribute_detail_id = #{attribute_detail_id}
+	</select>
+	<!-- 批量修改 -->
+	<update id="attributedetailnum" parameterType="String">
+
+		update  shop_attribute_detail 
+		<trim prefix="set" suffixOverrides="">
+			<trim prefix="attribute_detail_num = case attribute_detail_id" suffix="end">
+				<foreach collection="list" item="detail_list" index="index" open="" separator="" close="">
+				when #{detail_list.attribute_detail_id} then attribute_detail_num - #{detail_list.goods_count}
+				</foreach>
+			</trim>
+		</trim>	  
+				  where attribute_detail_id in
+			<foreach collection="list" item="detail_list" index="index"
+			open="(" separator="," close=")">
+	              #{detail_list.attribute_detail_id}
+			</foreach> 
+	</update>
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 1=1
+		<if test="pd.keywords!= null and pd.keywords != ''"><!-- 关键词检索 -->
+			and
+				(
+				<!--	根据需求自己加检索条件
+					字段1 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%')
+					 or 
+					字段2 LIKE CONCAT(CONCAT('%', #{pd.keywords}),'%') 
+				-->
+				)
+		</if>
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where
+		goods_id=#{goods_id}
+		<!-- and attribute_detail_num > 0 -->
+		order by sort
+	</select>
+	
+	
+	<!-- 千派网络 www.qanpai.com-->
+</mapper>

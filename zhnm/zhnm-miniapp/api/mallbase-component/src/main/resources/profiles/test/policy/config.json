@@ -1,0 +1,7 @@
+{
+    "AccessKeyID": "LTAIO61DYpsEELm3",
+    "AccessKeySecret": "UhAPXUFuoZRKxYXqgVKrWpLwPPMtVM",
+    "RoleArn": "acs:ram::1367325777285340:role/ramappallpermission",
+    "TokenExpireTime": "1800",
+    "PolicyFile": "policy/all_policy.txt"
+}

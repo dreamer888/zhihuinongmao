@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.DelivererDynamicMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.DelivererDynamic">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			points points,
+			wallet wallet,
+			evaluation_total evaluationTotal,
+			evaluation_count evaluationCount
+			FROM deliverer_dynamic
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.DelivererDynamic" resultType="com.wqwy.zhnm.base.entity.DelivererDynamic">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			points points,
+			wallet wallet,
+			evaluation_total evaluationTotal,
+			evaluation_count evaluationCount
+			FROM deliverer_dynamic
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="delivererId!=null"> and deliverer_id = #{delivererId}</if>
+			<if test="points!=null"> and points = #{points}</if>
+			<if test="wallet!=null"> and wallet = #{wallet}</if>
+			<if test="evaluationTotal!=null"> and evaluation_total = #{evaluationTotal}</if>
+			<if test="evaluationCount!=null"> and evaluation_count = #{evaluationCount}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.DelivererDynamic" resultType="com.wqwy.zhnm.base.entity.DelivererDynamic">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			points points,
+			wallet wallet,
+			evaluation_total evaluationTotal,
+			evaluation_count evaluationCount
+			FROM deliverer_dynamic
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="delivererId!=null"> and deliverer_id = #{delivererId}</if>
+			<if test="points!=null"> and points = #{points}</if>
+			<if test="wallet!=null"> and wallet = #{wallet}</if>
+			<if test="evaluationTotal!=null"> and evaluation_total = #{evaluationTotal}</if>
+			<if test="evaluationCount!=null"> and evaluation_count = #{evaluationCount}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.DelivererDynamic">
+		INSERT INTO deliverer_dynamic (
+			<if test="delivererId!=null">deliverer_id,</if>
+			<if test="points!=null">points,</if>
+			<if test="wallet!=null">wallet,</if>
+			<if test="evaluationTotal!=null">evaluation_total,</if>
+			<if test="evaluationCount!=null">evaluation_count,</if>
+			id
+			) VALUES (
+			<if test="delivererId!=null">#{delivererId},</if>
+			<if test="points!=null">#{points},</if>
+			<if test="wallet!=null">#{wallet},</if>
+			<if test="evaluationTotal!=null">#{evaluationTotal},</if>
+			<if test="evaluationCount!=null">#{evaluationCount},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.DelivererDynamic">
+		UPDATE deliverer_dynamic SET
+			<if test="delivererId!=null">deliverer_id = #{delivererId} ,</if>
+			<if test="points!=null">points = #{points} ,</if>
+			<if test="wallet!=null">wallet = #{wallet} ,</if>
+			<if test="evaluationTotal!=null">evaluation_total = #{evaluationTotal} ,</if>
+			<if test="evaluationCount!=null">evaluation_count = #{evaluationCount} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM deliverer_dynamic  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

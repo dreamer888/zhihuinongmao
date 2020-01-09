@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.RefundMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.Refund">
+		SELECT
+			refund_id refundId,
+			order_id orderId,
+			order_detail_id orderDetailId,
+			refund_price refundPrice,
+			refund_explain refundExplain,
+			addtime addTime,
+			status status
+			FROM shop_refund
+			WHERE refund_id = #{refundId}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.Refund" resultType="com.wqwy.zhnm.base.entity.Refund">
+		SELECT
+			refund_id refundId,
+			order_id orderId,
+			order_detail_id orderDetailId,
+			refund_price refundPrice,
+			refund_explain refundExplain,
+			addtime addTime,
+			status status
+			FROM shop_refund
+			WHERE 1 = 1
+			<if test="refundId!=null"> and refund_id = #{refundId}</if>
+			<if test="orderId!=null"> and order_id = #{orderId}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.Refund" resultType="com.wqwy.zhnm.base.entity.Refund">
+		SELECT
+			refund_id refundId,
+			order_id orderId,
+			order_detail_id orderDetailId,
+			refund_price refundPrice,
+			refund_explain refundExplain,
+			addtime addTime,
+			status status
+			FROM shop_refund
+			WHERE 1 = 1
+			<if test="refundId!=null"> and refund_id = #{refundId}</if>
+			<if test="orderId!=null"> and order_id = #{orderId}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.Refund">
+		INSERT INTO shop_refund (
+			<if test="orderId!=null">order_id,</if>
+			<if test="orderDetailId!=null">order_detail_id,</if>
+			<if test="refundPrice!=null">refund_price,</if>
+			<if test="refundExplain!=null">refund_explain,</if>
+			<if test="addTime!=null">addtime,</if>
+			<if test="status!=null">status,</if>
+			refund_id
+			) VALUES (
+			<if test="orderId!=null">#{orderId},</if>
+			<if test="orderDetailId!=null">#{orderDetailId},</if>
+			<if test="refundPrice!=null">#{refundPrice},</if>
+			<if test="refundExplain!=null">#{refundExplain},</if>
+			<if test="addTime!=null">#{addTime},</if>
+			<if test="status!=null">#{status},</if>
+            #{refundId})
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.Refund">
+		UPDATE shop_refund SET
+			<if test="orderId!=null">order_id = #{orderId} ,</if>
+			<if test="orderDetailId!=null">market_city = #{orderDetailId} ,</if>
+			<if test="refundPrice!=null">refund_price = #{refundPrice} ,</if>
+			<if test="refundExplain!=null">refund_explain = #{refundExplain} ,</if>
+			<if test="addTime!=null">add_time = #{addTime} ,</if>
+			<if test="status!=null">status = #{status} ,</if>
+			refund_id = #{refundId}
+			WHERE
+			refund_id = #{refundId}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM shop_refund  
+		WHERE refund_id = #{refundId}
+	</update>
+	
+</mapper>

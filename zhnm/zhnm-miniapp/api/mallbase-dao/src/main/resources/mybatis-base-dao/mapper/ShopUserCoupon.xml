@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.ShopUserCouponMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ShopUserCoupon">
+		SELECT
+			coupon_id couponId,	
+			addtime addTime,
+			user_id userId,
+			status status,	
+			usercoupon_id usercouponId
+			FROM shop_usercoupon
+			WHERE coupon_id = #{couponId}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.ShopUserCoupon" resultType="com.wqwy.zhnm.base.entity.ShopUserCoupon">
+		SELECT
+			coupon_id couponId,	
+			addtime addTime,
+			user_id userId,
+			status status,	
+			usercoupon_id usercouponId
+			FROM shop_usercoupon
+			WHERE 1 = 1
+			<if test="userId!=null"> and user_id = #{userId}</if>
+			<if test="couponId!=null"> and coupon_id = #{couponId}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			order by addtime desc 
+	</select>
+	
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.ShopUserCoupon">
+		UPDATE shop_usercoupon SET
+			<if test="couponId!=null">coupon_id = #{couponId} ,</if>
+			<if test="addTime!=null">addtime = #{addTime} ,</if>
+			<if test="userId!=null">user_id = #{userId} ,</if>
+			<if test="status!=null">status = #{status} ,</if>
+			<if test="usercouponId!=null">usercoupon_id = #{usercouponId} ,</if>
+			usercoupon_id = #{usercouponId}
+			WHERE
+			usercoupon_id = #{usercouponId}
+	</update>
+	
+</mapper>

@@ -1,0 +1,19 @@
+.deploy_ctype_tip {
+	z-index: 1001;
+	width: 100%;
+	text-align: center;
+	position: fixed;
+	top: 50%;
+	margin-top: -23px;
+	left: 0;
+}
+
+.deploy_ctype_tip p {
+	display: inline-block;
+	padding: 13px 24px;
+	background: rgba(0,0,0,0.8);
+	font-size: 16px;
+	color: #ffffff;
+	line-height: 18px;
+	border-radius: 3px;
+}

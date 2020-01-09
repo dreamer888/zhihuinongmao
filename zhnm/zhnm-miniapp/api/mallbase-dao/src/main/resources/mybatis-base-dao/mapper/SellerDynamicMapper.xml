@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.SellerDynamicMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.SellerDynamic">
+		SELECT
+			id id,
+			seller_id sellerId,
+			evaluation_total evaluationTotal,
+			evaluation_count evaluationCount,
+			seller_points sellerPoints,
+			seller_wallet sellerWallet
+			FROM seller_dynamic
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.SellerDynamic" resultType="com.wqwy.zhnm.base.entity.SellerDynamic">
+		SELECT
+			id id,
+			seller_id sellerId,
+			evaluation_total evaluationTotal,
+			evaluation_count evaluationCount,
+			seller_points sellerPoints,
+			seller_wallet sellerWallet
+			FROM seller_dynamic
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="evaluationTotal!=null"> and evaluation_total = #{evaluationTotal}</if>
+			<if test="evaluationCount!=null"> and evaluation_count = #{evaluationCount}</if>
+			<if test="sellerPoints!=null"> and seller_points = #{sellerPoints}</if>
+			<if test="sellerWallet!=null"> and seller_wallet = #{sellerWallet}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.SellerDynamic" resultType="com.wqwy.zhnm.base.entity.SellerDynamic">
+		SELECT
+			id id,
+			seller_id sellerId,
+			evaluation_total evaluationTotal,
+			evaluation_count evaluationCount,
+			seller_points sellerPoints,
+			seller_wallet sellerWallet
+			FROM seller_dynamic
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="evaluationTotal!=null"> and evaluation_total = #{evaluationTotal}</if>
+			<if test="evaluationCount!=null"> and evaluation_count = #{evaluationCount}</if>
+			<if test="sellerPoints!=null"> and seller_points = #{sellerPoints}</if>
+			<if test="sellerWallet!=null"> and seller_wallet = #{sellerWallet}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.SellerDynamic">
+		INSERT INTO seller_dynamic (
+			<if test="sellerId!=null">seller_id,</if>
+			<if test="evaluationTotal!=null">evaluation_total,</if>
+			<if test="evaluationCount!=null">evaluation_count,</if>
+			<if test="sellerPoints!=null">seller_points,</if>
+			<if test="sellerWallet!=null">seller_wallet,</if>
+			id
+			) VALUES (
+			<if test="sellerId!=null">#{sellerId},</if>
+			<if test="evaluationTotal!=null">#{evaluationTotal},</if>
+			<if test="evaluationCount!=null">#{evaluationCount},</if>
+			<if test="sellerPoints!=null">#{sellerPoints},</if>
+			<if test="sellerWallet!=null">#{sellerWallet},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.SellerDynamic">
+		UPDATE seller_dynamic SET
+			<if test="sellerId!=null">seller_id = #{sellerId} ,</if>
+			<if test="evaluationTotal!=null">evaluation_total = #{evaluationTotal} ,</if>
+			<if test="evaluationCount!=null">evaluation_count = #{evaluationCount} ,</if>
+			<if test="sellerPoints!=null">seller_points = #{sellerPoints} ,</if>
+			<if test="sellerWallet!=null">seller_wallet = #{sellerWallet} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM seller_dynamic  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

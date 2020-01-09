@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.DelivererMarketMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.DelivererMarket">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			market_id marketId
+			FROM deliverer_market
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.DelivererMarket" resultType="com.wqwy.zhnm.base.entity.DelivererMarket">
+		SELECT
+			m.id id,
+			m.deliverer_id delivererId,
+			m.market_id marketId
+			FROM deliverer_market m LEFT JOIN deliverer lv 
+            ON m.deliverer_id = lv.id 
+			WHERE 1 = 1 AND lv.status = 0 
+			<if test="id!=null"> and m.id = #{id}</if>
+			<if test="delivererId!=null"> and m.deliverer_id = #{delivererId}</if>
+			<if test="marketId!=null"> and m.market_id = #{marketId}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.DelivererMarket" resultType="com.wqwy.zhnm.base.entity.DelivererMarket">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			market_id marketId
+			FROM deliverer_market
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="delivererId!=null"> and deliverer_id = #{delivererId}</if>
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.DelivererMarket">
+		INSERT INTO deliverer_market (
+			<if test="delivererId!=null">deliverer_id,</if>
+			<if test="marketId!=null">market_id,</if>
+			id
+			) VALUES (
+			<if test="delivererId!=null">#{delivererId},</if>
+			<if test="marketId!=null">#{marketId},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.DelivererMarket">
+		UPDATE deliverer_market SET
+			<if test="delivererId!=null">deliverer_id = #{delivererId} ,</if>
+			<if test="marketId!=null">market_id = #{marketId} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM deliverer_market  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

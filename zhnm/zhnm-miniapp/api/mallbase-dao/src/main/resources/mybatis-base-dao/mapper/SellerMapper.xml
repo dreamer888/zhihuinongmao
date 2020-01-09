@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.SellerMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.Seller">
+		SELECT
+			id id,
+			token token,
+			name name,
+			account account,
+			password password,
+			shop_code shopCode,
+			shop_name shopName,
+			business_license_img businessLicenseImg,
+			belong_market belongMarket,
+			id_card_last idCardLast,
+			business_license_code businessLicenseCode,
+			seller_ico sellerIco,
+			seller_category sellerCategory
+			FROM seller
+			WHERE id = #{id}
+	</select>
+	
+	<select id="getWithMarket" parameterType="String" resultType="com.wqwy.zhnm.base.component.component.SellerMarketComponent">
+        SELECT
+            s.id id,
+            s.token token,
+            s.name name,
+            s.account account,
+            s.password password,
+            s.shop_code shopCode,
+            s.shop_name shopName,
+            s.business_license_img businessLicenseImg,
+            s.belong_market belongMarket,
+            s.id_card_last idCardLast,
+            s.business_license_code businessLicenseCode,
+            s.seller_ico sellerIco,
+            s.seller_category sellerCategory,
+
+            m.market_name marketName
+            FROM seller s left join market m on s.belong_market=m.id
+            WHERE s.id = #{s.id}
+    </select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.Seller" resultType="com.wqwy.zhnm.base.entity.Seller">
+		SELECT
+			id id,
+			token token,
+			name name,
+			account account,
+			password password,
+			shop_code shopCode,
+			shop_name shopName,
+			business_license_img businessLicenseImg,
+			belong_market belongMarket,
+			id_card_last idCardLast,
+			business_license_code businessLicenseCode,
+			seller_ico sellerIco,
+			seller_category sellerCategory
+			FROM seller
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="token!=null"> and token = #{token}</if>
+			<if test="name!=null"> and name = #{name}</if>
+			<if test="account!=null"> and account = #{account}</if>
+			<if test="password!=null"> and password = #{password}</if>
+			<if test="shopCode!=null"> and shop_code = #{shopCode}</if>
+			<if test="shopName!=null"> and shop_name = #{shopName}</if>
+			<if test="businessLicenseImg!=null"> and business_license_img = #{businessLicenseImg}</if>
+			<if test="belongMarket!=null"> and belong_market = #{belongMarket}</if>
+			<if test="idCardLast!=null"> and id_card_last = #{idCardLast}</if>
+			<if test="businessLicenseCode!=null"> and business_license_code = #{businessLicenseCode}</if>
+			<if test="sellerIco!=null"> and seller_ico = #{sellerIco}</if>
+			<if test="sellerCategory!=null"> and seller_category = #{sellerCategory}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.Seller" resultType="com.wqwy.zhnm.base.entity.Seller">
+		SELECT
+			id id,
+			token token,
+			name name,
+			account account,
+			password password,
+			shop_code shopCode,
+			shop_name shopName,
+			business_license_img businessLicenseImg,
+			belong_market belongMarket,
+			id_card_last idCardLast,
+			business_license_code businessLicenseCode,
+			seller_ico sellerIco,
+			seller_category sellerCategory
+			FROM seller
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="token!=null"> and token = #{token}</if>
+			<if test="name!=null"> and name = #{name}</if>
+			<if test="account!=null"> and account = #{account}</if>
+			<if test="password!=null"> and password = #{password}</if>
+			<if test="shopCode!=null"> and shop_code = #{shopCode}</if>
+			<if test="shopName!=null"> and shop_name = #{shopName}</if>
+			<if test="businessLicenseImg!=null"> and business_license_img = #{businessLicenseImg}</if>
+			<if test="belongMarket!=null"> and belong_market = #{belongMarket}</if>
+			<if test="idCardLast!=null"> and id_card_last = #{idCardLast}</if>
+			<if test="businessLicenseCode!=null"> and business_license_code = #{businessLicenseCode}</if>
+			<if test="sellerIco!=null"> and seller_ico = #{sellerIco}</if>
+			<if test="sellerCategory!=null"> and seller_category = #{sellerCategory}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.Seller">
+		INSERT INTO seller (
+			<if test="token!=null">token,</if>
+			<if test="account!=null">account,</if>
+			<if test="name!=null">name,</if>
+			<if test="password!=null">password,</if>
+			<if test="shopCode!=null">shop_code,</if>
+			<if test="shopName!=null">shop_name,</if>
+			<if test="businessLicenseImg!=null">business_license_img,</if>
+			<if test="belongMarket!=null">belong_market,</if>
+			<if test="idCardLast!=null">id_card_last,</if>
+			<if test="businessLicenseCode!=null">business_license_code,</if>
+			<if test="sellerIco!=null">seller_ico,</if>
+			<if test="sellerCategory!=null">seller_category,</if>
+			id
+			) VALUES (
+			<if test="token!=null">#{token},</if>
+			<if test="account!=null">#{account},</if>
+			<if test="name!=null">#{name},</if>
+			<if test="password!=null">#{password},</if>
+			<if test="shopCode!=null">#{shopCode},</if>
+			<if test="shopName!=null">#{shopName},</if>
+			<if test="businessLicenseImg!=null">#{businessLicenseImg},</if>
+			<if test="belongMarket!=null">#{belongMarket},</if>
+			<if test="idCardLast!=null">#{idCardLast},</if>
+			<if test="businessLicenseCode!=null">#{businessLicenseCode},</if>
+			<if test="sellerIco!=null">#{sellerIco},</if>
+			<if test="sellerCategory!=null">#{sellerCategory},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.Seller">
+		UPDATE seller SET
+			<if test="token!=null">token = #{token} ,</if>
+			<if test="account!=null">account = #{account} ,</if>
+			<if test="name!=null">name = #{name} ,</if>
+			<if test="password!=null">password = #{password} ,</if>
+			<if test="shopCode!=null">shop_code = #{shopCode} ,</if>
+			<if test="shopName!=null">shop_name = #{shopName} ,</if>
+			<if test="businessLicenseImg!=null">business_license_img = #{businessLicenseImg} ,</if>
+			<if test="belongMarket!=null">belong_market = #{belongMarket} ,</if>
+			<if test="idCardLast!=null">id_card_last = #{idCardLast} ,</if>
+			<if test="businessLicenseCode!=null">business_license_code = #{businessLicenseCode} ,</if>
+			<if test="sellerIco!=null">seller_ico = #{sellerIco} ,</if>
+			<if test="sellerCategory!=null">seller_category = #{sellerCategory} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM seller  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

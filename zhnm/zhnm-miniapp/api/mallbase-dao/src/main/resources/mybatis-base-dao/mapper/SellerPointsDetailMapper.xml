@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.SellerPointsDetailMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.SellerPointsDetail">
+		SELECT
+			id id,
+			seller_id sellerId,
+			changed_points changedPoints,
+			update_time updateTime,
+			changed_reason changedReason,
+			operator operator,
+			create_time createTime,
+			auditor auditor,
+			audit_time auditTime,
+			remark remark
+			FROM seller_points_detail
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.SellerPointsDetail" resultType="com.wqwy.zhnm.base.entity.SellerPointsDetail">
+		SELECT
+			id id,
+			seller_id sellerId,
+			changed_points changedPoints,
+			update_time updateTime,
+			changed_reason changedReason,
+			operator operator,
+			create_time createTime,
+			auditor auditor,
+			audit_time auditTime,
+			remark remark
+			FROM seller_points_detail
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="changedPoints!=null"> and changed_points = #{changedPoints}</if>
+			<if test="updateTime!=null"> and update_time = #{updateTime}</if>
+			<if test="changedReason!=null"> and changed_reason = #{changedReason}</if>
+			<if test="operator!=null"> and operator = #{operator}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+			<if test="auditor!=null"> and auditor = #{auditor}</if>
+			<if test="auditTime!=null"> and audit_time = #{auditTime}</if>
+			<if test="remark!=null"> and remark = #{remark}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.SellerPointsDetail" resultType="com.wqwy.zhnm.base.entity.SellerPointsDetail">
+		SELECT
+			id id,
+			seller_id sellerId,
+			changed_points changedPoints,
+			update_time updateTime,
+			changed_reason changedReason,
+			operator operator,
+			create_time createTime,
+			auditor auditor,
+			audit_time auditTime,
+			remark remark
+			FROM seller_points_detail
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="changedPoints!=null"> and changed_points = #{changedPoints}</if>
+			<if test="updateTime!=null"> and update_time = #{updateTime}</if>
+			<if test="changedReason!=null"> and changed_reason = #{changedReason}</if>
+			<if test="operator!=null"> and operator = #{operator}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+			<if test="auditor!=null"> and auditor = #{auditor}</if>
+			<if test="auditTime!=null"> and audit_time = #{auditTime}</if>
+			<if test="remark!=null"> and remark = #{remark}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.SellerPointsDetail">
+		INSERT INTO seller_points_detail (
+			<if test="sellerId!=null">seller_id,</if>
+			<if test="changedPoints!=null">changed_points,</if>
+			<if test="updateTime!=null">update_time,</if>
+			<if test="changedReason!=null">changed_reason,</if>
+			<if test="operator!=null">operator,</if>
+			<if test="createTime!=null">create_time,</if>
+			<if test="auditor!=null">auditor,</if>
+			<if test="auditTime!=null">audit_time,</if>
+			<if test="remark!=null">remark,</if>
+			id
+			) VALUES (
+			<if test="sellerId!=null">#{sellerId},</if>
+			<if test="changedPoints!=null">#{changedPoints},</if>
+			<if test="updateTime!=null">#{updateTime},</if>
+			<if test="changedReason!=null">#{changedReason},</if>
+			<if test="operator!=null">#{operator},</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="auditor!=null">#{auditor},</if>
+			<if test="auditTime!=null">#{auditTime},</if>
+			<if test="remark!=null">#{remark},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.SellerPointsDetail">
+		UPDATE seller_points_detail SET
+			<if test="sellerId!=null">seller_id = #{sellerId} ,</if>
+			<if test="changedPoints!=null">changed_points = #{changedPoints} ,</if>
+			<if test="updateTime!=null">update_time = #{updateTime} ,</if>
+			<if test="changedReason!=null">changed_reason = #{changedReason} ,</if>
+			<if test="operator!=null">operator = #{operator} ,</if>
+			<if test="createTime!=null">create_time = #{createTime} ,</if>
+			<if test="auditor!=null">auditor = #{auditor} ,</if>
+			<if test="auditTime!=null">audit_time = #{auditTime} ,</if>
+			<if test="remark!=null">remark = #{remark} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM seller_points_detail  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

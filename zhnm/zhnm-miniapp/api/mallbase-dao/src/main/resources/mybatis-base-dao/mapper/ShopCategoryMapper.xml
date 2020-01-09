@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.ShopCategoryMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ShopCategory">
+		SELECT
+			category_id categoryId,
+			category_name categoryName,
+			category_en_name categoryEnName,
+			category_img categoryImg,
+			super_id superId,
+			sort sort
+			FROM shop_category
+			WHERE category_id = #{categoryId}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.ShopCategory" resultType="com.wqwy.zhnm.base.entity.ShopCategory">
+		SELECT
+			category_id categoryId,
+			category_name categoryName,
+			category_en_name categoryEnName,
+			category_img categoryImg,
+			super_id superId,
+			sort sort
+			FROM shop_category
+			WHERE 1 = 1
+			<if test="categoryId!=null"> and category_id = #{categoryId}</if>
+			<if test="categoryName!=null"> and category_name = #{categoryName}</if>
+			<if test="categoryEnName!=null"> and category_en_name = #{categoryEnName}</if>
+			<if test="categoryImg!=null"> and category_img = #{categoryImg}</if>
+			<if test="superId!=null"> and super_id = #{superId}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.ShopCategory" resultType="com.wqwy.zhnm.base.entity.ShopCategory">
+		SELECT
+			category_id categoryId,
+			category_name categoryName,
+			category_en_name categoryEnName,
+			category_img categoryImg,
+			super_id superId,
+			sort sort
+			FROM shop_category
+			WHERE 1 = 1
+			<if test="categoryId!=null"> and category_id = #{categoryId}</if>
+			<if test="categoryName!=null"> and category_name = #{categoryName}</if>
+			<if test="categoryEnName!=null"> and category_en_name = #{categoryEnName}</if>
+			<if test="categoryImg!=null"> and category_img = #{categoryImg}</if>
+			<if test="superId!=null"> and super_id = #{superId}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+			ORDER BY sort ASC 
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.ShopCategory">
+		INSERT INTO shop_category (
+			<if test="categoryName!=null">category_name,</if>
+			<if test="categoryEnName!=null">category_en_name,</if>
+			<if test="categoryImg!=null">category_img,</if>
+			<if test="superId!=null">super_id,</if>
+			<if test="sort!=null">sort,</if>
+			category_id
+			) VALUES (
+			<if test="categoryName!=null">#{categoryName},</if>
+			<if test="categoryEnName!=null">#{categoryEnName},</if>
+			<if test="categoryImg!=null">#{categoryImg},</if>
+			<if test="superId!=null">#{superId},</if>
+			<if test="sort!=null">#{sort},</if>
+#{categoryId}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.ShopCategory">
+		UPDATE shop_category SET
+			<if test="categoryName!=null">category_name = #{categoryName} ,</if>
+			<if test="categoryEnName!=null">category_en_name = #{categoryEnName} ,</if>
+			<if test="categoryImg!=null">category_img = #{categoryImg} ,</if>
+			<if test="superId!=null">super_id = #{superId} ,</if>
+			<if test="sort!=null">sort = #{sort} ,</if>
+			category_id = #{categoryId}
+			WHERE
+			category_id = #{categoryId}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM shop_category  
+		WHERE category_id = #{categoryId}
+	</update>
+	
+</mapper>

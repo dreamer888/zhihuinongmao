@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.ShopOrderMapper">
+
+    <select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ShopOrder">
+		SELECT
+			order_id orderId,
+			addtime addtime,
+			total_price totalPrice,
+			order_total orderTotal,
+			coupon_price couponPrice,
+			coupon_id couponId,
+			freight_price freightPrice,
+			pay_way payWay,
+			user_id userId,
+			addr_realname addrRealname,
+			addr_phone addrPhone,
+			addr_city addrCity,
+			address address,
+			ip_address ipAddress,
+			user_ip userIp,
+			status status,
+			express_title expressTitle,
+			express_name expressName,
+			express_num expressNum,
+			transaction_id transactionId,
+			market_id marketId,
+			deliverer_id delivererId,
+			delivery_cost deliveryCost,
+			cancel_time cancelTime,
+			delivery_finish_time deliveryFinishTime,
+			finish_time finishTime,
+			location location,
+			delivery_time_slice deliveryTimeSlice,
+			remark remark
+			FROM shop_order
+			WHERE order_id = #{orderId}
+	</select>
+
+    <select id="getForUpdate" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ShopOrder">
+		SELECT
+			order_id orderId,
+			addtime addtime,
+			total_price totalPrice,
+			order_total orderTotal,
+			coupon_price couponPrice,
+			coupon_id couponId,
+			freight_price freightPrice,
+			pay_way payWay,
+			user_id userId,
+			addr_realname addrRealname,
+			addr_phone addrPhone,
+			addr_city addrCity,
+			address address,
+			ip_address ipAddress,
+			user_ip userIp,
+			status status,
+			express_title expressTitle,
+			express_name expressName,
+			express_num expressNum,
+			transaction_id transactionId,
+			market_id marketId,
+			deliverer_id delivererId,
+			delivery_cost deliveryCost,
+			cancel_time cancelTime,
+			delivery_finish_time deliveryFinishTime,
+			finish_time finishTime,
+			location location,
+			delivery_time_slice deliveryTimeSlice,
+			remark remark
+			FROM shop_order
+		WHERE order_id = #{orderId}
+			FOR UPDATE
+	</select>
+
+    <select id="findList" parameterType="com.wqwy.zhnm.base.entity.ShopOrder"
+            resultType="com.wqwy.zhnm.base.entity.ShopOrder">
+        SELECT
+        order_id orderId,
+        addtime addtime,
+        total_price totalPrice,
+        order_total orderTotal,
+        coupon_price couponPrice,
+        coupon_id couponId,
+        freight_price freightPrice,
+        pay_way payWay,
+        user_id userId,
+        addr_realname addrRealname,
+        addr_phone addrPhone,
+        addr_city addrCity,
+        address address,
+        ip_address ipAddress,
+        user_ip userIp,
+        status status,
+        express_title expressTitle,
+        express_name expressName,
+        express_num expressNum,
+        transaction_id transactionId,
+        market_id marketId,
+        deliverer_id delivererId,
+        delivery_cost deliveryCost,
+        cancel_time cancelTime,
+        delivery_finish_time deliveryFinishTime,
+        finish_time finishTime,
+        location location,
+        delivery_time_slice deliveryTimeSlice
+        FROM shop_order
+        WHERE 1 = 1
+        <if test="orderId!=null">and order_id = #{orderId}</if>
+        <if test="addtime!=null">and addtime = #{addtime}</if>
+        <if test="totalPrice!=null">and total_price = #{totalPrice}</if>
+        <if test="orderTotal!=null">and order_total = #{orderTotal}</if>
+        <if test="couponPrice!=null">and coupon_price = #{couponPrice}</if>
+        <if test="couponId!=null">and coupon_id = #{couponId}</if>
+        <if test="freightPrice!=null">and freight_price = #{freightPrice}</if>
+        <if test="payWay!=null">and pay_way = #{payWay}</if>
+        <if test="userId!=null">and user_id = #{userId}</if>
+        <if test="addrRealname!=null">and addr_realname = #{addrRealname}</if>
+        <if test="addrPhone!=null">and addr_phone = #{addrPhone}</if>
+        <if test="addrCity!=null">and addr_city = #{addrCity}</if>
+        <if test="address!=null">and address = #{address}</if>
+        <if test="ipAddress!=null">and ip_address = #{ipAddress}</if>
+        <if test="userIp!=null">and user_ip = #{userIp}</if>
+        <if test="status!=null">and status = #{status}</if>
+        <if test="expressTitle!=null">and express_title = #{expressTitle}</if>
+        <if test="expressName!=null">and express_name = #{expressName}</if>
+        <if test="expressNum!=null">and express_num = #{expressNum}</if>
+        <if test="transactionId!=null">and transaction_id = #{transactionId}</if>
+        <if test="marketId!=null">and market_id = #{marketId}</if>
+        <if test="delivererId!=null">and deliverer_id = #{delivererId}</if>
+
+        <if test="deliveryCost!=null">and delivery_cost = #{deliveryCost}</if>
+        <if test="cancelTime!=null">and cancel_time = #{cancelTime}</if>
+        <if test="deliveryFinishTime!=null">and delivery_finish_time = #{deliveryFinishTime}</if>
+        <if test="finishTime!=null">and finish_time = #{finishTime}</if>
+    </select>
+
+    <select id="findListByPage" parameterType="com.wqwy.zhnm.base.component.dto.ShopOrderDTO"
+            resultType="com.wqwy.zhnm.base.component.dto.ShopOrderDTO">
+        SELECT
+        order_id orderId,
+        addtime addtime,
+        total_price totalPrice,
+        order_total orderTotal,
+        coupon_price couponPrice,
+        coupon_id couponId,
+        freight_price freightPrice,
+        pay_way payWay,
+        user_id userId,
+        addr_realname addrRealname,
+        addr_phone addrPhone,
+        addr_city addrCity,
+        address address,
+        ip_address ipAddress,
+        user_ip userIp,
+        status status,
+        express_title expressTitle,
+        express_name expressName,
+        express_num expressNum,
+        transaction_id transactionId,
+        market_id marketId,
+        deliverer_id delivererId,
+        delivery_cost deliveryCost,
+        cancel_time cancelTime,
+        delivery_finish_time deliveryFinishTime,
+        finish_time finishTime,
+        location location,
+        delivery_time_slice deliveryTimeSlice,
+        remark remark
+        FROM shop_order
+        WHERE 1 = 1
+        <if test="orderId!=null">and order_id = #{orderId}</if>
+        <if test="addtime!=null">and addtime = #{addtime}</if>
+        <if test="totalPrice!=null">and total_price = #{totalPrice}</if>
+        <if test="orderTotal!=null">and order_total = #{orderTotal}</if>
+        <if test="couponPrice!=null">and coupon_price = #{couponPrice}</if>
+        <if test="couponId!=null">and coupon_id = #{couponId}</if>
+        <if test="freightPrice!=null">and freight_price = #{freightPrice}</if>
+        <if test="payWay!=null">and pay_way = #{payWay}</if>
+        <if test="userId!=null">and user_id = #{userId}</if>
+        <if test="addrRealname!=null">and addr_realname = #{addrRealname}</if>
+        <if test="addrPhone!=null">and addr_phone = #{addrPhone}</if>
+        <if test="addrCity!=null">and addr_city = #{addrCity}</if>
+        <if test="address!=null">and address = #{address}</if>
+        <if test="ipAddress!=null">and ip_address = #{ipAddress}</if>
+        <if test="userIp!=null">and user_ip = #{userIp}</if>
+        <if test='status!=null and status=="25"'>and status in (5,25)</if>
+        <if test='status!=null and status!="25"'>and status = #{status}</if>
+        <if test="expressTitle!=null">and express_title = #{expressTitle}</if>
+        <if test="expressName!=null">and express_name = #{expressName}</if>
+        <if test="expressNum!=null">and express_num = #{expressNum}</if>
+        <if test="transactionId!=null">and transaction_id = #{transactionId}</if>
+        <if test="marketId!=null">and market_id = #{marketId}</if>
+        <if test="delivererId!=null">and deliverer_id = #{delivererId}</if>
+
+        <if test="deliveryCost!=null">and delivery_cost = #{deliveryCost}</if>
+        <if test="cancelTime!=null">and cancel_time = #{cancelTime}</if>
+        <if test="deliveryFinishTime!=null">and delivery_finish_time = #{deliveryFinishTime}</if>
+        <if test="finishTime!=null">and finish_time = #{finishTime}</if>
+
+        <if test="isToday!=null">and date(addtime) = curdate()</if>
+
+        <if test="searchString!=null">and (order_id like '%${searchString}%' or addr_phone like '%${searchString}%')
+        </if>
+        ORDER BY addtime desc
+    </select>
+
+    <select id="findShopOrdersByPage" parameterType="com.wqwy.zhnm.base.component.dto.ShopOrderDTO"
+            resultType="com.wqwy.zhnm.base.component.dto.ShopOrderDTO">
+        SELECT
+        distinct so.order_id orderId,<!-- TODO -->
+        so.addtime addtime,
+        so.total_price totalPrice,
+        so.order_total orderTotal,
+        so.coupon_price couponPrice,
+        so.coupon_id couponId,
+        so.freight_price freightPrice,
+        so.pay_way payWay,
+        so.user_id userId,
+        so.addr_realname addrRealname,
+        so.addr_phone addrPhone,
+        so.addr_city addrCity,
+        so.address address,
+        so.ip_address ipAddress,
+        so.user_ip userIp,
+        so.status status,
+        so.express_title expressTitle,
+        so.express_name expressName,
+        so.express_num expressNum,
+        so.transaction_id transactionId,
+        so.market_id marketId,
+        so.deliverer_id delivererId,
+        so.delivery_cost deliveryCost,
+        so.cancel_time cancelTime,
+        so.delivery_finish_time deliveryFinishTime,
+        so.finish_time finishTime,
+        so.location location,
+        sod.seller_id sellerId,
+        sod.seller_seize_time sellerSeizeTime,
+        d.cnname delivererName,
+        d.account delivererPhone,
+        so.delivery_time_slice deliveryTimeSlice,
+        so.remark remark
+        FROM
+        shop_order so left join shop_order_detail sod on so.order_id=sod.order_id
+        left join deliverer d on so.deliverer_id=d.id
+        WHERE 1 = 1
+        <if test="orderId!=null">and so.order_id = #{orderId}</if>
+        <if test="addtime!=null">and so.addtime = #{addtime}</if>
+        <if test="userId!=null">and so.user_id = #{userId}</if>
+        <if test="status!=null">and so.status = #{status}</if>
+        <if test="marketId!=null">and so.market_id = #{marketId}</if>
+        <if test="delivererId!=null">and so.deliverer_id = #{delivererId}</if>
+        <!--  -->
+        <if test="sellerId!=null">and sod.seller_id = #{sellerId}</if>
+        <if test="isToday!=null">and date(so.addtime) = curdate()</if>
+        ORDER BY so.addtime desc
+    </select>
+
+    <select id="findAllOrdersByPage" parameterType="com.wqwy.zhnm.base.component.dto.OrderDTO"
+            resultType="com.wqwy.zhnm.base.component.dto.OrderDTO">
+        select
+        order_number orderNumber,
+        addtime,
+        'OFFLINE' as orderType,
+        pay_way as payWay,
+        delivery_time_slice deliveryTimeSlice,
+        remark remark
+        from
+        balance_offline_order boo
+        where 1=1 and status !=0
+        <if test="sellerId!=null">and boo.seller_id = #{sellerId}</if>
+        <if test="searchString!=null">and boo.order_number like '%${searchString}%'</if>
+        union all
+
+        select
+        distinct so.order_id orderNumber,
+        addtime,
+        'ONLINE' as orderType,
+        pay_way as payWay,
+        so.delivery_time_slice deliveryTimeSlice,
+        so.remark remark
+        from
+        shop_order so left join shop_order_detail sod on so.order_id=sod.order_id
+        where 1=1
+        <if test="sellerId!=null">and sod.seller_id = #{sellerId}</if>
+        <if test="searchString!=null">and (so.order_id like '%${searchString}%' or so.addr_phone like
+            '%${searchString}%')
+        </if>
+        <!-- <if test="searchString!=null"> or so.addr_phone like '%#{searchString}%'</if> -->
+        order by addtime desc
+    </select>
+
+    <insert id="insert" parameterType="com.wqwy.zhnm.base.entity.ShopOrder">
+        INSERT INTO shop_order (
+        <if test="addtime!=null">addtime,</if>
+        <if test="totalPrice!=null">total_price,</if>
+        <if test="orderTotal!=null">order_total,</if>
+        <if test="couponPrice!=null">coupon_price,</if>
+        <if test="couponId!=null">coupon_id,</if>
+        <if test="freightPrice!=null">freight_price,</if>
+        <if test="payWay!=null">pay_way,</if>
+        <if test="userId!=null">user_id,</if>
+        <if test="addrRealname!=null">addr_realname,</if>
+        <if test="addrPhone!=null">addr_phone,</if>
+        <if test="addrCity!=null">addr_city,</if>
+        <if test="address!=null">address,</if>
+        <if test="ipAddress!=null">ip_address,</if>
+        <if test="userIp!=null">user_ip,</if>
+        <if test="status!=null">status,</if>
+        <if test="expressTitle!=null">express_title,</if>
+        <if test="expressName!=null">express_name,</if>
+        <if test="expressNum!=null">express_num,</if>
+        <if test="transactionId!=null">transaction_id,</if>
+        <if test="marketId!=null">market_id,</if>
+        <if test="delivererId!=null">deliverer_id,</if>
+
+        <if test="deliveryCost!=null">delivery_cost,</if>
+        <if test="cancelTime!=null">cancel_time,</if>
+        <if test="deliveryFinishTime!=null">delivery_finish_time,</if>
+        <if test="finishTime!=null">finish_time,</if>
+        <if test="location!=null">location,</if>
+        <if test="deliveryTimeSlice!=null">delivery_time_slice,</if>
+        <if test="remark">remark,</if>
+        order_id
+        ) VALUES (
+        <if test="addtime!=null">#{addtime},</if>
+        <if test="totalPrice!=null">#{totalPrice},</if>
+        <if test="orderTotal!=null">#{orderTotal},</if>
+        <if test="couponPrice!=null">#{couponPrice},</if>
+        <if test="couponId!=null">#{couponId},</if>
+        <if test="freightPrice!=null">#{freightPrice},</if>
+        <if test="payWay!=null">#{payWay},</if>
+        <if test="userId!=null">#{userId},</if>
+        <if test="addrRealname!=null">#{addrRealname},</if>
+        <if test="addrPhone!=null">#{addrPhone},</if>
+        <if test="addrCity!=null">#{addrCity},</if>
+        <if test="address!=null">#{address},</if>
+        <if test="ipAddress!=null">#{ipAddress},</if>
+        <if test="userIp!=null">#{userIp},</if>
+        <if test="status!=null">#{status},</if>
+        <if test="expressTitle!=null">#{expressTitle},</if>
+        <if test="expressName!=null">#{expressName},</if>
+        <if test="expressNum!=null">#{expressNum},</if>
+        <if test="transactionId!=null">#{transactionId},</if>
+        <if test="marketId!=null">#{marketId},</if>
+        <if test="delivererId!=null">#{delivererId},</if>
+
+        <if test="deliveryCost!=null">#{deliveryCost},</if>
+        <if test="cancelTime!=null">#{cancelTime},</if>
+        <if test="deliveryFinishTime!=null">#{deliveryFinishTime},</if>
+        <if test="finishTime!=null">#{finishTime},</if>
+        <if test="location!=null">#{location},</if>
+        <if test="remark">#{remark},</if>
+        <if test="deliveryTimeSlice!=null">#{deliveryTimeSlice},</if>
+        #{orderId} )
+    </insert>
+
+    <update id="update" parameterType="com.wqwy.zhnm.base.entity.ShopOrder">
+        UPDATE shop_order SET
+        <if test="addtime!=null">addtime = #{addtime} ,</if>
+        <if test="totalPrice!=null">total_price = #{totalPrice} ,</if>
+        <if test="orderTotal!=null">order_total = #{orderTotal} ,</if>
+        <if test="couponPrice!=null">coupon_price = #{couponPrice} ,</if>
+        <if test="couponId!=null">coupon_id = #{couponId} ,</if>
+        <if test="freightPrice!=null">freight_price = #{freightPrice} ,</if>
+        <if test="payWay!=null">pay_way = #{payWay} ,</if>
+        <if test="userId!=null">user_id = #{userId} ,</if>
+        <if test="addrRealname!=null">addr_realname = #{addrRealname} ,</if>
+        <if test="addrPhone!=null">addr_phone = #{addrPhone} ,</if>
+        <if test="addrCity!=null">addr_city = #{addrCity} ,</if>
+        <if test="address!=null">address = #{address} ,</if>
+        <if test="ipAddress!=null">ip_address = #{ipAddress} ,</if>
+        <if test="userIp!=null">user_ip = #{userIp} ,</if>
+        <if test="status!=null">status = #{status} ,</if>
+        <if test="expressTitle!=null">express_title = #{expressTitle} ,</if>
+        <if test="expressName!=null">express_name = #{expressName} ,</if>
+        <if test="expressNum!=null">express_num = #{expressNum} ,</if>
+        <if test="transactionId!=null">transaction_id = #{transactionId} ,</if>
+        <if test="marketId!=null">market_id = #{marketId} ,</if>
+        <if test="delivererId!=null">deliverer_id = #{delivererId} ,</if>
+
+        <if test="deliveryCost!=null">delivery_cost = #{deliveryCost} ,</if>
+        <if test="cancelTime!=null">cancel_time = #{cancelTime} ,</if>
+        <if test="deliveryFinishTime!=null">delivery_finish_time = #{deliveryFinishTime} ,</if>
+        <if test="finishTime!=null">finish_time = #{finishTime} ,</if>
+        <if test="location!=null">location = #{location} ,</if>
+        <if test="remark">remark = #{remark},</if>
+        <if test="deliveryTimeSlice!=null">delivery_time_slice = #{deliveryTimeSlice},</if>
+        <if test="singleTime!=null">single_time = #{singleTime},</if>
+        order_id = #{orderId}
+        WHERE
+        order_id = #{orderId}
+    </update>
+
+    <update id="delete" parameterType="String">
+		DELETE FROM shop_order  
+		WHERE order_id = #{orderId}
+	</update>
+
+</mapper>

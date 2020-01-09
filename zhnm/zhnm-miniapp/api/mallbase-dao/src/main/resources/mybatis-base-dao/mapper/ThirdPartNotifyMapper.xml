@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.ThirdPartNotifyMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ThirdPartNotify">
+		SELECT
+			id id,
+			trade_no tradeNo,
+			notify_type notifyType,
+			notify_status notify_status,
+			operation_type operationType,
+			notify_time notifyTime,
+			create_time createTime
+			FROM third_part_notify
+			WHERE id = #{id}
+	</select>
+
+	<select id="getCountByCondition" parameterType="com.wqwy.zhnm.base.entity.ThirdPartNotify" resultType="Integer">
+		SELECT
+			count(*)
+			FROM third_part_notify
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="tradeNo!=null"> and trade_no = #{tradeNo}</if>
+			<if test="notifyType!=null"> and notify_type = #{notifyType}</if>
+			<if test="notifyStatus!=null"> and notify_status = #{notifyStatus}</if>
+			<if test="operationType!=null"> and operation_type = #{operationType}</if>
+			<if test="notifyTime!=null"> and notify_time = #{notifyTime}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+	</select>
+	
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.ThirdPartNotify" resultType="com.wqwy.zhnm.base.entity.ThirdPartNotify">
+		SELECT
+			id id,
+			trade_no tradeNo,
+			notify_type notifyType,
+			notify_status notify_status,
+			operation_type operationType,
+			notify_time notifyTime,
+			create_time createTime
+			FROM third_part_notify
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="tradeNo!=null"> and trade_no = #{tradeNo}</if>
+			<if test="notifyType!=null"> and notify_type = #{notifyType}</if>
+			<if test="notifyStatus!=null"> and notify_status = #{notifyStatus}</if>
+			<if test="operationType!=null"> and operation_type = #{operationType}</if>
+			<if test="notifyTime!=null"> and notify_time = #{notifyTime}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.ThirdPartNotify" resultType="com.wqwy.zhnm.base.entity.ThirdPartNotify">
+		SELECT
+			id id,
+			trade_no tradeNo,
+			notify_type notifyType,
+			notify_status notify_status,
+			operation_type operationType,
+			notify_time notifyTime,
+			create_time createTime
+			FROM third_part_notify
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="tradeNo!=null"> and trade_no = #{tradeNo}</if>
+			<if test="notifyType!=null"> and notify_type = #{notifyType}</if>
+			<if test="notifyStatus!=null"> and notify_status = #{notifyStatus}</if>
+			<if test="operationType!=null"> and operation_type = #{operationType}</if>
+			<if test="notifyTime!=null"> and notify_time = #{notifyTime}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.ThirdPartNotify">
+		INSERT INTO third_part_notify (
+			<if test="tradeNo!=null">trade_no,</if>
+			<if test="notifyType!=null">notify_type,</if>
+			<if test="notifyStatus!=null">notify_status,</if>
+			<if test="operationType!=null">operation_type,</if>
+			<if test="notifyTime!=null">notify_time,</if>
+			<if test="createTime!=null">create_time,</if>
+			id
+			) VALUES (
+			<if test="tradeNo!=null">#{tradeNo},</if>
+			<if test="notifyType!=null">#{notifyType},</if>
+			<if test="notifyStatus!=null">#{notifyStatus},</if>
+			<if test="operationType!=null">#{operationType},</if>
+			<if test="notifyTime!=null">#{notifyTime},</if>
+			<if test="createTime!=null">#{createTime},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.ThirdPartNotify">
+		UPDATE third_part_notify SET
+			<if test="tradeNo!=null">trade_no = #{tradeNo} ,</if>
+			<if test="notifyType!=null">notify_type = #{notifyType} ,</if>
+			<if test="notifyStatus!=null">notify_status = #{notifyStatus} ,</if>
+			<if test="operationType!=null">operation_type = #{operationType} ,</if>
+			<if test="notifyTime!=null">notify_time = #{notifyTime} ,</if>
+			<if test="createTime!=null">create_time = #{createTime} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM third_part_notify  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

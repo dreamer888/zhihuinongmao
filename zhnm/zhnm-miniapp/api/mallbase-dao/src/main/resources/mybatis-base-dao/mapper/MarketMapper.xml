@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.MarketMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.Market">
+		SELECT
+			id id,
+			market_name marketName,
+			market_province marketProvince,
+			market_city marketCity,
+			market_district marketDistrict,
+			market_address marketAddress,
+			market_coords marketCoords,
+			market_opend_time marketOpendTime,
+			market_closed_time marketClosedTime,
+			create_time createTime,
+			update_time updateTime,
+			market_img marketImg,
+			market_status marketStatus,
+			market_desc marketDesc,
+			geode_id geodeId
+			FROM market
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.Market" resultType="com.wqwy.zhnm.base.entity.Market">
+		SELECT
+			id id,
+			market_name marketName,
+			market_province marketProvince,
+			market_city marketCity,
+			market_district marketDistrict,
+			market_address marketAddress,
+			market_coords marketCoords,
+			market_opend_time marketOpendTime,
+			market_closed_time marketClosedTime,
+			create_time createTime,
+			update_time updateTime,
+			market_img marketImg,
+			market_status marketStatus,
+			market_desc marketDesc,
+			geode_id geodeId
+			FROM market
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="marketName!=null"> and market_name = #{marketName}</if>
+			<if test="marketProvince!=null"> and market_province = #{marketProvince}</if>
+			<if test="marketCity!=null"> and market_city = #{marketCity}</if>
+			<if test="marketDistrict!=null"> and market_district = #{marketDistrict}</if>
+			<if test="marketAddress!=null"> and market_address = #{marketAddress}</if>
+			<if test="marketCoords!=null"> and market_coords = #{marketCoords}</if>
+			<if test="marketOpendTime!=null"> and market_opend_time = #{marketOpendTime}</if>
+			<if test="marketClosedTime!=null"> and market_closed_time = #{marketClosedTime}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+			<if test="updateTime!=null"> and update_time = #{updateTime}</if>
+			<if test="marketImg!=null"> and market_img = #{marketImg}</if>
+			<if test="marketStatus!=null"> and market_status = #{marketStatus}</if>
+			<if test="marketDesc!=null"> and market_desc = #{marketDesc}</if>
+			
+			<if test="geodeId!=null"> and geode_id = #{geodeId}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.Market" resultType="com.wqwy.zhnm.base.entity.Market">
+		SELECT
+			id id,
+			market_name marketName,
+			market_province marketProvince,
+			market_city marketCity,
+			market_district marketDistrict,
+			market_address marketAddress,
+			market_coords marketCoords,
+			market_opend_time marketOpendTime,
+			market_closed_time marketClosedTime,
+			create_time createTime,
+			update_time updateTime,
+			market_img marketImg,
+			market_status marketStatus,
+			market_desc marketDesc,
+			geode_id geodeId
+			FROM market
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="marketName!=null"> and market_name = #{marketName}</if>
+			<if test="marketProvince!=null"> and market_province = #{marketProvince}</if>
+			<if test="marketCity!=null"> and market_city = #{marketCity}</if>
+			<if test="marketDistrict!=null"> and market_district = #{marketDistrict}</if>
+			<if test="marketAddress!=null"> and market_address = #{marketAddress}</if>
+			<if test="marketCoords!=null"> and market_coords = #{marketCoords}</if>
+			<if test="marketOpendTime!=null"> and market_opend_time = #{marketOpendTime}</if>
+			<if test="marketClosedTime!=null"> and market_closed_time = #{marketClosedTime}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+			<if test="updateTime!=null"> and update_time = #{updateTime}</if>
+			<if test="marketImg!=null"> and market_img = #{marketImg}</if>
+			<if test="marketStatus!=null"> and market_status = #{marketStatus}</if>
+			<if test="marketDesc!=null"> and market_desc = #{marketDesc}</if>
+			
+			<if test="geodeId!=null"> and geode_id = #{geodeId}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.Market">
+		INSERT INTO market (
+			<if test="marketName!=null">market_name,</if>
+			<if test="marketProvince!=null">market_province,</if>
+			<if test="marketCity!=null">market_city,</if>
+			<if test="marketDistrict!=null">market_district,</if>
+			<if test="marketAddress!=null">market_address,</if>
+			<if test="marketCoords!=null">market_coords,</if>
+			<if test="marketOpendTime!=null">market_opend_time,</if>
+			<if test="marketClosedTime!=null">market_closed_time,</if>
+			<if test="createTime!=null">create_time,</if>
+			<if test="updateTime!=null">update_time,</if>
+			<if test="marketImg!=null">market_img,</if>
+			<if test="marketStatus!=null">market_status,</if>
+			<if test="marketDesc!=null">market_desc,</if>
+			
+			<if test="marketDesc!=null">market_desc,</if>
+			<if test="geodeId!=null">geode_id,</if>
+			id
+			) VALUES (
+			<if test="marketName!=null">#{marketName},</if>
+			<if test="marketProvince!=null">#{marketProvince},</if>
+			<if test="marketCity!=null">#{marketCity},</if>
+			<if test="marketDistrict!=null">#{marketDistrict},</if>
+			<if test="marketAddress!=null">#{marketAddress},</if>
+			<if test="marketCoords!=null">#{marketCoords},</if>
+			<if test="marketOpendTime!=null">#{marketOpendTime},</if>
+			<if test="marketClosedTime!=null">#{marketClosedTime},</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="updateTime!=null">#{updateTime},</if>
+			<if test="marketImg!=null">#{marketImg},</if>
+			<if test="marketStatus!=null">#{marketStatus},</if>
+			<if test="marketDesc!=null">#{marketDesc},</if>
+			
+			<if test="geodeId!=null">#{geodeId},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.Market">
+		UPDATE market SET
+			<if test="marketName!=null">market_name = #{marketName} ,</if>
+			<if test="marketProvince!=null">market_province = #{marketProvince} ,</if>
+			<if test="marketCity!=null">market_city = #{marketCity} ,</if>
+			<if test="marketDistrict!=null">market_district = #{marketDistrict} ,</if>
+			<if test="marketAddress!=null">market_address = #{marketAddress} ,</if>
+			<if test="marketCoords!=null">market_coords = #{marketCoords} ,</if>
+			<if test="marketOpendTime!=null">market_opend_time = #{marketOpendTime} ,</if>
+			<if test="marketClosedTime!=null">market_closed_time = #{marketClosedTime} ,</if>
+			<if test="createTime!=null">create_time = #{createTime} ,</if>
+			<if test="updateTime!=null">update_time = #{updateTime} ,</if>
+			<if test="marketImg!=null">market_img = #{marketImg} ,</if>
+			<if test="marketStatus!=null">market_status = #{marketStatus} ,</if>
+			<if test="marketDesc!=null">market_desc = #{marketDesc} ,</if>
+			
+			<if test="geodeId!=null"> geode_id = #{geodeId} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM market  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.BalanceOfflineOrderMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.BalanceOfflineOrder">
+		SELECT
+			id id,
+			order_number orderNumber,
+			balance_id balanceId,
+			addtime addtime,
+			total_price totalPrice,
+			pay_way payWay,
+			status status,
+			seller_id sellerId,
+			remark remark
+			FROM balance_offline_order
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.BalanceOfflineOrder" resultType="com.wqwy.zhnm.base.entity.BalanceOfflineOrder">
+		SELECT
+			id id,
+			order_number orderNumber,
+			balance_id balanceId,
+			addtime addtime,
+			total_price totalPrice,
+			pay_way payWay,
+			status status,
+			seller_id sellerId,
+			remark remark
+			FROM balance_offline_order
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="orderNumber!=null"> and order_number = #{orderNumber}</if>
+			<if test="balanceId!=null"> and balance_id = #{balanceId}</if>
+			<if test="addtime!=null"> and addtime = #{addtime}</if>
+			<if test="totalPrice!=null"> and total_price = #{totalPrice}</if>
+			<if test="payWay!=null"> and pay_way = #{payWay}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="remark!=null"> and remark = #{remark}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.component.dto.BalanceOfflineOrderDTO" resultType="com.wqwy.zhnm.base.component.dto.BalanceOfflineOrderDTO">
+		SELECT
+			id id,
+			order_number orderNumber,
+			balance_id balanceId,
+			addtime addtime,
+			total_price totalPrice,
+			pay_way payWay,
+			status status,
+			seller_id sellerId,
+			remark remark
+			FROM balance_offline_order
+			WHERE 1 = 1 and status !=0 
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="orderNumber!=null"> and order_number = #{orderNumber}</if>
+			<if test="balanceId!=null"> and balance_id = #{balanceId}</if>
+			<if test="addtime!=null"> and addtime = #{addtime}</if>
+			<if test="totalPrice!=null"> and total_price = #{totalPrice}</if>
+			<if test="payWay!=null"> and pay_way = #{payWay}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="remark!=null"> and remark = #{remark}</if>
+			ORDER BY addtime desc
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.BalanceOfflineOrder">
+		INSERT INTO balance_offline_order (
+			<if test="orderNumber!=null">order_number,</if>
+			<if test="balanceId!=null">balance_id,</if>
+			<if test="addtime!=null">addtime,</if>
+			<if test="totalPrice!=null">total_price,</if>
+			<if test="payWay!=null">pay_way,</if>
+			<if test="status!=null">status,</if>
+			<if test="sellerId!=null">seller_id,</if>
+			<if test="remark!=null">remark,</if>
+			id
+			) VALUES (
+			<if test="orderNumber!=null">#{orderNumber},</if>
+			<if test="balanceId!=null">#{balanceId},</if>
+			<if test="addtime!=null">#{addtime},</if>
+			<if test="totalPrice!=null">#{totalPrice},</if>
+			<if test="payWay!=null">#{payWay},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="sellerId!=null">#{sellerId},</if>
+			<if test="remark!=null">#{remark},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.BalanceOfflineOrder">
+		UPDATE balance_offline_order SET
+			<if test="orderNumber!=null">order_number = #{orderNumber} ,</if>
+			<if test="balanceId!=null">balance_id = #{balanceId} ,</if>
+			<if test="addtime!=null">addtime = #{addtime} ,</if>
+			<if test="totalPrice!=null">total_price = #{totalPrice} ,</if>
+			<if test="payWay!=null">pay_way = #{payWay} ,</if>
+			<if test="status!=null">status = #{status} ,</if>
+			<if test="sellerId!=null">seller_id = #{sellerId} ,</if>
+			<if test="remark!=null">remark = #{remark} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM balance_offline_order  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

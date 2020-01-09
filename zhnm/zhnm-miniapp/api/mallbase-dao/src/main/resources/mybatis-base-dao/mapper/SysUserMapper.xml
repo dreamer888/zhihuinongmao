@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.SysUserMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.SysUser">
+		SELECT
+			USER_ID userId,
+			USERNAME username,
+			PASSWORD password,
+			NAME name,
+			RIGHTS rights,
+			ROLE_ID roleId,
+			LAST_LOGIN lastLogin,
+			IP ip,
+			STATUS status,
+			BZ bz,
+			SKIN skin,
+			EMAIL email,
+			NUMBER number,
+			PHONE phone
+			FROM sys_user
+			WHERE USER_ID = #{userId}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.SysUser" resultType="com.wqwy.zhnm.base.entity.SysUser">
+		SELECT
+			USER_ID userId,
+			USERNAME username,
+			PASSWORD password,
+			NAME name,
+			RIGHTS rights,
+			ROLE_ID roleId,
+			LAST_LOGIN lastLogin,
+			IP ip,
+			STATUS status,
+			BZ bz,
+			SKIN skin,
+			EMAIL email,
+			NUMBER number,
+			PHONE phone
+			FROM sys_user
+			WHERE 1 = 1
+			<if test="userId!=null"> and USER_ID = #{userId}</if>
+			<if test="username!=null"> and USERNAME = #{username}</if>
+			<if test="password!=null"> and PASSWORD = #{password}</if>
+			<if test="name!=null"> and NAME = #{name}</if>
+			<if test="rights!=null"> and RIGHTS = #{rights}</if>
+			<if test="roleId!=null"> and ROLE_ID = #{roleId}</if>
+			<if test="lastLogin!=null"> and LAST_LOGIN = #{lastLogin}</if>
+			<if test="ip!=null"> and IP = #{ip}</if>
+			<if test="status!=null"> and STATUS = #{status}</if>
+			<if test="bz!=null"> and BZ = #{bz}</if>
+			<if test="skin!=null"> and SKIN = #{skin}</if>
+			<if test="email!=null"> and EMAIL = #{email}</if>
+			<if test="number!=null"> and NUMBER = #{number}</if>
+			<if test="phone!=null"> and PHONE = #{phone}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.SysUser" resultType="com.wqwy.zhnm.base.entity.SysUser">
+		SELECT
+			USER_ID userId,
+			USERNAME username,
+			PASSWORD password,
+			NAME name,
+			RIGHTS rights,
+			ROLE_ID roleId,
+			LAST_LOGIN lastLogin,
+			IP ip,
+			STATUS status,
+			BZ bz,
+			SKIN skin,
+			EMAIL email,
+			NUMBER number,
+			PHONE phone
+			FROM sys_user
+			WHERE 1 = 1
+			<if test="userId!=null"> and USER_ID = #{userId}</if>
+			<if test="username!=null"> and USERNAME = #{username}</if>
+			<if test="password!=null"> and PASSWORD = #{password}</if>
+			<if test="name!=null"> and NAME = #{name}</if>
+			<if test="rights!=null"> and RIGHTS = #{rights}</if>
+			<if test="roleId!=null"> and ROLE_ID = #{roleId}</if>
+			<if test="lastLogin!=null"> and LAST_LOGIN = #{lastLogin}</if>
+			<if test="ip!=null"> and IP = #{ip}</if>
+			<if test="status!=null"> and STATUS = #{status}</if>
+			<if test="bz!=null"> and BZ = #{bz}</if>
+			<if test="skin!=null"> and SKIN = #{skin}</if>
+			<if test="email!=null"> and EMAIL = #{email}</if>
+			<if test="number!=null"> and NUMBER = #{number}</if>
+			<if test="phone!=null"> and PHONE = #{phone}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.SysUser">
+		INSERT INTO sys_user (
+			<if test="username!=null">USERNAME,</if>
+			<if test="password!=null">PASSWORD,</if>
+			<if test="name!=null">NAME,</if>
+			<if test="rights!=null">RIGHTS,</if>
+			<if test="roleId!=null">ROLE_ID,</if>
+			<if test="lastLogin!=null">LAST_LOGIN,</if>
+			<if test="ip!=null">IP,</if>
+			<if test="status!=null">STATUS,</if>
+			<if test="bz!=null">BZ,</if>
+			<if test="skin!=null">SKIN,</if>
+			<if test="email!=null">EMAIL,</if>
+			<if test="number!=null">NUMBER,</if>
+			<if test="phone!=null">PHONE,</if>
+			USER_ID
+			) VALUES (
+			<if test="username!=null">#{username},</if>
+			<if test="password!=null">#{password},</if>
+			<if test="name!=null">#{name},</if>
+			<if test="rights!=null">#{rights},</if>
+			<if test="roleId!=null">#{roleId},</if>
+			<if test="lastLogin!=null">#{lastLogin},</if>
+			<if test="ip!=null">#{ip},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="bz!=null">#{bz},</if>
+			<if test="skin!=null">#{skin},</if>
+			<if test="email!=null">#{email},</if>
+			<if test="number!=null">#{number},</if>
+			<if test="phone!=null">#{phone},</if>
+#{userId}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.SysUser">
+		UPDATE sys_user SET
+			<if test="username!=null">USERNAME = #{username} ,</if>
+			<if test="password!=null">PASSWORD = #{password} ,</if>
+			<if test="name!=null">NAME = #{name} ,</if>
+			<if test="rights!=null">RIGHTS = #{rights} ,</if>
+			<if test="roleId!=null">ROLE_ID = #{roleId} ,</if>
+			<if test="lastLogin!=null">LAST_LOGIN = #{lastLogin} ,</if>
+			<if test="ip!=null">IP = #{ip} ,</if>
+			<if test="status!=null">STATUS = #{status} ,</if>
+			<if test="bz!=null">BZ = #{bz} ,</if>
+			<if test="skin!=null">SKIN = #{skin} ,</if>
+			<if test="email!=null">EMAIL = #{email} ,</if>
+			<if test="number!=null">NUMBER = #{number} ,</if>
+			<if test="phone!=null">PHONE = #{phone} ,</if>
+			USER_ID = #{userId}
+			WHERE
+			USER_ID = #{userId}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM sys_user  
+		WHERE USER_ID = #{userId}
+	</update>
+	
+</mapper>

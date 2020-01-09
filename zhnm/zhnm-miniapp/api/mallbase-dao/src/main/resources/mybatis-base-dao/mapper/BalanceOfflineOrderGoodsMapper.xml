@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.BalanceOfflineOrderGoodsMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.BalanceOfflineOrderGoods">
+		SELECT
+			id id,
+			goods_id goodsId,
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			pay_total payTotal,
+			order_number orderNumber,
+			sort sort
+			FROM balance_offline_order_goods
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.BalanceOfflineOrderGoods" resultType="com.wqwy.zhnm.base.entity.BalanceOfflineOrderGoods">
+		SELECT
+			id id,
+			goods_id goodsId,
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			pay_total payTotal,
+			order_number orderNumber,
+			sort sort
+			FROM balance_offline_order_goods
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="goodsName!=null"> and goods_name = #{goodsName}</if>
+			<if test="goodsPrice!=null"> and goods_price = #{goodsPrice}</if>
+			<if test="goodsCount!=null"> and goods_count = #{goodsCount}</if>
+			<if test="payTotal!=null"> and pay_total = #{payTotal}</if>
+			<if test="orderNumber!=null"> and order_number = #{orderNumber}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+	</select>
+	
+	<select id="findListSpecial" parameterType="com.wqwy.zhnm.base.component.dto.BalanceOfflineOrderGoodsDTO" resultType="com.wqwy.zhnm.base.component.dto.BalanceOfflineOrderGoodsDTO">
+		SELECT
+			boog.id id,
+			boog.goods_id goodsId,
+			boog.goods_name goodsName,
+			boog.goods_price goodsPrice,
+			boog.goods_count goodsCount,
+			boog.pay_total payTotal,
+			boog.order_number orderNumber,
+			boog.sort sort,
+			sg.goods_pic goodsPic
+			FROM balance_offline_order_goods boog left join shop_goods sg on boog.goods_id=sg.goods_id
+			WHERE 1 = 1
+			<if test="id!=null"> and boog.id = #{id}</if>
+			<if test="goodsId!=null"> and boog.goods_id = #{goodsId}</if>
+			<if test="goodsName!=null"> and boog.goods_name = #{goodsName}</if>
+			<if test="goodsPrice!=null"> and boog.goods_price = #{goodsPrice}</if>
+			<if test="goodsCount!=null"> and boog.goods_count = #{goodsCount}</if>
+			<if test="payTotal!=null"> and boog.pay_total = #{payTotal}</if>
+			<if test="orderNumber!=null"> and boog.order_number = #{orderNumber}</if>
+			<if test="sort!=null"> and boog.sort = #{sort}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.BalanceOfflineOrderGoods" resultType="com.wqwy.zhnm.base.entity.BalanceOfflineOrderGoods">
+		SELECT
+			id id,
+			goods_id goodsId,
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			pay_total payTotal,
+			order_number orderNumber,
+			sort sort
+			FROM balance_offline_order_goods
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="goodsName!=null"> and goods_name = #{goodsName}</if>
+			<if test="goodsPrice!=null"> and goods_price = #{goodsPrice}</if>
+			<if test="goodsCount!=null"> and goods_count = #{goodsCount}</if>
+			<if test="payTotal!=null"> and pay_total = #{payTotal}</if>
+			<if test="orderNumber!=null"> and order_number = #{orderNumber}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.BalanceOfflineOrderGoods">
+		INSERT INTO balance_offline_order_goods (
+			<if test="goodsId!=null">goods_id,</if>
+			<if test="goodsName!=null">goods_name,</if>
+			<if test="goodsPrice!=null">goods_price,</if>
+			<if test="goodsCount!=null">goods_count,</if>
+			<if test="payTotal!=null">pay_total,</if>
+			<if test="orderNumber!=null">order_number,</if>
+			<if test="sort!=null">sort,</if>
+			id
+			) VALUES (
+			<if test="goodsId!=null">#{goodsId},</if>
+			<if test="goodsName!=null">#{goodsName},</if>
+			<if test="goodsPrice!=null">#{goodsPrice},</if>
+			<if test="goodsCount!=null">#{goodsCount},</if>
+			<if test="payTotal!=null">#{payTotal},</if>
+			<if test="orderNumber!=null">#{orderNumber},</if>
+			<if test="sort!=null">#{sort},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.BalanceOfflineOrderGoods">
+		UPDATE balance_offline_order_goods SET
+			<if test="goodsId!=null">goods_id = #{goodsId} ,</if>
+			<if test="goodsName!=null">goods_name = #{goodsName} ,</if>
+			<if test="goodsPrice!=null">goods_price = #{goodsPrice} ,</if>
+			<if test="goodsCount!=null">goods_count = #{goodsCount} ,</if>
+			<if test="payTotal!=null">pay_total = #{payTotal} ,</if>
+			<if test="orderNumber!=null">order_number = #{orderNumber} ,</if>
+			<if test="sort!=null">sort = #{sort} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM balance_offline_order_goods  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

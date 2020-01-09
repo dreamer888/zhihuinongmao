@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.SellerBalanceMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.SellerBalance">
+		SELECT
+			id id,
+			seller_id sellerId,
+			balance_id balanceId
+			FROM seller_balance
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.SellerBalance" resultType="com.wqwy.zhnm.base.entity.SellerBalance">
+		SELECT
+			id id,
+			seller_id sellerId,
+			balance_id balanceId
+			FROM seller_balance
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="balanceId!=null"> and balance_id = #{balanceId}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.SellerBalance" resultType="com.wqwy.zhnm.base.entity.SellerBalance">
+		SELECT
+			id id,
+			seller_id sellerId,
+			balance_id balanceId
+			FROM seller_balance
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="balanceId!=null"> and balance_id = #{balanceId}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.SellerBalance">
+		INSERT INTO seller_balance (
+			<if test="sellerId!=null">seller_id,</if>
+			<if test="balanceId!=null">balance_id,</if>
+			id
+			) VALUES (
+			<if test="sellerId!=null">#{sellerId},</if>
+			<if test="balanceId!=null">#{balanceId},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.SellerBalance">
+		UPDATE seller_balance SET
+			<if test="sellerId!=null">seller_id = #{sellerId} ,</if>
+			<if test="balanceId!=null">balance_id = #{balanceId} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM seller_balance  
+		WHERE id = #{id}
+	</update>
+	
+	
+	<select id="findByMerchantId" parameterType="com.wqwy.zhnm.base.entity.SellerBankAccount" resultType="com.wqwy.zhnm.base.entity.SellerBalance">
+		SELECT
+			sl.id id,
+			sl.seller_id sellerId,
+			sl.balance_id balanceId
+			FROM seller_balance sl
+			INNER JOIN seller_bank_account ac ON sl.seller_id =ac.seller_id
+			WHERE 1 = 1
+			<if test="posid"> and ac.posid = #{posid}</if>
+	</select>
+	
+	
+</mapper>

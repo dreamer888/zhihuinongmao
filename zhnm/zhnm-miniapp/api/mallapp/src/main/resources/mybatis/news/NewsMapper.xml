@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="NewsMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_news
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		news_title,	
+		news_content,
+		addtime,	
+		sort,	
+		type,	
+		news_id
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{news_title},	
+		#{news_content},
+		#{addtime},	
+		#{sort},	
+		#{type},	
+		#{news_id}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values (
+	<include refid="FieldValue"></include>
+		)
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+		news_id = #{news_id}
+	</delete>
+	
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+			news_id = #{news_id}
+	</select>
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		news_title,	
+		news_content,	
+		addtime,
+		sort,	
+		type,	
+		news_id
+		from 
+		shop_news
+		where 1=1
+		<if test="pd.type!= null and pd.type != ''">
+		and	type=#{pd.type}
+		</if>	
+			
+		<if test="pd.keywords!= null and pd.keywords != ''">
+		and  new_title like concat(concat('%', #{pd.keywords}),'%')
+		</if>
+		order by sort		
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+	</select>
+	
+</mapper>

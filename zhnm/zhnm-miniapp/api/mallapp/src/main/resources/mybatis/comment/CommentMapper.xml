@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CommentMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_comment
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		order_id,
+		goods_id,	
+		user_id,	
+		comment_title,
+		comment_content,	
+		comment_pic,	
+		addtime,	
+		comment_id
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{order_id},
+		#{goods_id},	
+		#{user_id},	
+		#{comment_title},
+		#{comment_content},	
+		#{comment_pic},	
+		#{addtime},	
+		#{comment_id}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values 
+		<foreach item="item" index="index" collection="list" separator=",">
+         (#{item.order_id},#{item.goods_id},#{item.user_id},#{item.comment_title},#{item.comment_content},
+         #{item.comment_pic},#{item.addtime},#{item.comment_id})
+		</foreach>
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			comment_id = #{comment_id}
+	</delete>
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		<include refid="tableName"></include>
+		set 
+		order_id = #{order_id},
+		user_id = #{user_id},
+		comment_content = #{comment_content},
+		comment_pic = #{comment_pic},
+		addtime = #{addtime},
+		comment_id = comment_id
+		where 1=1
+		<if test="pd.user_id != null and pd.user_id != ''">
+		and user_id=#{user_id}
+		</if>
+		<if test="pd.goods_id != null and pd.goods_id != ''">
+		and goods_id=#{goods_id}
+		</if>
+		<if test="pd.comment_id != null and pd.comment_id != ''">
+		and comment_id = #{comment_id}
+		</if>
+		
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+		comment_id = #{comment_id}
+	</select>
+
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select 
+		order_id,	
+		t1.user_id,	
+		comment_title,
+		comment_content,	
+		comment_pic,	
+		t1.addtime,	
+		comment_id,
+		username,
+		head_img
+		from 
+		shop_comment t1
+		left join shop_user t2
+		on t1.user_id=t2.user_id
+		where 1=1
+		<if test="pd.user_id != null and pd.user_id != ''">
+		and t1.user_id=#{pd.user_id}
+		</if>
+		<if test="pd.goods_id != null and pd.goods_id != ''">
+		and t1.goods_id=#{pd.goods_id}
+		</if>
+		order by t1.addtime desc
+	</select>
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where order_id=#{order_id}
+	</select>
+	
+</mapper>

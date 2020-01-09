@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.DelivererMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.Deliverer">
+		SELECT
+			id id,
+			token token,
+			account account,
+			password password,
+			id_card idCard,
+			status status,
+			credit credit,
+			cnname cnname,
+			gender gender,
+			age age,
+			deliverer_Ico delivererIco
+			FROM deliverer
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.Deliverer" resultType="com.wqwy.zhnm.base.entity.Deliverer">
+		SELECT
+			id id,
+			token token,
+			account account,
+			password password,
+			id_card idCard,
+			status status,
+			credit credit,
+			cnname cnname,
+			gender gender,
+			age age,
+		    deliverer_Ico delivererIco
+			FROM deliverer
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="token!=null"> and token = #{token}</if>
+			<if test="account!=null"> and account = #{account}</if>
+			<if test="password!=null"> and password = #{password}</if>
+			<if test="idCard!=null"> and id_card = #{idCard}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="credit!=null"> and credit = #{credit}</if>
+			<if test="cnname!=null"> and cnname = #{cnname}</if>
+			<if test="gender!=null"> and gender = #{gender}</if>
+			<if test="age!=null"> and age = #{age}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.Deliverer" resultType="com.wqwy.zhnm.base.entity.Deliverer">
+		SELECT
+			id id,
+			token token,
+			account account,
+			password password,
+			id_card idCard,
+			status status,
+			credit credit,
+			cnname cnname,
+			gender gender,
+			age age,
+		    deliverer_Ico delivererIco
+			FROM deliverer
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="token!=null"> and token = #{token}</if>
+			<if test="account!=null"> and account = #{account}</if>
+			<if test="password!=null"> and password = #{password}</if>
+			<if test="idCard!=null"> and id_card = #{idCard}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="credit!=null"> and credit = #{credit}</if>
+			<if test="cnname!=null"> and cnname = #{cnname}</if>
+			<if test="gender!=null"> and gender = #{gender}</if>
+			<if test="age!=null"> and age = #{age}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.Deliverer">
+		INSERT INTO deliverer (
+			<if test="token!=null">token,</if>
+			<if test="account!=null">account,</if>
+			<if test="password!=null">password,</if>
+			<if test="idCard!=null">id_card,</if>
+			<if test="status!=null">status,</if>
+			<if test="credit!=null">credit,</if>
+			<if test="cnname!=null">cnname,</if>
+			<if test="gender!=null">gender,</if>
+			<if test="age!=null">age,</if>
+			id
+			) VALUES (
+			<if test="token!=null">#{token},</if>
+			<if test="account!=null">#{account},</if>
+			<if test="password!=null">#{password},</if>
+			<if test="idCard!=null">#{idCard},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="credit!=null">#{credit},</if>
+			<if test="cnname!=null">#{cnname},</if>
+			<if test="gender!=null">#{gender},</if>
+			<if test="age!=null">#{age},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.Deliverer">
+		UPDATE deliverer SET
+			<if test="token!=null">token = #{token} ,</if>
+			<if test="account!=null">account = #{account} ,</if>
+			<if test="password!=null">password = #{password} ,</if>
+			<if test="idCard!=null">id_card = #{idCard} ,</if>
+			<if test="status!=null">status = #{status} ,</if>
+			<if test="credit!=null">credit = #{credit} ,</if>
+			<if test="cnname!=null">cnname = #{cnname} ,</if>
+			<if test="gender!=null">gender = #{gender} ,</if>
+		    <if test="delivererIco!=null">deliverer_Ico = #{delivererIco} ,</if>
+			<if test="age!=null">age = #{age} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM deliverer  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

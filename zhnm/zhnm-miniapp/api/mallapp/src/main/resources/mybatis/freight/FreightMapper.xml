@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="FreightMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_freight
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		freight_price,	
+		freight_free_price,	
+		freight_id
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{freight_price},	
+		#{freight_free_price},	
+		#{freight_id}
+	</sql>
+
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select 
+		<include refid="Field"></include>
+		from 
+		<include refid="tableName"></include>
+		where 
+		freight_id = 1
+	</select>
+	
+</mapper>

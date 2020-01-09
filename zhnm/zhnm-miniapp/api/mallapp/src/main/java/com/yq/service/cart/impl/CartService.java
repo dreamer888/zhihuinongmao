@@ -1,0 +1,94 @@
+package com.yq.service.cart.impl;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.change.entity.Page;
+import org.change.util.PageData;
+import org.springframework.stereotype.Service;
+
+import com.yq.dao.DaoSupport;
+import com.yq.service.cart.CartManager;
+
+/** 
+ * 说明： 购物车
+ * 创建人：易钱科技 qq 357788906
+ * 创建时间：2017-01-05
+ * @version
+ */
+@Service("cartService")
+public class CartService implements CartManager{
+
+	@Resource(name = "daoSupport")
+	private DaoSupport dao;
+	
+	/**新增
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void save(PageData pd)throws Exception{
+		dao.save("CartMapper.save", pd);
+	}
+	
+	public void saveall(PageData pd)throws Exception{
+		dao.save("CartMapper.saveall", pd);
+	}
+	/**删除
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void delete(PageData pd)throws Exception{
+		dao.delete("CartMapper.delete", pd);
+	}
+	
+	/**修改
+	 * @param pd
+	 * @throws Exception
+	 */
+	public void edit(PageData pd)throws Exception{
+		dao.update("CartMapper.edit", pd);
+	}
+	
+	/**列表
+	 * @param page
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> list(Page page)throws Exception{
+		return (List<PageData>)dao.findForList("CartMapper.datalistPage", page);
+	}
+	
+	/**列表(全部)
+	 * @param pd
+	 * @throws Exception
+	 */
+	@SuppressWarnings("unchecked")
+	public List<PageData> listAll(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("CartMapper.listAll", pd);
+	}
+	public int count(PageData pd) throws Exception{
+		return (int) dao.findForObject("CartMapper.count", pd);				 
+	}
+	
+	/**通过id获取数据
+	 * @param pd
+	 * @throws Exception
+	 */
+	public PageData findById(PageData pd)throws Exception{
+		return (PageData)dao.findForObject("CartMapper.findById", pd);
+	}
+	
+	public PageData usercartById(PageData pd)throws Exception{
+		return (PageData)dao.findForObject("CartMapper.usercartById", pd);
+	}
+	/**批量删除
+	 * @param ArrayDATA_IDS
+	 * @throws Exception
+	 */
+	public void deleteAll(String[] ArrayDATA_IDS)throws Exception{
+		dao.delete("CartMapper.deleteAll", ArrayDATA_IDS);
+	}
+	
+}
+

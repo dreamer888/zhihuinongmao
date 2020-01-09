@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderMapper">
+
+    <!--表名 -->
+    <sql id="tableName">
+		shop_order
+	</sql>
+
+    <!-- 字段 -->
+    <sql id="Field">
+		addtime,	
+		total_price,
+		order_total,
+		coupon_id,
+		coupon_price,
+		freight_price,	
+		pay_way,
+		user_id,	
+		addr_realname,
+		addr_phone,
+		addr_city,	
+		address,
+		ip_address,
+		user_ip,
+		order_id,
+		status,
+		express_title,
+		express_name,
+		express_num,
+		remark,
+		market_id,
+		location
+	</sql>
+
+    <!-- 字段值 -->
+    <sql id="FieldValue">
+		#{addtime},	
+		#{total_price},
+		#{order_total},
+		#{coupon_id},
+		#{coupon_price},
+		#{freight_price},	
+		#{pay_way},
+		#{user_id},	
+		#{addr_realname},
+		#{addr_phone},
+		#{addr_city},	
+		#{address},
+		#{ip_address},
+		#{user_ip},
+		#{order_id},
+		#{status},
+		#{express_title},
+		#{express_name},
+		#{express_num},
+		#{remark},
+		#{market_id},
+		#{location}
+	</sql>
+
+    <!-- 新增-->
+    <insert id="save" parameterType="pd">
+        insert into
+        <include refid="tableName"></include>
+        (
+        <include refid="Field"></include>
+        ) values (
+        <include refid="FieldValue"></include>
+        )
+    </insert>
+
+    <!-- 删除-->
+    <delete id="delete" parameterType="pd">
+        delete from
+        <include refid="tableName"></include>
+        where
+        order_id = #{order_id}
+    </delete>
+
+
+    <!-- 修改 -->
+    <update id="edit" parameterType="pd">
+        update
+        shop_order
+        set
+        <if test="addr_realname !=null and addr_realname !=''">
+            addr_realname=#{addr_realname},
+        </if>
+        <if test="addr_phone !=null and addr_phone !=''">
+            addr_phone=#{addr_phone},
+        </if>
+        <if test="addr_city !=null and addr_city !=''">
+            addr_city=#{addr_city},
+        </if>
+        <if test="address !=null and address !=''">
+            address=#{address},
+        </if>
+        <if test="status !=null and status !=''">
+            status=#{status},
+        </if>
+        order_id = #{order_id}
+        where
+        order_id = #{order_id}
+    </update>
+
+    <!-- 通过ID获取数据 -->
+    <select id="findById" parameterType="pd" resultType="pd">
+        select addtime,
+        order_total,
+        total_price,
+        coupon_id,
+        coupon_price,
+        freight_price,
+        pay_way,
+        addr_realname,
+        addr_phone,
+        addr_city,
+        address,
+        ip_address,
+        user_ip,
+        order_id,
+        status,
+        user_id,
+        express_title,
+        express_name,
+        express_num,
+        market_id,
+        delivery_time_slice,
+        remark
+        from shop_order
+        where
+        order_id=#{order_id}
+
+        <!-- addtime,
+        order_total,
+        coupon_id,
+        coupon_price,
+        pay_way,
+        addr_realname,
+        addr_phone,
+        addr_city,
+        address,
+        ip_address,
+        user_ip,
+        t1.order_id,
+        status,
+        t1.user_id,
+        t2.username,
+        t2.phone
+        from shop_order t1
+        left join shop_user t2 on t1.user_id=t2.user_id
+        where
+        order_id=#{order_id} -->
+
+    </select>
+
+
+    <!-- 列表 -->
+    <select id="datalistPage" parameterType="page" resultType="pd">
+        select
+        t1.addtime,
+        order_total,
+        total_price,
+        coupon_id,
+        coupon_price,
+        freight_price,
+        pay_way,
+        addr_realname,
+        addr_phone,
+        addr_city,
+        address,
+        ip_address,
+        user_ip,
+        t1.order_id,
+        status,
+        t1.user_id,
+        t2.username,
+        t2.phone,
+        express_title,
+        express_name,
+        express_num
+        from shop_order t1
+        left join shop_user t2 on t1.user_id=t2.user_id
+        where 1=1
+        <if test="pd.username!=null and pd.username!=''">
+            and
+            (
+            username like concat(concat('%',#{pd.username}),'%')
+            or
+            phone like concat(concat('%',#{pd.username}),'%')
+            )
+        </if>
+        <if test="pd.status!=null and pd.status!=''">
+            <if test='pd.status=="0"'>
+                and t1.status in (0)
+            </if>
+            <if test='pd.status=="1"'>
+                and t1.status in (11,13,15,17)
+            </if>
+            <if test='pd.status=="2"'>
+                and t1.status in (19,21,23)
+            </if>
+            <if test='pd.status=="5"'>
+                and t1.status in (5)
+            </if>
+        </if>
+
+        <if test="pd.order_id!=null and pd.order_id!=''">
+            and order_id=#{pd.order_id}
+        </if>
+        <if test="pd.user_id!=null and pd.user_id!=''">
+            and t1.user_id=#{pd.user_id}
+        </if>
+        order by t1.addtime desc
+    </select>
+
+
+    <!-- 列表(全部) -->
+    <select id="listAll" parameterType="pd" resultType="pd">
+        select
+        t1.addtime,
+        order_total,
+        total_price,
+        coupon_id,
+        coupon_price,freight_price,
+        pay_way,
+        addr_realname,
+        addr_phone,
+        addr_city,
+        address,
+        ip_address,
+        user_ip,
+        t1.order_id,
+        status,
+        t1.user_id,
+        t2.username,
+        t2.phone,
+        express_title,
+        express_name,
+        express_num
+        from shop_order t1
+        left join shop_user t2 on t1.user_id=t2.user_id
+        where 1=1
+        <if test="username!=null and username!=''">
+            and
+            (
+            username like concat(concat('%',#{username}),'%')
+            or
+            phone like concat(concat('%',#{username}),'%')
+            )
+        </if>
+        <if test="status!=null">
+            and status=#{status}
+        </if>
+        <if test="order_id!=null and order_id!=''">
+            and order_id=#{order_id}
+        </if>
+        <if test="user_id!=null and user_id!=''">
+            and t1.user_id=#{user_id}
+        </if>
+        order by t1.addtime desc
+    </select>
+
+    <!-- 查询数据数量 -->
+    <select id="count" parameterType="pd" resultType="java.lang.Integer">
+        select
+        count(1)
+        from shop_order t1
+        where 1=1
+        <if test='status==0'>
+            and t1.status in (0)
+        </if>
+        <if test='status==1'>
+            and t1.status in (11,13,15,17)
+        </if>
+        <if test='status==2'>
+            and t1.status in (19,21,23)
+        </if>
+        <if test='status==5'>
+            and t1.status in (5)
+        </if>
+        <if test="user_id!=null and user_id!=''">
+            and user_id=#{user_id}
+        </if>
+    </select>
+
+
+    <!-- 批量删除 -->
+    <delete id="deleteAll" parameterType="String">
+        delete from
+        <include refid="tableName"></include>
+        where
+        ORDER_ID in
+        <foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+
+    <!-- 壹仟科技 357788906 -->
+</mapper>

@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.ShopOrderDetailMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+		SELECT
+			order_detail_id orderDetailId,
+			goods_id goodsId,
+			goods_pic goodsPic,
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			goods_total goodsTotal,
+			attribute_detail_id attributeDetailId,
+			attribute_detail_name attributeDetailName,
+			pay_total payTotal,
+			order_id orderId,
+			sort sort,
+			status status,
+			seller_id sellerId,
+			seller_seize_time sellerSeizeTime,
+			seller_prepare_time sellerPrepareTime,
+			deliverer_receive_time delivererReceiveTime,
+			avg_price avgPrice
+			FROM shop_order_detail
+			WHERE order_detail_id = #{orderDetailId}
+	</select>
+	
+	<select id="getForUpdate" parameterType="String" resultType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+		SELECT
+			order_detail_id orderDetailId,
+			goods_id goodsId,
+			goods_pic goodsPic,
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			goods_total goodsTotal,
+			attribute_detail_id attributeDetailId,
+			attribute_detail_name attributeDetailName,
+			pay_total payTotal,
+			order_id orderId,
+			sort sort,
+			status status,
+			seller_id sellerId,
+			seller_seize_time sellerSeizeTime,
+			seller_prepare_time sellerPrepareTime,
+			deliverer_receive_time delivererReceiveTime,
+		    avg_price avgPrice
+			FROM shop_order_detail
+			WHERE order_detail_id = #{orderDetailId}
+			FOR UPDATE
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail" resultType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+		SELECT
+			order_detail_id orderDetailId,
+			goods_id goodsId,
+			goods_pic goodsPic,
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			goods_total goodsTotal,
+			attribute_detail_id attributeDetailId,
+			attribute_detail_name attributeDetailName,
+			pay_total payTotal,
+			order_id orderId,
+			sort sort,
+			status status,
+			seller_id sellerId,
+			seller_seize_time sellerSeizeTime,
+			seller_prepare_time sellerPrepareTime,
+			deliverer_receive_time delivererReceiveTime,
+			avg_price avgPrice
+			FROM shop_order_detail
+			WHERE 1 = 1
+			<if test="orderDetailId!=null"> and order_detail_id = #{orderDetailId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="goodsPic!=null"> and goods_pic = #{goodsPic}</if>
+			<if test="goodsName!=null"> and goods_name = #{goodsName}</if>
+			<if test="goodsPrice!=null"> and goods_price = #{goodsPrice}</if>
+			<if test="goodsCount!=null"> and goods_count = #{goodsCount}</if>
+			<if test="goodsTotal!=null"> and goods_total = #{goodsTotal}</if>
+			<if test="attributeDetailId!=null"> and attribute_detail_id = #{attributeDetailId}</if>
+			<if test="attributeDetailName!=null"> and attribute_detail_name = #{attributeDetailName}</if>
+			<if test="payTotal!=null"> and pay_total = #{payTotal}</if>
+			<if test="orderId!=null"> and order_id = #{orderId}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="sellerSeizeTime!=null"> and seller_seize_time = #{sellerSeizeTime}</if>
+			
+			<if test="sellerPrepareTime!=null"> and seller_prepare_time = #{sellerPrepareTime}</if>
+			<if test="delivererReceiveTime!=null"> and deliverer_receive_time = #{delivererReceiveTime}</if>
+	</select>
+	
+	<select id="findListWithGoods" parameterType="com.wqwy.zhnm.base.component.component.ShopOrderDetailWithGoodsComponent" resultType="com.wqwy.zhnm.base.component.component.ShopOrderDetailWithGoodsComponent">
+		SELECT
+			sod.order_detail_id orderDetailId,
+			sod.goods_id goodsId,
+			sod.goods_pic goodsPic,
+			sod.goods_name goodsName,
+			sod.goods_price goodsPrice,
+			sod.goods_count goodsCount,
+			sod.goods_total goodsTotal,
+			sod.attribute_detail_id attributeDetailId,
+			sod.attribute_detail_name attributeDetailName,
+			sod.pay_total payTotal,
+			sod.order_id orderId,
+			sod.sort sort,
+			sod.status status,
+			sod.seller_id sellerId,
+			sod.seller_seize_time sellerSeizeTime,
+			sod.seller_prepare_time sellerPrepareTime,
+			sod.deliverer_receive_time delivererReceiveTime,
+			
+			sg.goods_name goodsName,
+			sg.spec_name specName,
+			sg.spec_title specTitle,
+			sg.spec_price specPrice
+			FROM 
+			shop_order_detail sod left join shop_goods sg on sod.goods_id=sg.goods_id
+			WHERE 1 = 1
+			<if test="orderDetailId!=null"> and order_detail_id = #{orderDetailId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="attributeDetailId!=null"> and attribute_detail_id = #{attributeDetailId}</if>
+			<if test="orderId!=null"> and order_id = #{orderId}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+	</select>
+	
+	<select id="findListByCondition" parameterType="com.wqwy.zhnm.base.component.dto.ShopOrderDetailDTO" resultType="com.wqwy.zhnm.base.component.dto.ShopOrderDetailDTO">
+		select 
+			sod.order_detail_id orderDetailId,
+			sod.goods_id goodsId,
+			sod.goods_pic goodsPic,
+			sod.goods_name goodsName,
+			sod.goods_price goodsPrice,
+			sod.goods_count goodsCount,
+			sod.goods_total goodsTotal,
+			sod.attribute_detail_id attributeDetailId,
+			sod.attribute_detail_name attributeDetailName,
+			sod.pay_total payTotal,
+			sod.order_id orderId,
+			sod.sort sort,
+			sod.status status,
+			sod.seller_id sellerId,
+			sod.seller_seize_time sellerSeizeTime,
+			sod.seller_prepare_time sellerPrepareTime,
+			sod.deliverer_receive_time delivererReceiveTime,
+			avg_price avgPrice,
+			sg.seller_id preSellerId,
+			sg.status preSellerGoodsStatus,
+			s.belong_market marketId
+		from 
+			shop_order_detail sod 
+			left join seller_goods sg on sod.goods_id=sg.goods_id 
+			left join seller s on sg.seller_id=s.id
+		where 1=1 
+			<if test="orderId!=null"> and sod.order_id = #{orderId}</if>
+			<if test="marketId!=null"> and s.belong_market = #{marketId}</if>
+			<if test="preSellerGoodsStatus!=null"> and sg.status = #{preSellerGoodsStatus}</if>
+			and sg.current_stock >= sod.goods_count
+			<!-- and sod.order_id='1525424561121'
+			and s.belong_market=11 -->
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail" resultType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+		SELECT
+			order_detail_id orderDetailId,
+			goods_id goodsId,
+			goods_pic goodsPic,
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			goods_total goodsTotal,
+			attribute_detail_id attributeDetailId,
+			attribute_detail_name attributeDetailName,
+			pay_total payTotal,
+			order_id orderId,
+			sort sort,
+			status status,
+			seller_id sellerId,
+			seller_seize_time sellerSeizeTime,
+			seller_prepare_time sellerPrepareTime,
+			deliverer_receive_time delivererReceiveTime,
+			avg_price avgPrice
+			FROM shop_order_detail
+			WHERE 1 = 1
+			<if test="orderDetailId!=null"> and order_detail_id = #{orderDetailId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="goodsPic!=null"> and goods_pic = #{goodsPic}</if>
+			<if test="goodsName!=null"> and goods_name = #{goodsName}</if>
+			<if test="goodsPrice!=null"> and goods_price = #{goodsPrice}</if>
+			<if test="goodsCount!=null"> and goods_count = #{goodsCount}</if>
+			<if test="goodsTotal!=null"> and goods_total = #{goodsTotal}</if>
+			<if test="attributeDetailId!=null"> and attribute_detail_id = #{attributeDetailId}</if>
+			<if test="attributeDetailName!=null"> and attribute_detail_name = #{attributeDetailName}</if>
+			<if test="payTotal!=null"> and pay_total = #{payTotal}</if>
+			<if test="orderId!=null"> and order_id = #{orderId}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="sellerSeizeTime!=null"> and seller_seize_time = #{sellerSeizeTime}</if>
+			
+			<if test="sellerPrepareTime!=null"> and seller_prepare_time = #{sellerPrepareTime}</if>
+			<if test="delivererReceiveTime!=null"> and deliverer_receive_time = #{delivererReceiveTime}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+		INSERT INTO shop_order_detail (
+			<if test="goodsId!=null">goods_id,</if>
+			<if test="goodsPic!=null">goods_pic,</if>
+			<if test="goodsName!=null">goods_name,</if>
+			<if test="goodsPrice!=null">goods_price,</if>
+			<if test="goodsCount!=null">goods_count,</if>
+			<if test="goodsTotal!=null">goods_total,</if>
+			<if test="attributeDetailId!=null">attribute_detail_id,</if>
+			<if test="attributeDetailName!=null">attribute_detail_name,</if>
+			<if test="payTotal!=null">pay_total,</if>
+			<if test="orderId!=null">order_id,</if>
+			<if test="sort!=null">sort,</if>
+			<if test="status!=null">status,</if>
+			<if test="sellerId!=null">seller_id,</if>
+			<if test="sellerSeizeTime!=null">seller_seize_time,</if>
+			
+			<if test="sellerPrepareTime!=null">seller_prepare_time ,</if>
+			<if test="delivererReceiveTime!=null">deliverer_receive_time ,</if>
+			order_detail_id
+			) VALUES (
+			<if test="goodsId!=null">#{goodsId},</if>
+			<if test="goodsPic!=null">#{goodsPic},</if>
+			<if test="goodsName!=null">#{goodsName},</if>
+			<if test="goodsPrice!=null">#{goodsPrice},</if>
+			<if test="goodsCount!=null">#{goodsCount},</if>
+			<if test="goodsTotal!=null">#{goodsTotal},</if>
+			<if test="attributeDetailId!=null">#{attributeDetailId},</if>
+			<if test="attributeDetailName!=null">#{attributeDetailName},</if>
+			<if test="payTotal!=null">#{payTotal},</if>
+			<if test="orderId!=null">#{orderId},</if>
+			<if test="sort!=null">#{sort},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="sellerId!=null">#{sellerId},</if>
+			<if test="sellerSeizeTime!=null">#{sellerSeizeTime},</if>
+			
+			<if test="sellerPrepareTime!=null">#{sellerPrepareTime},</if>
+			<if test="delivererReceiveTime!=null">#{delivererReceiveTime},</if>
+#{orderDetailId}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+		UPDATE shop_order_detail SET
+			<if test="goodsId!=null">goods_id = #{goodsId} ,</if>
+			<if test="goodsPic!=null">goods_pic = #{goodsPic} ,</if>
+			<if test="goodsName!=null">goods_name = #{goodsName} ,</if>
+			<if test="goodsPrice!=null">goods_price = #{goodsPrice} ,</if>
+			<if test="goodsCount!=null">goods_count = #{goodsCount} ,</if>
+			<if test="goodsTotal!=null">goods_total = #{goodsTotal} ,</if>
+			<if test="attributeDetailId!=null">attribute_detail_id = #{attributeDetailId} ,</if>
+			<if test="attributeDetailName!=null">attribute_detail_name = #{attributeDetailName} ,</if>
+			<if test="payTotal!=null">pay_total = #{payTotal} ,</if>
+			<if test="orderId!=null">order_id = #{orderId} ,</if>
+			<if test="sort!=null">sort = #{sort} ,</if>
+			<if test="status!=null">status = #{status} ,</if>
+			<if test="sellerId!=null">seller_id = #{sellerId} ,</if>
+			<if test="sellerSeizeTime!=null">seller_seize_time = #{sellerSeizeTime} ,</if>
+			
+			<if test="sellerPrepareTime!=null">seller_prepare_time = #{sellerPrepareTime} ,</if>
+			<if test="delivererReceiveTime!=null">deliverer_receive_time = #{delivererReceiveTime} ,</if>
+			order_detail_id = #{orderDetailId}
+			WHERE
+			order_detail_id = #{orderDetailId}
+	</update>
+	
+	<update id="updateBySellerShopOrder" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+		UPDATE shop_order_detail SET
+			<if test="goodsId!=null">goods_id = #{goodsId} ,</if>
+			<if test="goodsPic!=null">goods_pic = #{goodsPic} ,</if>
+			<if test="goodsName!=null">goods_name = #{goodsName} ,</if>
+			<if test="goodsPrice!=null">goods_price = #{goodsPrice} ,</if>
+			<if test="goodsCount!=null">goods_count = #{goodsCount} ,</if>
+			<if test="goodsTotal!=null">goods_total = #{goodsTotal} ,</if>
+			<if test="attributeDetailId!=null">attribute_detail_id = #{attributeDetailId} ,</if>
+			<if test="attributeDetailName!=null">attribute_detail_name = #{attributeDetailName} ,</if>
+			<if test="payTotal!=null">pay_total = #{payTotal} ,</if>
+			<if test="sort!=null">sort = #{sort} ,</if>
+			<if test="status!=null">status = #{status} ,</if>
+			<if test="sellerSeizeTime!=null">seller_seize_time = #{sellerSeizeTime} ,</if>
+			<if test="sellerPrepareTime!=null">seller_prepare_time = #{sellerPrepareTime} ,</if>
+			<if test="delivererReceiveTime!=null">deliverer_receive_time = #{delivererReceiveTime} ,</if>
+			order_id = #{orderId},
+			seller_id = #{sellerId}
+		WHERE
+			seller_id = #{sellerId}
+		AND
+			order_id = #{orderId}
+	</update>
+	
+	<update id="updateByShopOrder" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail">
+        UPDATE shop_order_detail SET
+            <if test="goodsId!=null">goods_id = #{goodsId} ,</if>
+            <if test="goodsPic!=null">goods_pic = #{goodsPic} ,</if>
+            <if test="goodsName!=null">goods_name = #{goodsName} ,</if>
+            <if test="goodsPrice!=null">goods_price = #{goodsPrice} ,</if>
+            <if test="goodsCount!=null">goods_count = #{goodsCount} ,</if>
+            <if test="goodsTotal!=null">goods_total = #{goodsTotal} ,</if>
+            <if test="attributeDetailId!=null">attribute_detail_id = #{attributeDetailId} ,</if>
+            <if test="attributeDetailName!=null">attribute_detail_name = #{attributeDetailName} ,</if>
+            <if test="payTotal!=null">pay_total = #{payTotal} ,</if>
+            <if test="sort!=null">sort = #{sort} ,</if>
+            <if test="status!=null">status = #{status} ,</if>
+            <if test="sellerSeizeTime!=null">seller_seize_time = #{sellerSeizeTime} ,</if>
+            <if test="sellerPrepareTime!=null">seller_prepare_time = #{sellerPrepareTime} ,</if>
+            <if test="delivererReceiveTime!=null">deliverer_receive_time = #{delivererReceiveTime} ,</if>
+            order_id = #{orderId}
+        WHERE
+            order_id = #{orderId}
+    </update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM shop_order_detail  
+		WHERE order_detail_id = #{orderDetailId}
+	</update>
+	
+	<select id="printOrderDetail" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail" resultType="com.wqwy.zhnm.base.component.dto.ShopOrderDetailPrintDTO">
+		SELECT
+			goods_name goodsName,
+			goods_price goodsPrice,
+			goods_count goodsCount,
+			goods_total totalPrice   
+			FROM shop_order_detail
+			WHERE order_id = #{orderId} and seller_id = #{sellerId}
+	</select>
+	
+	<select id="printOrder" parameterType="com.wqwy.zhnm.base.entity.ShopOrderDetail" resultType="com.wqwy.zhnm.base.component.dto.ShopOrderPrintDTO">
+		SELECT
+			ir.order_id orderId,
+			ir.order_total orderPrice,
+			pr.addtime payTime
+			FROM shop_order ir INNER JOIN shop_record pr ON ir.order_id = pr.order_id WHERE pr.record_note = '付款时间' 
+			and ir.order_id = #{orderId}
+	</select>
+	
+</mapper>

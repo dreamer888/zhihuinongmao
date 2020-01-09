@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.SellerGoodsMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.SellerGoods">
+		SELECT
+			id id,
+			seller_id sellerId,
+			goods_id goodsId,
+			status status,
+			start_stock startStock,
+			current_stock currentStock,
+			price price,
+			balance_hotkey balanceHotkey,
+			market_id marketId
+			FROM seller_goods
+			WHERE id = #{id}
+	</select>
+	
+	<select id="getCountByCondition" parameterType="com.wqwy.zhnm.base.entity.SellerGoods" resultType="Integer">
+		SELECT
+			count(*)
+			FROM seller_goods
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="startStock!=null"> and start_stock = #{startStock}</if>
+			<if test="currentStock!=null"> and current_stock = #{currentStock}</if>
+			<if test="price!=null"> and price = #{price}</if>
+			<if test="balanceHotkey!=null"> and balance_hotkey = #{balanceHotkey}</if>
+			
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.SellerGoods" resultType="com.wqwy.zhnm.base.entity.SellerGoods">
+		SELECT
+			id id,
+			seller_id sellerId,
+			goods_id goodsId,
+			status status,
+			start_stock startStock,
+			current_stock currentStock,
+			price price,
+			balance_hotkey balanceHotkey,
+			market_id marketId
+			FROM seller_goods
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="startStock!=null"> and start_stock = #{startStock}</if>
+			<if test="currentStock!=null"> and current_stock = #{currentStock}</if>
+			<if test="price!=null"> and price = #{price}</if>
+			<if test="balanceHotkey!=null"> and balance_hotkey = #{balanceHotkey}</if>
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+			ORDER BY current_stock DESC  
+	</select>
+	
+	<select id="findListForUpdate" parameterType="com.wqwy.zhnm.base.entity.SellerGoods" resultType="com.wqwy.zhnm.base.entity.SellerGoods">
+		SELECT
+			id id,
+			seller_id sellerId,
+			goods_id goodsId,
+			status status,
+			start_stock startStock,
+			current_stock currentStock,
+			price price,
+			balance_hotkey balanceHotkey,
+			market_id marketId
+			FROM seller_goods
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="startStock!=null"> and start_stock = #{startStock}</if>
+			<if test="currentStock!=null"> and current_stock = #{currentStock}</if>
+			<if test="price!=null"> and price = #{price}</if>
+			<if test="balanceHotkey!=null"> and balance_hotkey = #{balanceHotkey}</if>
+			
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+			FOR UPDATE
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.SellerGoods" resultType="com.wqwy.zhnm.base.entity.SellerGoods">
+		SELECT
+			id id,
+			seller_id sellerId,
+			goods_id goodsId,
+			status status,
+			start_stock startStock,
+			current_stock currentStock,
+			price price,
+			balance_hotkey balanceHotkey,
+			market_id marketId
+			FROM seller_goods
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="status!=null"> and status = #{status}</if>
+			<if test="startStock!=null"> and start_stock = #{startStock}</if>
+			<if test="currentStock!=null"> and current_stock = #{currentStock}</if>
+			<if test="price!=null"> and price = #{price}</if>
+			<if test="balanceHotkey!=null"> and balance_hotkey = #{balanceHotkey}</if>
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.SellerGoods">
+		INSERT INTO seller_goods (
+			<if test="sellerId!=null">seller_id,</if>
+			<if test="goodsId!=null">goods_id,</if>
+			<if test="status!=null">status,</if>
+			<if test="startStock!=null">start_stock,</if>
+			<if test="currentStock!=null">current_stock,</if>
+			<if test="price!=null">price,</if>
+			<if test="balanceHotkey!=null">balance_hotkey,</if>
+			
+			<if test="marketId!=null">market_id,</if>
+			id
+			) VALUES (
+			<if test="sellerId!=null">#{sellerId},</if>
+			<if test="goodsId!=null">#{goodsId},</if>
+			<if test="status!=null">#{status},</if>
+			<if test="startStock!=null">#{startStock},</if>
+			<if test="currentStock!=null">#{currentStock},</if>
+			<if test="price!=null">#{price},</if>
+			<if test="balanceHotkey!=null">#{balanceHotkey},</if>
+			
+			<if test="marketId!=null">#{marketId},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.SellerGoods">
+		UPDATE seller_goods SET
+			<if test="sellerId!=null">seller_id = #{sellerId} ,</if>
+			<if test="goodsId!=null">goods_id = #{goodsId} ,</if>
+			<if test="status!=null">status = #{status} ,</if>
+			<if test="startStock!=null">start_stock = #{startStock} ,</if>
+			<if test="currentStock!=null">current_stock = #{currentStock} ,</if>
+			<if test="price!=null">price = #{price} ,</if>
+			<if test="balanceHotkey!=null">balance_hotkey = #{balanceHotkey} ,</if>
+			<if test="marketId!=null">market_id = #{marketId} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="updateAllStock" parameterType="com.wqwy.zhnm.base.entity.SellerGoods">
+		UPDATE seller_goods SET
+			current_stock = #{currentStock}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM seller_goods  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.MarketShopGoodsViewMapper">
+
+	<select id="getCountByCondition" parameterType="com.wqwy.zhnm.base.component.dto.MarketShopGoodsView" resultType="Integer">
+		SELECT
+			count(*)
+			FROM market_shop_goods_view
+			WHERE 1 = 1
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="goodsPic!=null"> and goods_pic = #{goodsPic}</if>
+			<if test="goodsName!=null"> and goods_name = #{goodsName}</if>
+			<if test="goodsTitle!=null"> and goods_title = #{goodsTitle}</if>
+			<if test="goodsPrice!=null"> and goods_price = #{goodsPrice}</if>
+			<if test="goodsNum!=null"> and goods_num = #{goodsNum}</if>
+			<if test="specName!=null"> and spec_name = #{specName}</if>
+			<if test="specTitle!=null"> and spec_title = #{specTitle}</if>
+			<if test="specPrice!=null"> and spec_price = #{specPrice}</if>
+			<if test="goodsDetail!=null"> and goods_detail = #{goodsDetail}</if>
+			<if test="goodsSales!=null"> and goods_sales = #{goodsSales}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+			<if test="categoryId!=null"> and category_id = #{categoryId}</if>
+			<if test="tuijian!=null"> and tuijian = #{tuijian}</if>
+			<if test="reasonReturn!=null"> and reason_return = #{reasonReturn}</if>
+			<if test="sellCount!=null"> and sell_count = #{sellCount}</if>
+	</select>
+	
+	<select id="findList" parameterType="com.wqwy.zhnm.base.component.dto.MarketShopGoodsView" resultType="com.wqwy.zhnm.base.component.dto.MarketShopGoodsView">
+		SELECT
+			market_id marketId,
+			goods_id goodsId,
+			goods_pic goodsPic,
+			goods_name goodsName,
+			goods_title goodsTitle,
+			goods_price goodsPrice,
+			goods_num goodsNum,
+			spec_name specName,
+			spec_title specTitle,
+			spec_price specPrice,
+			goods_detail goodsDetail,
+			goods_sales goodsSales,
+			sort sort,
+			category_id categoryId,
+			tuijian tuijian,
+			reason_return reasonReturn,
+			sell_count sellCount
+			FROM market_shop_goods_view
+			WHERE 1 = 1
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="goodsPic!=null"> and goods_pic = #{goodsPic}</if>
+			<if test="goodsName!=null"> and goods_name = #{goodsName}</if>
+			<if test="goodsTitle!=null"> and goods_title = #{goodsTitle}</if>
+			<if test="goodsPrice!=null"> and goods_price = #{goodsPrice}</if>
+			<if test="goodsNum!=null"> and goods_num = #{goodsNum}</if>
+			<if test="specName!=null"> and spec_name = #{specName}</if>
+			<if test="specTitle!=null"> and spec_title = #{specTitle}</if>
+			<if test="specPrice!=null"> and spec_price = #{specPrice}</if>
+			<if test="goodsDetail!=null"> and goods_detail = #{goodsDetail}</if>
+			<if test="goodsSales!=null"> and goods_sales = #{goodsSales}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+			<if test="categoryId!=null"> and category_id = #{categoryId}</if>
+			<if test="tuijian!=null"> and tuijian = #{tuijian}</if>
+			<if test="reasonReturn!=null"> and reason_return = #{reasonReturn}</if>
+			<if test="sellCount!=null"> and sell_count = #{sellCount}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.component.dto.MarketShopGoodsView" resultType="com.wqwy.zhnm.base.component.dto.MarketShopGoodsView">
+		SELECT
+			market_id marketId,
+			goods_id goodsId,
+			goods_pic goodsPic,
+			goods_name goodsName,
+			goods_title goodsTitle,
+			goods_price goodsPrice,
+			goods_num goodsNum,
+			spec_name specName,
+			spec_title specTitle,
+			spec_price specPrice,
+			goods_detail goodsDetail,
+			goods_sales goodsSales,
+			sort sort,
+			category_id categoryId,
+			tuijian tuijian,
+			reason_return reasonReturn,
+			sell_count sellCount
+			FROM market_shop_goods_view
+			WHERE 1 = 1
+			<if test="marketId!=null"> and market_id = #{marketId}</if>
+			<if test="goodsId!=null"> and goods_id = #{goodsId}</if>
+			<if test="goodsPic!=null"> and goods_pic = #{goodsPic}</if>
+			<if test="goodsName!=null"> and goods_name = #{goodsName}</if>
+			<if test="goodsTitle!=null"> and goods_title = #{goodsTitle}</if>
+			<if test="goodsPrice!=null"> and goods_price = #{goodsPrice}</if>
+			<if test="goodsNum!=null"> and goods_num = #{goodsNum}</if>
+			<if test="specName!=null"> and spec_name = #{specName}</if>
+			<if test="specTitle!=null"> and spec_title = #{specTitle}</if>
+			<if test="specPrice!=null"> and spec_price = #{specPrice}</if>
+			<if test="goodsDetail!=null"> and goods_detail = #{goodsDetail}</if>
+			<if test="goodsSales!=null"> and goods_sales = #{goodsSales}</if>
+			<if test="sort!=null"> and sort = #{sort}</if>
+			<if test="categoryId!=null"> and category_id = #{categoryId}</if>
+			<if test="tuijian!=null"> and tuijian = #{tuijian}</if>
+			<if test="reasonReturn!=null"> and reason_return = #{reasonReturn}</if>
+			<if test="sellCount!=null"> and sell_count = #{sellCount}</if>
+	</select>
+
+</mapper>

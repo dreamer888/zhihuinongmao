@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.VersionManager">
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findByType" parameterType="com.wqwy.zhnm.base.entity.Version" resultType="com.wqwy.zhnm.base.entity.Version">
+		SELECT
+			id id,
+			app_name appName,
+			version_code versionCode,
+			app_type appType,
+			last_force lastForce,
+			upgrade_url upgradeUrl,
+			upgrade_info upgradeInfo
+			FROM version
+			WHERE 1 = 1
+		    and app_type = #{appType}
+		    order by id desc 
+	</select>
+
+</mapper>

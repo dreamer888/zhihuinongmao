@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.BalanceMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.Balance">
+		SELECT
+			id id,
+			balance_imei balanceImei,
+			balance_model balanceModel,
+			used used,
+			version version
+			FROM balance
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.Balance" resultType="com.wqwy.zhnm.base.entity.Balance">
+		SELECT
+			id id,
+			balance_imei balanceImei,
+			balance_model balanceModel,
+			used used,
+			version version
+			FROM balance
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="balanceImei!=null"> and balance_imei = #{balanceImei}</if>
+			<if test="balanceModel!=null"> and balance_model = #{balanceModel}</if>
+			<if test="used!=null"> and used = #{used}</if>
+			<if test="version!=null"> and version = #{version}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.Balance" resultType="com.wqwy.zhnm.base.entity.Balance">
+		SELECT
+			id id,
+			balance_imei balanceImei,
+			balance_model balanceModel,
+			used used,
+			version version
+			FROM balance
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="balanceImei!=null"> and balance_imei = #{balanceImei}</if>
+			<if test="balanceModel!=null"> and balance_model = #{balanceModel}</if>
+			<if test="used!=null"> and used = #{used}</if>
+			<if test="version!=null"> and version = #{version}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.Balance">
+		INSERT INTO balance (
+			<if test="balanceImei!=null">balance_imei,</if>
+			<if test="balanceModel!=null">balance_model,</if>
+			<if test="used!=null">used,</if>
+			<if test="version!=null">version,</if>
+			id
+			) VALUES (
+			<if test="balanceImei!=null">#{balanceImei},</if>
+			<if test="balanceModel!=null">#{balanceModel},</if>
+			<if test="used!=null">#{used},</if>
+			<if test="version!=null">#{version},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.Balance">
+		UPDATE balance SET
+			<if test="balanceImei!=null">balance_imei = #{balanceImei} ,</if>
+			<if test="balanceModel!=null">balance_model = #{balanceModel} ,</if>
+			<if test="used!=null">used = #{used} ,</if>
+			<if test="version!=null">version = #{version},</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM balance  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

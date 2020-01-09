@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.SellerOrderPriceViewMapper">
+
+	
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.component.dto.SellerOrderPriceView" resultType="com.wqwy.zhnm.base.component.dto.SellerOrderPriceView">
+		SELECT
+			order_id orderId,
+			seller_id sellerId,
+			total_price totalPrice,
+			addtime addtime,
+			type type
+			FROM v_seller_order_price
+			WHERE 1 = 1
+			<if test="query==1"> and date(addtime)=curdate()</if>
+			<if test="query==2">and date(addtime)=DATE_SUB(curdate(),INTERVAL 1 DAY)</if>
+			<if test="query==3">and YEARWEEK(date_format(addtime,'%Y-%m-%d')) = YEARWEEK(now())</if>
+			<if test="query==4">and YEARWEEK(date_format(addtime,'%Y-%m-%d')) = YEARWEEK(now())-1</if>
+			<if test="query==5">and date_format(addtime,'%Y-%m')=date_format(now(),'%Y-%m')</if>
+			<if test="query==6">and date_format(addtime,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')</if>
+			<if test="orderId!=null"> and order_id = #{orderId}</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="totalPrice!=null"> and total_price = #{totalPrice}</if>
+			<if test="addtime!=null"> and addtime = #{addtime}</if>
+			<if test="type!=null"> and type = #{type}</if>
+			ORDER BY addtime DESC
+	</select>
+	 
+	 
+
+	
+	<select id="getTotalPrice" parameterType="com.wqwy.zhnm.base.component.dto.SellerOrderPriceView" resultType="java.math.BigDecimal">
+		SELECT
+			sum(total_price) totalPrice
+			FROM v_seller_order_price
+			WHERE 1 = 1
+			<if test="query==1"> and date(addtime)=curdate()</if>
+			<if test="query==2">and date(addtime)=DATE_SUB(curdate(),INTERVAL 1 DAY)</if>
+			<if test="query==3">and YEARWEEK(date_format(addtime,'%Y-%m-%d')) = YEARWEEK(now())</if>
+			<if test="query==4">and YEARWEEK(date_format(addtime,'%Y-%m-%d')) = YEARWEEK(now())-1</if>
+			<if test="query==5">and date_format(addtime,'%Y-%m')=date_format(now(),'%Y-%m')</if>
+			<if test="query==6">and date_format(addtime,'%Y-%m')=date_format(DATE_SUB(curdate(), INTERVAL 1 MONTH),'%Y-%m')</if>
+			<if test="sellerId!=null"> and seller_id = #{sellerId}</if>
+			<if test="totalPrice!=null"> and total_price = #{totalPrice}</if>
+			<if test="addtime!=null"> and addtime = #{addtime}</if>
+			<if test="type!=null"> and type = #{type}</if>
+
+	</select>
+	
+	
+	
+</mapper>

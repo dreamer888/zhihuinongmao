@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="OrderDetailMapper">
+	
+	<!--表名 -->
+	<sql id="tableName">
+		shop_order_detail
+	</sql>
+	
+	<!-- 字段 -->
+	<sql id="Field">
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status,
+		avg_price
+	</sql>
+	
+	<!-- 字段值 -->
+	<sql id="FieldValue">
+		#{order_detail_id},
+		#{goods_id},		
+		#{goods_pic},	
+		#{goods_name},	
+		#{goods_price},
+		#{goods_count},	
+		#{goods_total},
+		#{attribute_detail_id},
+		#{attribute_detail_name},
+		#{pay_total},
+		#{order_id},
+		#{sort},
+		#{status},
+		#{avg_price}
+	</sql>
+	
+	<!-- 新增-->
+	<insert id="save" parameterType="pd">
+		insert into 
+	<include refid="tableName"></include>
+		(
+	<include refid="Field"></include>
+		) values 
+		<foreach item="item" index="index" collection="detaillist" separator=",">
+         (#{item.order_detail_id},#{item.goods_id},#{item.goods_pic},#{item.goods_name},
+         #{item.goods_price},#{item.goods_count},#{item.goods_total},#{item.attribute_detail_id},#{item.attribute_detail_name},#{item.pay_total},#{item.order_id},#{item.sort},#{item.status},#{item.avg_price})
+		</foreach>
+	</insert>
+	
+	<!-- 删除-->
+	<delete id="delete" parameterType="pd">
+		delete from
+		<include refid="tableName"></include>
+		where 
+		order_id = #{order_id}
+	</delete>
+	
+	
+	<!-- 修改 -->
+	<update id="edit" parameterType="pd">
+		update
+		shop_order_detail
+		set 
+		status = #{status}	
+		where 
+		order_detail_id = #{order_detail_id}
+		<!-- and status=2 -->
+	</update>
+	
+	<!-- 修改 -->
+	<update id="edit_order_id" parameterType="pd">
+		update
+		shop_order_detail
+		set 
+		status = #{status}	
+		where 
+		order_id = #{order_id}
+	</update>
+	
+	<!-- 通过ID获取数据 -->
+	<select id="findById" parameterType="pd" resultType="pd">
+		select
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status,
+		avg_price
+		from shop_order_detail t1
+		where 
+		order_detail_id=#{order_detail_id}
+	</select>
+	
+	
+	<!-- 列表 -->
+	<select id="datalistPage" parameterType="page" resultType="pd">
+		select
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status,
+		avg_price
+		from shop_order_detail t1
+		where
+		order_id=#{order_id}
+		order by sort
+	</select>
+	
+	
+	<!-- 列表(全部) -->
+	<select id="listAll" parameterType="pd" resultType="pd">
+		select
+		order_detail_id,
+		goods_id,		
+		goods_pic,	
+		goods_name,	
+		goods_price,
+		goods_count,	
+		goods_total,
+		attribute_detail_id,
+		attribute_detail_name,
+		pay_total,
+		order_id,
+		sort,
+		status,
+		avg_price
+		from shop_order_detail
+		where
+		order_id=#{order_id}
+		order by sort
+	</select>
+	
+	
+	
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="String">
+		delete from
+		<include refid="tableName"></include>
+		where 
+			ORDER_ID in
+		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+                 #{item}
+		</foreach>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqwy.zhnm.base.dao.DelivererPointsDetailMapper">
+
+	<select id="get" parameterType="String" resultType="com.wqwy.zhnm.base.entity.DelivererPointsDetail">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			points_changed pointsChanged,
+			update_time updateTime,
+			changed_reason changedReason,
+			operator operator,
+			create_time createTime,
+			auditor auditor,
+			audit_time auditTime
+			FROM deliverer_points_detail
+			WHERE id = #{id}
+	</select>
+
+	<select id="findList" parameterType="com.wqwy.zhnm.base.entity.DelivererPointsDetail" resultType="com.wqwy.zhnm.base.entity.DelivererPointsDetail">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			points_changed pointsChanged,
+			update_time updateTime,
+			changed_reason changedReason,
+			operator operator,
+			create_time createTime,
+			auditor auditor,
+			audit_time auditTime
+			FROM deliverer_points_detail
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="delivererId!=null"> and deliverer_id = #{delivererId}</if>
+			<if test="pointsChanged!=null"> and points_changed = #{pointsChanged}</if>
+			<if test="updateTime!=null"> and update_time = #{updateTime}</if>
+			<if test="changedReason!=null"> and changed_reason = #{changedReason}</if>
+			<if test="operator!=null"> and operator = #{operator}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+			<if test="auditor!=null"> and auditor = #{auditor}</if>
+			<if test="auditTime!=null"> and audit_time = #{auditTime}</if>
+	</select>
+
+	<select id="findListByPage" parameterType="com.wqwy.zhnm.base.entity.DelivererPointsDetail" resultType="com.wqwy.zhnm.base.entity.DelivererPointsDetail">
+		SELECT
+			id id,
+			deliverer_id delivererId,
+			points_changed pointsChanged,
+			update_time updateTime,
+			changed_reason changedReason,
+			operator operator,
+			create_time createTime,
+			auditor auditor,
+			audit_time auditTime
+			FROM deliverer_points_detail
+			WHERE 1 = 1
+			<if test="id!=null"> and id = #{id}</if>
+			<if test="delivererId!=null"> and deliverer_id = #{delivererId}</if>
+			<if test="pointsChanged!=null"> and points_changed = #{pointsChanged}</if>
+			<if test="updateTime!=null"> and update_time = #{updateTime}</if>
+			<if test="changedReason!=null"> and changed_reason = #{changedReason}</if>
+			<if test="operator!=null"> and operator = #{operator}</if>
+			<if test="createTime!=null"> and create_time = #{createTime}</if>
+			<if test="auditor!=null"> and auditor = #{auditor}</if>
+			<if test="auditTime!=null"> and audit_time = #{auditTime}</if>
+	</select>
+
+	<insert id="insert" parameterType="com.wqwy.zhnm.base.entity.DelivererPointsDetail">
+		INSERT INTO deliverer_points_detail (
+			<if test="delivererId!=null">deliverer_id,</if>
+			<if test="pointsChanged!=null">points_changed,</if>
+			<if test="updateTime!=null">update_time,</if>
+			<if test="changedReason!=null">changed_reason,</if>
+			<if test="operator!=null">operator,</if>
+			<if test="createTime!=null">create_time,</if>
+			<if test="auditor!=null">auditor,</if>
+			<if test="auditTime!=null">audit_time,</if>
+			id
+			) VALUES (
+			<if test="delivererId!=null">#{delivererId},</if>
+			<if test="pointsChanged!=null">#{pointsChanged},</if>
+			<if test="updateTime!=null">#{updateTime},</if>
+			<if test="changedReason!=null">#{changedReason},</if>
+			<if test="operator!=null">#{operator},</if>
+			<if test="createTime!=null">#{createTime},</if>
+			<if test="auditor!=null">#{auditor},</if>
+			<if test="auditTime!=null">#{auditTime},</if>
+#{id}		)
+	</insert>
+
+	<update id="update" parameterType="com.wqwy.zhnm.base.entity.DelivererPointsDetail">
+		UPDATE deliverer_points_detail SET
+			<if test="delivererId!=null">deliverer_id = #{delivererId} ,</if>
+			<if test="pointsChanged!=null">points_changed = #{pointsChanged} ,</if>
+			<if test="updateTime!=null">update_time = #{updateTime} ,</if>
+			<if test="changedReason!=null">changed_reason = #{changedReason} ,</if>
+			<if test="operator!=null">operator = #{operator} ,</if>
+			<if test="createTime!=null">create_time = #{createTime} ,</if>
+			<if test="auditor!=null">auditor = #{auditor} ,</if>
+			<if test="auditTime!=null">audit_time = #{auditTime} ,</if>
+			id = #{id}
+			WHERE
+			id = #{id}
+	</update>
+	
+	<update id="delete" parameterType="String">
+		DELETE FROM deliverer_points_detail  
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
