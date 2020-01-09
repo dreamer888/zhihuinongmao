@@ -70,7 +70,8 @@
 
 10  另外这个程序有简化版本的 ，就是最简单的小程序商城，智慧农贸就是从简化版本演化出来的 ，需要的朋友可以加QQ 2219992847索求。
 
-
+11.  github  实在是 push 不上来，error: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054解决方法  。  
+解决方法 ，先上传到 gitee上 再 import  过来 
 
 
  
