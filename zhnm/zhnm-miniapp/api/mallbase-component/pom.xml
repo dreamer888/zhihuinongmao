@@ -15,7 +15,7 @@
 	<description>zhnm-mallbase-component</description>
 
 	<properties>
-		<quartz.version>2.3.0</quartz.version>
+		<quartz.version>2.3.2</quartz.version>
 		<codec.version>1.11</codec.version>
 	</properties>
 
