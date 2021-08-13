@@ -197,7 +197,7 @@
 		<dependency>
 			<groupId>com.jfinal</groupId>
 			<artifactId>jfinal</artifactId>
-			<version>3.4</version>
+			<version>4.9.11</version>
 		</dependency>
         <!-- netpay-1.0.jar -->
 		<dependency>
